@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.database import engine, Base
+from app.models.user import User # noqa: F401
 
 Base.metadata.create_all(bind=engine)
 
