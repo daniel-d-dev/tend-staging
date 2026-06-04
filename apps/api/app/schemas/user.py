@@ -20,4 +20,4 @@ class Token(BaseModel):
     token_type: str = "bearer" # This is the standard token type for JWTs
 
 class TokenData(BaseModel):
-    user_id: Optional[int] = None # This is none if the token is missing or can't be decoded
+    user_id: int | None = None # This is none if the token is missing or can't be decoded
