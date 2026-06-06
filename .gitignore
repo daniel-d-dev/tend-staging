@@ -11,6 +11,7 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+constants/api.ts
 
 # Testing
 coverage
@@ -36,6 +37,7 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.
+.expo/
 
 # Python
 venv/

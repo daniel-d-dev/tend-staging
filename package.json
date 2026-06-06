@@ -20,5 +20,11 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "expo-secure-store": "~15.0.8"
+  },
+  "overrides": {
+    "react": "19.1.0"
+  }
 }
