@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from app.core.database import get_db
@@ -36,13 +36,26 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     return user
 
 @router.post("/login", response_model = Token)
-def login(user_in: UserCreate, db: Session = Depends(get_db)):
+def login(user_in: UserCreate, response: Response, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == user_in.email).first()
     # deliberately vague, not revealing whether the email exists or not
     if not user or not verify_password(user_in.password, user.hashed_password):
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Incorrect email or password.")
     token = create_access_token(user.id)
+    response.set_cookie(
+        key = "access_token",
+        value = token,
+        httponly = True,
+        samesite = "lax",
+        secure = False # set to True in production when serving over HTTPS
+    )
     return Token(access_token = token)
+
+@router.post("/logout")
+def logout(response: Response):
+    # no auth check is needed as clearing a cookie that doesn't exist does no harm
+    response.delete_cookie(key = "access_token")
+    return {"message": "Logged out"}
 
 @router.get("/me", response_model = UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):

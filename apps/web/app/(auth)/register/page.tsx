@@ -1,7 +1,56 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/auth";
+import styles from "./page.module.css"
+
 export default function RegisterPage() {
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [displayName, setDisplayName] = useState("");
+    const [password, setPassword] = useState("");
+
+    async function handleRegister() {
+        try {
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password, display_name: displayName })
+            });
+            if (!response.ok) {
+                alert("Registration failed. Please check your details.");
+                return;
+            }
+            router.push("/login");
+        } catch {
+            alert("Could not connect to the server.");
+        }
+    }
+
     return (
-        <div>
-            <h1>Register</h1>
+        <div className = {styles.container}>
+            <h1 className = {styles.title}>Create an account</h1>
+            <input className = {styles.input}
+                type = "email"
+                placeholder = "Email"
+                value = {email}
+                onChange = {(e) => setEmail(e.target.value)}
+            />
+            <input className = {styles.input}
+                type = "text"
+                placeholder = "Display name"
+                value = {displayName}
+                onChange = {(e) => setDisplayName(e.target.value)}
+            />
+            <input className = {styles.input}
+                type = "password"
+                placeholder = "Password"
+                value = {password}
+                onChange = {(e) => setPassword(e.target.value)}
+            />
+            <button className = {styles.button} onClick = {handleRegister}>Register</button>
+            <p className = {styles.paragraph}>Already have an account? <a href = "/login" className = {styles.link}>Log in here</a></p>
         </div>
     );
 }

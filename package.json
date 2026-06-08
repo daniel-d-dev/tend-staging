@@ -25,6 +25,7 @@
     "expo-secure-store": "~15.0.8"
   },
   "overrides": {
-    "react": "19.1.0"
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
   }
 }

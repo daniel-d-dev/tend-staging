@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { describe } from "node:test";
 
 export const metadata: Metadata = {
   title: "Tend",
