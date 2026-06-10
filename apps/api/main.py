@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import engine, Base
 from app.models.user import User # noqa: F401
 from app.models.checkin import CheckIn  # noqa: F401
+from app.models.nudge import NudgeFlag # noqa: F401
 from app.routers.auth import router as auth_router
 from app.routers.checkins import router as checkins_router
 from app.core.sentiment import load_model
