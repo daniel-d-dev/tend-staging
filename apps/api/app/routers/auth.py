@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.user import User
@@ -7,16 +6,28 @@ from app.schemas.user import UserCreate, UserResponse, Token
 from app.core.security import hash_password, verify_password, create_access_token, decode_access_token
 
 router = APIRouter(prefix = "/auth", tags = ["auth"])
-# reads the JWT from the authorisation header
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "/auth/login")
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> User:
+def get_current_user(request: Request, db: Session = Depends(get_db)) -> User:
+    token = None # accepts Bearer token for mobile or httponly cookie for web
+
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+
+    if not token:
+        token = request.cookies.get("access_token")
+
+    if not token:
+        raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "Not authenticated.")
+
     user_id = decode_access_token(token)
     if user_id is None:
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "This token is invalid or expired.")
+    
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail = "User not found.")
+    
     return user
 
 @router.post("/register", response_model = UserResponse, status_code = status.HTTP_201_CREATED)

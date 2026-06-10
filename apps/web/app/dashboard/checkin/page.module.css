@@ -1,0 +1,55 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 48px 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prompt {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 20px;
+    margin-bottom: 6px;
+}
+
+.textArea {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.button {
+    margin-top: 32px;
+    background-color: #000;
+    color: #fff;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
