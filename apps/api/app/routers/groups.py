@@ -19,6 +19,22 @@ def create_group(payload: GroupCreate, db: Session = Depends(get_db), current_us
     db.refresh(group)
     return group
 
+@router.post("/join")
+def join_group(join_code: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    group = db.query(Group).filter(Group.join_code == join_code).first()
+    if not group:
+        raise HTTPException(status_code = 404, detail = "Group not found.")
+    already_member = db.query(GroupMember).filter(
+        GroupMember.group_id == group.id,
+        GroupMember.user_id == current_user.id
+    ).first()
+    if already_member:
+        raise HTTPException(status_code = 400, detail = "You are already a member of this group.") # UniqueConstraint would catch this in any case but this gives the user a clearer error
+    member = GroupMember(group_id = group.id, user_id = current_user.id)
+    db.add(member)
+    db.commit()
+    return {"message": "Joined group successfully."}
+
 @router.get("/me", response_model = list[GroupResponse])
 def get_my_groups(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     memberships = db.query(GroupMember).filter(GroupMember.user_id == current_user.id).all()

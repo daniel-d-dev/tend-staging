@@ -15,6 +15,7 @@ class GroupResponse(BaseModel):
     name: str
     created_by: int
     created_at: datetime
+    join_code: str
     members: list[GroupMemberResponse] = []
 
     model_config = { "from_attributes": True }
