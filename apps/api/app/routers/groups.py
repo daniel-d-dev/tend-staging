@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.routers.auth import get_current_user
 from app.models.user import User
-from app.models.group import Group, GroupMember
+from app.models.group import Group, GroupMember, FriendAssignment
 from app.schemas.group import GroupCreate, GroupResponse
 
 router = APIRouter(prefix = "/groups", tags = ["groups"])
@@ -34,6 +34,32 @@ def join_group(join_code: str, db: Session = Depends(get_db), current_user: User
     db.add(member)
     db.commit()
     return {"message": "Joined group successfully."}
+
+@router.post("/{group_id}/friend")
+def assign_friend(group_id: int, friend_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    membership = db.query(GroupMember).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id == current_user.id
+    ).first()
+    if not membership:
+        raise HTTPException(status_code = 403, detail = "You are not a member of this group.")
+    friend_membership = db.query(GroupMember).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id == friend_id
+    ).first()
+    if not friend_membership:
+        raise HTTPException(status_code = 400, detail = "That user is not a member of this group.")
+    assignment = db.query(FriendAssignment).filter(
+        FriendAssignment.group_id == group_id,
+        FriendAssignment.user_id == current_user.id
+    ).first()
+    if assignment:
+        assignment.friend_id = friend_id # update existing assignment rather than creating a duplicate
+    else:
+        assignment = FriendAssignment(group_id = group_id, user_id = current_user.id, friend_id = friend_id)
+        db.add(assignment)
+    db.commit()
+    return {"message": "Designated friend has been assigned successfully."}
 
 @router.get("/me", response_model = list[GroupResponse])
 def get_my_groups(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

@@ -29,3 +29,14 @@ class GroupMember(Base):
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = utc_now)
 
     __table_args__ = (UniqueConstraint("group_id", "user_id"),) # prevents the same user being added to the same group twice. The trailing comma makes this a tuple and is required by SQLalchemy
+
+class FriendAssignment(Base):
+    __tablename__ = "friend_assignments"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key = True, index = True)
+    group_id: Mapped[int] = mapped_column(Integer, ForeignKey("groups.id"), nullable = False)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable = False)
+    friend_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable = False)
+    assigned_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = utc_now)
+
+    __table_args__ = (UniqueConstraint("group_id", "user_id"),) # a user can only have one designated friend per group
