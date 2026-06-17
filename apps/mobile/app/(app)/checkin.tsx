@@ -5,12 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getToken } from "@/utils/token";
 import { API_URL } from "@/constants/api";
 
-const PLACEHOLDER_PROMPT = "How have you been feeling lately?" // to be replaced when the prompt bank is built
-
 export default function CheckInScreen() {
     const router = useRouter();
     const [existing, setExisting] = useState(null);
-    const [promptQuestion, setPromptQuestion] = useState(PLACEHOLDER_PROMPT);
+    const [promptQuestion, setPromptQuestion] = useState("");
     const [promptResponse, setPromptResponse] = useState("");
     const [journalText, setJournalText] = useState("");
     const [sleepHours, setSleepHours] = useState("");
@@ -22,7 +20,7 @@ export default function CheckInScreen() {
         useCallback(() => {
             const fetchToday = async () => {
                 const token = await getToken();
-                const response = await fetch(`${API_URL}/checkins/today`, {
+                let response = await fetch(`${API_URL}/checkins/today`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -34,6 +32,14 @@ export default function CheckInScreen() {
                     if (data.journal_text) setJournalText(data.journal_text);
                     if (data.sleep_hours) setSleepHours(data.sleep_hours.toString());
                     if (data.step_count) setStepCount(data.step_count.toString());
+                } else { // if there's been no check in today, fetch today's prompt instead
+                    response = await fetch(`${API_URL}/checkins/prompt/today`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        setPromptQuestion(data.prompt);
+                    }
                 }
 
                 setLoading(false);

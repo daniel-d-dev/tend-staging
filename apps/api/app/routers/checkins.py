@@ -7,8 +7,13 @@ from app.models.checkin import CheckIn
 from app.routers.auth import get_current_user
 from app.schemas.checkin import CheckInCreate, CheckInUpdate, CheckInResponse
 from app.models.user import User
+from app.services.prompts import get_todays_prompt
 
 router = APIRouter(prefix = "/checkins", tags = ["checkins"])
+
+@router.get("/prompt/today")
+def get_prompt_today(current_user: User = Depends(get_current_user)):
+    return {"prompt": get_todays_prompt()}
 
 @router.post("/", response_model = CheckInResponse)
 def submit_checkin (

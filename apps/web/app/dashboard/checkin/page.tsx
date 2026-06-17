@@ -5,12 +5,10 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { API_URL } from "@/lib/auth";
 
-const PLACEHOLDER_PROMPT = "How have you been feeling lately?" // to be replaced when the prompt bank is built
-
 export default function CheckInPage() {
     const router = useRouter();
     const [existing, setExisting] = useState(null);
-    const [promptQuestion, setPromptQuestion] = useState(PLACEHOLDER_PROMPT);
+    const [promptQuestion, setPromptQuestion] = useState("");
     const [promptResponse, setPromptResponse] = useState("");
     const [journalText, setJournalText] = useState("");
     const [sleepHours, setSleepHours] = useState("");
@@ -20,7 +18,7 @@ export default function CheckInPage() {
 
     useEffect(() => {
         const fetchToday = async () => {
-            const response = await fetch(`${API_URL}/checkins/today`, {
+            let response = await fetch(`${API_URL}/checkins/today`, {
                 credentials: "include"
             });
 
@@ -32,6 +30,15 @@ export default function CheckInPage() {
                 if (data.journal_text) setJournalText(data.journal_text);
                 if (data.sleep_hours) setSleepHours(data.sleep_hours.toString());
                 if (data.step_count) setStepCount(data.step_count.toString());
+            } else {
+                // if there's been no check in today, fetch today's prompt instead
+                response = await fetch(`${API_URL}/checkins/prompt/today`, {
+                    credentials: "include"
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setPromptQuestion(data.prompt)
+                }
             }
 
             setLoading(false);
