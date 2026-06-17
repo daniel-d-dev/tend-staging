@@ -1,0 +1,48 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.empty {
+    color: #888;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.cardRead {
+    opacity: 0.5;
+}
+
+.message {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.date {
+    font-size: 12px;
+    color: #888;
+}
+
+.readButton {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}

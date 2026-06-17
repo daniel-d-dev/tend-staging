@@ -1,0 +1,63 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.sectionHeading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 12px;
+}
+
+.empty {
+    color: #888;
+    margin-bottom: 16px;
+}
+
+.groupCard {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.groupName {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.joinCode {
+    font-size: 13px;
+    color: #555;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
