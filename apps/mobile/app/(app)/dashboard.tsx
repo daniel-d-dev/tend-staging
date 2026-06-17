@@ -21,6 +21,13 @@ export default function DashboardScreen() {
             >
                 <Text style = {styles.buttonText}>Groups</Text>
             </TouchableOpacity>
+            
+            <TouchableOpacity
+                style = {styles.button}
+                onPress = {() => router.push("/(app)/notifications")}
+            >
+                <Text style = {styles.buttonText}>Notifications</Text>
+            </TouchableOpacity>   
 
             <TouchableOpacity onPress = {async () => {await deleteToken(); router.replace("/(auth)/login"); }}>
                 <Text>Logout</Text> {/* temporary logout button for testing which will be removed before pilot */}
