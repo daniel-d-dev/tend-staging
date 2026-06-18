@@ -21,3 +21,6 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     user_id: int | None = None # This is none if the token is missing or can't be decoded
+
+class PushTokenUpdate(BaseModel):
+    token: str

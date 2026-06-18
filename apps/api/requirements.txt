@@ -10,3 +10,5 @@ passlib == 1.7.4
 pydantic[email]
 transformers == 4.51.3
 torch == 2.7.0
+apscheduler == 3.11.2
+httpx == 0.28.1

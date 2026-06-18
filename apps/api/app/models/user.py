@@ -17,3 +17,4 @@ class User(Base):
         DateTime(timezone = True),
         default = utc_now
     )
+    push_token: Mapped[str | None] = mapped_column(String, nullable = True)
