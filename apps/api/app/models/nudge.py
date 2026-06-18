@@ -15,3 +15,4 @@ class NudgeFlag(Base):
     triggered_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = utc_now)
     sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone = True), nullable = True)
     evaluated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone = True), nullable = True)
+    outcome: Mapped[str | None] = mapped_column(String, nullable = True)

@@ -6,6 +6,7 @@ from app.models.user import User
 from app.models.notification import Notification
 from app.services.inference import run_inference
 from app.services.nudge_delivery import deliver
+from app.services.evaluation import evaluate_pending_nudges
 import httpx
 
 scheduler = BackgroundScheduler()
@@ -33,7 +34,12 @@ def send_push_notifications():
                     notification.pushed_at = datetime.now(timezone.utc)
         db.commit()
 
+def run_post_nudge_evaluation():
+    with SessionLocal() as db:
+        evaluate_pending_nudges(db)
+
 def start_scheduler():
     scheduler.add_job(run_nightly_inference, CronTrigger(hour = 0, minute = 0)) # midnight utc
     scheduler.add_job(send_push_notifications, CronTrigger(hour = 9, minute = 0)) # 9am utc after nightly inference
+    scheduler.add_job(run_post_nudge_evaluation, CronTrigger(hour = 10, minute = 0)) # 10am utc after push notifs sent
     scheduler.start()
