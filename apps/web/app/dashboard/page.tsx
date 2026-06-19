@@ -7,6 +7,7 @@ export default function DashboardPage() {
             <Link href = "/dashboard/checkin">Check in</Link>
             <Link href = "/dashboard/groups">Groups</Link>
             <Link href = "/dashboard/notifications">Notifications</Link>
+            <Link href = "/dashboard/temperature">Temperature Check</Link>
         </div>
     );
 }
