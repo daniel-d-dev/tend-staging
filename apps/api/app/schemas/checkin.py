@@ -25,5 +25,6 @@ class CheckInResponse(BaseModel):
     step_count: int | None
     sentiment_score: float | None
     created_at: datetime
+    audio_emotion_score: float | None # derived from voice audio by audeering. Audio is uploaded separately, so this never appears in CheckInCreate or CheckInUpdate
 
     model_config = {'from_attributes': True}
