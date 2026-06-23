@@ -49,7 +49,7 @@ def deliver(flag: NudgeFlag, db: Session) -> Notification | None:
     if not friend_id:
         return None
     message = MESSAGES.get(flag.trigger_rule, "We think {name} could do with some support right now 💙")
-    message = message.format(name = subject.display_name)
+    message = message.format(name = subject.first_name)
     notification = Notification(
         recipient_id = friend_id,
         nudge_flag_id = flag.id,

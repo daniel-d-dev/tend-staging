@@ -10,6 +10,10 @@ class GroupMemberResponse(BaseModel):
 
     model_config = { "from_attributes": True }
 
+class GroupMemberInfo(BaseModel):
+    user_id: int
+    first_name: str
+    
 class GroupResponse(BaseModel):
     id: int
     name: str

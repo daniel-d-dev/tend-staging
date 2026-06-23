@@ -15,7 +15,7 @@ export default function LoginScreen() {
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, display_name: "" })
+                body: JSON.stringify({ email, password })
             });
             if (!response.ok) {
                 Alert.alert("Login failed", "Incorrect email or password.");

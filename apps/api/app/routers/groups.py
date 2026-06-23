@@ -4,7 +4,7 @@ from app.core.database import get_db
 from app.routers.auth import get_current_user
 from app.models.user import User
 from app.models.group import Group, GroupMember, FriendAssignment
-from app.schemas.group import GroupCreate, GroupResponse
+from app.schemas.group import GroupCreate, GroupResponse, GroupMemberInfo
 
 router = APIRouter(prefix = "/groups", tags = ["groups"])
 
@@ -66,3 +66,17 @@ def get_my_groups(db: Session = Depends(get_db), current_user: User = Depends(ge
     memberships = db.query(GroupMember).filter(GroupMember.user_id == current_user.id).all()
     group_ids = [m.group_id for m in memberships]
     return db.query(Group).filter(Group.id.in_(group_ids)).all()
+
+@router.get("/{group_id}/members", response_model = list[GroupMemberInfo])
+def get_group_members(group_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    membership = db.query(GroupMember).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id == current_user.id
+    ).first()
+    if not membership:
+        raise HTTPException(status_code = 403, detail = "You are not a member of this group.")
+    members = db.query(GroupMember, User).join(User, User.id == GroupMember.user_id).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id != current_user.id
+    ).all()
+    return [{"user_id": u.id, "first_name": u.first_name} for _, u in members]

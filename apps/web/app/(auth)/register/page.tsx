@@ -8,7 +8,7 @@ import styles from "./page.module.css"
 export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
-    const [displayName, setDisplayName] = useState("");
+    const [firstName, setfirstName] = useState("");
     const [password, setPassword] = useState("");
 
     async function handleRegister() {
@@ -16,7 +16,7 @@ export default function RegisterPage() {
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, display_name: displayName })
+                body: JSON.stringify({ email, password, first_name: firstName })
             });
             if (!response.ok) {
                 alert("Registration failed. Please check your details.");
@@ -39,9 +39,9 @@ export default function RegisterPage() {
             />
             <input className = {styles.input}
                 type = "text"
-                placeholder = "Display name"
-                value = {displayName}
-                onChange = {(e) => setDisplayName(e.target.value)}
+                placeholder = "First name"
+                value = {firstName}
+                onChange = {(e) => setfirstName(e.target.value)}
             />
             <input className = {styles.input}
                 type = "password"

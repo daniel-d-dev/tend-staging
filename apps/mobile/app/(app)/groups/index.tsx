@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { useFocusEffect } from "expo-router";
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import { Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getToken } from "@/utils/token";
 import { API_URL } from "@/constants/api";
@@ -11,6 +11,7 @@ export default function GroupsScreen() {
     const [joinCode, setJoinCode] = useState("");
     const [creating, setCreating] = useState(false)
     const [joining, setJoining] = useState(false)
+    const router = useRouter();
 
     const fetchGroups = async () => {
         const token = await getToken();
@@ -84,10 +85,15 @@ export default function GroupsScreen() {
                 )}
 
                 {groups.map(group => (
-                    <View key = {group.id} style = {styles.groupCard}>
+                    <TouchableOpacity
+                        key = {group.id}
+                        style = {styles.groupCard}
+                        onPress = {() => router.push({ pathname: "/(app)/groups/[id]", params: { id: group.id, name: group.name }
+                })}
+                    >
                         <Text style = {styles.groupName}>{group.name}</Text>
                         <Text style = {styles.joinCode}>Join code: {group.join_code}</Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
 
                 <Text style = {styles.sectionHeading}>Create a group</Text>

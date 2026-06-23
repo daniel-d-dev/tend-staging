@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { API_URL } from "@/lib/auth";
 
@@ -10,6 +11,7 @@ export default function GroupsPage() {
     const [joinCode, setJoinCode] = useState("");
     const [creating, setCreating] = useState(false);
     const [joining, setJoining] = useState(false);
+    const router = useRouter();
 
     const fetchGroups = async () => {
         const response = await fetch(`${API_URL}/groups/me`, {
@@ -75,7 +77,12 @@ export default function GroupsPage() {
             )}
 
             {groups.map(group => (
-                <div key = {group.id} className = {styles.groupCard}>
+                <div
+                    key = {group.id}
+                    className = {styles.groupCard}
+                    onClick = {() => router.push(`/dashboard/groups/${group.id}?name=${group.name}`)}
+                    style = {{ cursor: "pointer" }}
+                >
                     <p className = {styles.groupName}>{group.name}</p>
                     <p className = {styles.joinCode}>Join code: {group.join_code}</p>
                 </div>

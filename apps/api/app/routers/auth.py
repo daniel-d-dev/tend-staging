@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.user import User
-from app.schemas.user import UserCreate, UserResponse, Token
+from app.schemas.user import UserCreate, UserResponse, Token, UserLogin
 from app.core.security import hash_password, verify_password, create_access_token, decode_access_token
 
 router = APIRouter(prefix = "/auth", tags = ["auth"])
@@ -39,7 +39,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     user = User(
         email = user_in.email,
         hashed_password = hash_password(user_in.password),
-        display_name = user_in.display_name
+        first_name = user_in.first_name
     )
     db.add(user)
     db.commit()
@@ -47,7 +47,7 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     return user
 
 @router.post("/login", response_model = Token)
-def login(user_in: UserCreate, response: Response, db: Session = Depends(get_db)):
+def login(user_in: UserLogin, response: Response, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == user_in.email).first()
     # deliberately vague, not revealing whether the email exists or not
     if not user or not verify_password(user_in.password, user.hashed_password):

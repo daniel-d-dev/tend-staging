@@ -6,7 +6,7 @@ import { API_URL } from "@/constants/api";
 export default function RegisterScreen() {
     const router = useRouter();
     const [email, setEmail] = useState("");
-    const [displayName, setDisplayName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [password, setPassword] = useState("");
 
     // call the register endpoint and navigate to login on success
@@ -15,7 +15,7 @@ export default function RegisterScreen() {
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, display_name: displayName })
+                body: JSON.stringify({ email, password, first_name: firstName })
             });
             if (!response.ok) {
                 Alert.alert("Registration failed", "Please check your details and try again.");
@@ -41,9 +41,9 @@ export default function RegisterScreen() {
                 />
                 <TextInput 
                     style = {styles.input}
-                    placeholder = "Display name"
-                    value = {displayName}
-                    onChangeText = {setDisplayName}
+                    placeholder = "First name"
+                    value = {firstName}
+                    onChangeText = {setFirstName}
                 />
                 <TextInput 
                     style = {styles.input}
