@@ -4,6 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert,
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getToken } from "@/utils/token";
 import { API_URL } from "@/constants/api";
+import { Audio } from "expo-av";
 
 export default function CheckInScreen() {
     const router = useRouter();
@@ -15,6 +16,9 @@ export default function CheckInScreen() {
     const [stepCount, setStepCount] = useState("");
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [activeRecording, setActiveRecording] = useState<Audio.Recording | null>(null);
+    const [recordingField, setRecordingField] = useState<"prompt" | "journal" | null>(null);
+    const [transcribing, setTranscribing] = useState(false);
 
     useFocusEffect(
         useCallback(() => {
@@ -100,6 +104,62 @@ export default function CheckInScreen() {
         }
     };
 
+    const handleStartRecording = async (field: "prompt" | "journal") => {
+        try {
+            const { status } = await Audio.requestPermissionsAsync();
+            if (status !== "granted") {
+                Alert.alert("Permission required", "Microphone access is required to record audio.");
+                return;
+            }
+            await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true }) // android handles this automatically
+            const { recording } = await Audio.Recording.createAsync(
+                Audio.RecordingOptionsPresets.HIGH_QUALITY
+            );
+            setActiveRecording(recording);
+            setRecordingField(field);
+        } catch {
+            Alert.alert("Error", "Could not start recording. Please try again.")
+        }
+    };
+
+    const handleStopRecording = async () => {
+        if (!activeRecording || !recordingField) return;
+        const field = recordingField; // recordingField gets set to null in the finally block so its captured here first
+        try {
+            await activeRecording.stopAndUnloadAsync();
+            const uri = activeRecording.getURI();
+            setActiveRecording(null);
+            if (!uri) {
+                setRecordingField(null)
+                return;
+            }
+            setTranscribing(true)
+            const token = await getToken();
+            const formData = new FormData();
+            formData.append("audio", { uri, name: "audio.m4a", type: "audio/m4a" } as any); // audio can't be sent as JSON so we use FormData. 'as any' is needed because typescript doesnt recognise the react native file format
+            const response = await fetch(`${API_URL}/checkins/note/transcribe`, {
+                method: "POST",
+                headers: { Authorization: `Bearer ${token}` },
+                body: formData
+            });
+            if (response.ok) {
+                const data = await response.json();
+                if (field === "prompt") {
+                    setPromptResponse(data.transcript);
+                } else {
+                    setJournalText(data.transcript);
+                }
+            } else {
+                Alert.alert("Error", "Could not transcribe audio. Please try again.");
+            }
+        } catch {
+            Alert.alert("Error", "Something went wrong. Please try again.");
+        } finally {
+            setTranscribing(false);
+            setRecordingField(null);
+        }
+    };
+
     if (loading) {
         return (
             <View style = {styles.container}>
@@ -123,6 +183,19 @@ export default function CheckInScreen() {
                         onChangeText = {setPromptResponse}
                         multiline
                     />
+                    <TouchableOpacity
+                        style = {styles.micButton}
+                        onPress = {() => recordingField === "prompt" ? handleStopRecording() : handleStartRecording("prompt")}
+                        disabled = {transcribing || (recordingField !== null && recordingField !== "prompt")}
+                    >
+                        <Text style = {styles.micButtonText}>
+                            {(() => {
+                                if (recordingField === "prompt" && !transcribing) return "Stop recording";
+                                if (recordingField === "prompt" && transcribing) return "Transcribing...";
+                                return "Record";
+                            })()}
+                        </Text>
+                    </TouchableOpacity>
                     <Text style = {styles.label}>Anything else on your mind?</Text>
                     <TextInput
                         style = {styles.textArea}
@@ -131,6 +204,19 @@ export default function CheckInScreen() {
                         onChangeText = {setJournalText}
                         multiline
                     />
+                    <TouchableOpacity
+                        style = {styles.micButton}
+                        onPress = {() => recordingField === "journal" ? handleStopRecording() : handleStartRecording("prompt")}
+                        disabled = {transcribing || (recordingField !== null && recordingField !== "journal")}
+                    >
+                        <Text style = {styles.micButtonText}>
+                            {(() => {
+                                if (recordingField === "prompt" && !transcribing) return "Stop recording";
+                                if (recordingField === "prompt" && transcribing) return "Transcribing...";
+                                return "Record";
+                            })()}
+                        </Text>
+                    </TouchableOpacity>
                     <Text style = {styles.label}>Sleep last night in hours</Text>
                     <TextInput
                         style = {styles.input}
@@ -215,5 +301,18 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "600",
         fontSize: 16,
+    },
+    micButton: {
+        alignSelf: "flex-start",
+        marginTop: 8,
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 6,
+    },
+    micButtonText: {
+        fontSize: 13,
+        color: "#555",
     },
 });

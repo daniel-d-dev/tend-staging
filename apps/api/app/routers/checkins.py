@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+import tempfile
+import os
 from sqlalchemy.orm import Session
 from datetime import date, datetime, timezone
 from app.core.database import get_db
@@ -8,12 +10,27 @@ from app.routers.auth import get_current_user
 from app.schemas.checkin import CheckInCreate, CheckInUpdate, CheckInResponse
 from app.models.user import User
 from app.services.prompts import get_todays_prompt
+from app.services.transcription import transcribe_audio
 
 router = APIRouter(prefix = "/checkins", tags = ["checkins"])
 
 @router.get("/prompt/today")
 def get_prompt_today(current_user: User = Depends(get_current_user)):
     return {"prompt": get_todays_prompt()}
+
+@router.post("/note/transcribe")
+async def transcribe_note(
+    audio: UploadFile = File(...),
+    current_user: User = Depends(get_current_user)
+):
+    with tempfile.NamedTemporaryFile(delete = False, suffix = ".m4a") as tmp: # delete = false keeps the file on disk (temporarily) after closing so whisper can read it
+        tmp.write(await audio.read())
+        tmp_path = tmp.name
+    try:
+        transcript = transcribe_audio(tmp_path)
+        return {"transcript": transcript}
+    finally:
+        os.remove(tmp_path) # always runs even if the transcription fails
 
 @router.post("/", response_model = CheckInResponse)
 def submit_checkin (
