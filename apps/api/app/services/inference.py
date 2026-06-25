@@ -4,6 +4,13 @@ from app.models.checkin import CheckIn
 from app.models.nudge import NudgeFlag
 from app.core.baseline import get_baseline
 
+AUDIO_DISTRESS_THRESHOLD = 0.4 # audeering valence below this number indicates distress. 0.5 is neutral, lower would be considered more negative
+
+def is_distressed(checkin, avg_sentiment: float, drop: float) -> bool:
+    text_low = checkin.sentiment_score is not None and checkin.sentiment_score < avg_sentiment - drop
+    audio_low = checkin.audio_emotion_score is not None and checkin.audio_emotion_score < AUDIO_DISTRESS_THRESHOLD
+    return text_low or audio_low # distress in either signal is enough to flag the checkin
+
 def is_on_cooldown(user_id: int, db: Session) -> bool:
     cutoff = datetime.now(timezone.utc) - timedelta(days = 3)
     recent = db.query(NudgeFlag).filter(
@@ -45,19 +52,19 @@ def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
 
     if len(recent) >= 2:
         last_two = recent[:2]
-        if all(c.sentiment_score < avg_sentiment - 0.5 for c in last_two): # 0.5 is quite a drop so it triggers faster
+        if all(is_distressed(c, avg_sentiment, 0.5) for c in last_two): # 0.5 is quite a drop so it triggers faster
             return create_nudge_flag(user_id, "sentiment_sustained_2d", db)
         
     if len(recent) >= 3:
-        if all(c.sentiment_score < avg_sentiment - 0.3 for c in recent): # 0.3 is less of a drop so it's sustained longer
+        if all(is_distressed(c, avg_sentiment, 0.3) for c in recent): # 0.3 is less of a drop so it's sustained longer
             return create_nudge_flag(user_id, "sentiment_sustained_3d", db)
     
     if len(recent) >= 1:
         latest = recent[0]
-        sentiment_low = latest.sentiment_score < avg_sentiment - 0.3
+        signal_low = is_distressed(latest, avg_sentiment, 0.3)
         sleep_low = latest.sleep_hours is not None and latest.sleep_hours < baseline["sleep_mean"]
         steps_low = latest.step_count is not None and latest.step_count < baseline["steps_mean"]
-        if sentiment_low and (sleep_low or steps_low):
+        if signal_low and (sleep_low or steps_low):
             return create_nudge_flag(user_id, "sentiment_convergent", db)
         
     if len(recent) == 0 or (recent and (datetime.now(timezone.utc).date() - recent[0].checkin_date).days >= 3): # no checkins or the last one was more than 3 days ago
