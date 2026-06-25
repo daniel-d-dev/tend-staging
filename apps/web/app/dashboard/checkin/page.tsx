@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { API_URL } from "@/lib/auth";
@@ -15,6 +15,10 @@ export default function CheckInPage() {
     const [stepCount, setStepCount] = useState("");
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [activeRecorder, setActiveRecorder] = useState<MediaRecorder | null>(null);
+    const [recordingField, setRecordingField] = useState<"prompt" | "journal" | null>(null);
+    const [transcribing, setTranscribing] = useState(false);
+    const audioPartsRef = useRef<BlobPart[]>([]); // MediaRecorder fires audio in parts, they are collected here and combined into one file on stop
 
     useEffect(() => {
         const fetchToday = async () => {
@@ -94,7 +98,61 @@ export default function CheckInPage() {
         } else {
             alert("Something went wrong. Please try again.")
         }
-    };   
+    };
+
+    const handleStartRecording = async (field: "prompt" | "journal") => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const recorder = new MediaRecorder(stream);
+            audioPartsRef.current = []; // reset from any previous recording
+
+            recorder.ondataavailable = (e) => {
+                audioPartsRef.current.push(e.data);
+            };
+
+            recorder.onstop = async () => {
+                const blob = new Blob(audioPartsRef.current, { type: "audio/webm" });
+                stream.getTracks().forEach(track => track.stop()); // release the mic so the browser stops showing the recording sign
+                setTranscribing(true);
+                try {
+                    const formData = new FormData();
+                    formData.append("audio", blob, "audio.webm");
+                    const response = await fetch(`${API_URL}/checkins/note/transcribe`, {
+                        method: "POST",
+                        credentials: "include",
+                        body: formData
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (field === "prompt") {
+                            setPromptResponse(data.transcript);
+                        } else {
+                            setJournalText(data.transcript);
+                        }
+                    } else {
+                        alert("Could not transcribe audio. Please try again.");
+                    }
+                } catch {
+                    alert("Something went wrong. Please try again.");
+                } finally {
+                    setTranscribing(false);
+                    setRecordingField(null);
+                }
+            };
+
+            recorder.start();
+            setActiveRecorder(recorder);
+            setRecordingField(field);
+        } catch {
+            alert("Could not access microphone. Please check your permissions.");
+        }
+    };
+
+    const handleStopRecording = () => {
+        if (!activeRecorder) return;
+        activeRecorder.stop();
+        setActiveRecorder(null);
+    };
 
     if (loading) {
         return <p> Loading...</p>
@@ -111,6 +169,18 @@ export default function CheckInPage() {
                 onChange = {(e) => setPromptResponse(e.target.value)}
             />
 
+            <button
+                className = {styles.micButton}
+                onClick = {() => recordingField === "prompt" ? handleStopRecording() : handleStartRecording("prompt")}
+                disabled = {transcribing || (recordingField !== null && recordingField !== "prompt")}
+                >
+                    {(() => {
+                        if (recordingField === "prompt" && !transcribing) return "Stop recording";
+                        if (recordingField === "prompt" && transcribing) return "Transcribing...";
+                        return "Record";
+                    })()}
+            </button>
+
             <label className = {styles.label}>Anything else on your mind?</label>
             <textarea
                 className = {styles.textArea}
@@ -118,6 +188,18 @@ export default function CheckInPage() {
                 value = {journalText}
                 onChange = {(e) => setJournalText(e.target.value)}
             />
+
+            <button
+                className = {styles.micButton}
+                onClick = {() => recordingField === "journal" ? handleStopRecording() : handleStartRecording("journal")}
+                disabled = {transcribing || (recordingField !== null && recordingField !== "journal")}
+                >
+                    {(() => {
+                        if (recordingField === "journal" && !transcribing) return "Stop recording";
+                        if (recordingField === "journal" && transcribing) return "Transcribing...";
+                        return "Record";
+                    })()}
+            </button>
 
             <label className = {styles.label}>Sleep last night in hours</label>
             <input
