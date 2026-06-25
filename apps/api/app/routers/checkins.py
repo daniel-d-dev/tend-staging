@@ -11,6 +11,7 @@ from app.schemas.checkin import CheckInCreate, CheckInUpdate, CheckInResponse
 from app.models.user import User
 from app.services.prompts import get_todays_prompt
 from app.services.transcription import transcribe_audio
+from app.services.audio_emotion import score_audio
 
 router = APIRouter(prefix = "/checkins", tags = ["checkins"])
 
@@ -28,7 +29,8 @@ async def transcribe_note(
         tmp_path = tmp.name
     try:
         transcript = transcribe_audio(tmp_path)
-        return {"transcript": transcript}
+        audio_emotion = score_audio(tmp_path)
+        return {"transcript": transcript, "audio_emotion": audio_emotion}
     finally:
         os.remove(tmp_path) # always runs even if the transcription fails
 
@@ -56,7 +58,8 @@ def submit_checkin (
         journal_text = data.journal_text,
         sleep_hours = data.sleep_hours,
         step_count = data.step_count,
-        sentiment_score = sentiment
+        sentiment_score = sentiment,
+        audio_emotion_score = data.audio_emotion_score
     )
 
     db.add(checkin)
@@ -101,6 +104,8 @@ def update_today(
         checkin.sleep_hours = data.sleep_hours
     if data.step_count is not None:
         checkin.step_count = data.step_count
+    if data.audio_emotion_score is not None:
+        checkin.audio_emotion_score = data.audio_emotion_score
     
     db.commit()
     db.refresh(checkin)

@@ -18,6 +18,7 @@ export default function CheckInPage() {
     const [activeRecorder, setActiveRecorder] = useState<MediaRecorder | null>(null);
     const [recordingField, setRecordingField] = useState<"prompt" | "journal" | null>(null);
     const [transcribing, setTranscribing] = useState(false);
+    const [audioEmotionScore, setAudioEmotionScore] = useState<number | null>(null);
     const audioPartsRef = useRef<BlobPart[]>([]); // MediaRecorder fires audio in parts, they are collected here and combined into one file on stop
 
     useEffect(() => {
@@ -73,6 +74,7 @@ export default function CheckInPage() {
             journal_text: journalText.trim() || null,
             sleep_hours: null,
             step_count: null,
+            audio_emotion_score: audioEmotionScore
         };
 
         if (sleepHours) body.sleep_hours = parseFloat(sleepHours);
@@ -128,6 +130,9 @@ export default function CheckInPage() {
                             setPromptResponse(data.transcript);
                         } else {
                             setJournalText(data.transcript);
+                        }
+                        if (data.audio_emotion !== null && data.audio_emotion !== undefined) {
+                            setAudioEmotionScore(data.audio_emotion);
                         }
                     } else {
                         alert("Could not transcribe audio. Please try again.");

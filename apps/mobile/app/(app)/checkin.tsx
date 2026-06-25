@@ -19,6 +19,7 @@ export default function CheckInScreen() {
     const [activeRecording, setActiveRecording] = useState<Audio.Recording | null>(null);
     const [recordingField, setRecordingField] = useState<"prompt" | "journal" | null>(null);
     const [transcribing, setTranscribing] = useState(false);
+    const [audioEmotionScore, setAudioEmotionScore] = useState<number | null>(null);
 
     useFocusEffect(
         useCallback(() => {
@@ -77,6 +78,7 @@ export default function CheckInScreen() {
             journal_text: journalText.trim() || null,
             sleep_hours: null,
             step_count: null,
+            audio_emotion_score: audioEmotionScore
         };
 
         if (sleepHours) body.sleep_hours = parseFloat(sleepHours);
@@ -148,6 +150,9 @@ export default function CheckInScreen() {
                     setPromptResponse(data.transcript);
                 } else {
                     setJournalText(data.transcript);
+                }
+                if (data.audio_emotion !== null && data.audio_emotion !== undefined) {
+                    setAudioEmotionScore(data.audio_emotion);
                 }
             } else {
                 Alert.alert("Error", "Could not transcribe audio. Please try again.");
