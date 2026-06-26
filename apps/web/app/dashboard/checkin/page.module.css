@@ -6,9 +6,15 @@
     flex-direction: column;
 }
 
+.heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
 .prompt {
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 500;
     margin-bottom: 12px;
 }
 
@@ -41,12 +47,13 @@
     margin-top: 32px;
     background-color: #000;
     color: #fff;
-    padding: 14px;
+    padding: 14px 32px;
     border-radius: 8px;
     border: none;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    align-self: flex-start;
 }
 
 .button:disabled {

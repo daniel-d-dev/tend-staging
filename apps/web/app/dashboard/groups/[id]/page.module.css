@@ -2,6 +2,8 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .back {
@@ -11,16 +13,17 @@
     cursor: pointer;
     margin-bottom: 16px;
     padding: 0;
+    align-self: flex-start;
 }
 
 .heading {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     margin-bottom: 24px;
 }
 
 .sectionHeading {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     margin-bottom: 12px;
 }

@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { API_URL } from "@/lib/auth";
 import styles from "./page.module.css"
+import Link from "next/link";
 
 export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
-    const [firstName, setfirstName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [password, setPassword] = useState("");
 
     async function handleRegister() {
@@ -41,7 +42,7 @@ export default function RegisterPage() {
                 type = "text"
                 placeholder = "First name"
                 value = {firstName}
-                onChange = {(e) => setfirstName(e.target.value)}
+                onChange = {(e) => setFirstName(e.target.value)}
             />
             <input className = {styles.input}
                 type = "password"
@@ -50,7 +51,7 @@ export default function RegisterPage() {
                 onChange = {(e) => setPassword(e.target.value)}
             />
             <button className = {styles.button} onClick = {handleRegister}>Register</button>
-            <p className = {styles.paragraph}>Already have an account? <a href = "/login" className = {styles.link}>Log in here</a></p>
+            <p className = {styles.paragraph}>Already have an account? <Link href = "/login" className = {styles.link}>Log in here</Link></p>
         </div>
     );
 }

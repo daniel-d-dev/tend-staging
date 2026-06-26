@@ -1,12 +1,14 @@
 .container {
-    max-width: 480px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 32px 24px;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .heading {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     margin-bottom: 24px;
 }
 
@@ -18,12 +20,11 @@
 }
 
 .input {
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 12px;
-    font-size: 15px;
-    box-sizing: border-box;
+    font-size: 0.95rem;
+    font-family: inherit;
 }
 
 .groupCard {
@@ -43,10 +44,11 @@
     margin-top: 32px;
     background-color: #000;
     color: #fff;
-    padding: 12px 24px;
+    padding: 14px 32px;
     border-radius: 8px;
     border: none;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    align-self: flex-start;
 }

@@ -2,10 +2,12 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .heading {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 16px;
 }
@@ -41,14 +43,12 @@
 }
 
 .input {
-    display: block;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 12px;
-    font-size: 15px;
+    font-size: 0.95rem;
     margin-bottom: 12px;
-    box-sizing: border-box;
+    font-family: inherit;
 }
 
 .button {
@@ -56,8 +56,15 @@
     color: #fff;
     border: none;
     border-radius: 8px;
-    padding: 12px 24px;
-    font-size: 15px;
+    padding: 14px 32px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    align-self: flex-start;
+}
+
+.sectionDescription {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
 }

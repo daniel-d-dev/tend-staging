@@ -1,0 +1,42 @@
+.container {
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.card {
+    display: block;
+    padding: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #000;
+    transition: border-color 0.2s;
+}
+
+.card:hover {
+    border-color: #000;
+}
+
+.cardTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.cardDescription {
+    font-size: 14px;
+    color: #666;
+}

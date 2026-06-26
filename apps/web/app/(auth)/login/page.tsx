@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { API_URL } from "@/lib/auth";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -44,7 +45,7 @@ export default function LoginPage() {
                 onChange = {(e) => setPassword(e.target.value)}
             />
             <button className = {styles.button} onClick = {handleLogin}>Log in</button>
-            <p className = {styles.paragraph}>No account? <a href = "/register" className = {styles.link}>Register here</a></p>
+            <p className = {styles.paragraph}>No account? <Link href = "/register" className = {styles.link}>Register here</Link></p>
         </div>
     );
 }

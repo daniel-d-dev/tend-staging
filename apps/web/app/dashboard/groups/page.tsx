@@ -89,6 +89,7 @@ export default function GroupsPage() {
             ))}
 
             <h2 className = {styles.sectionHeading}>Create a group</h2>
+            <p className = {styles.sectionDescription}>Choose a name for your group</p>
             <input
                 className = {styles.input}
                 placeholder = "Group name"
@@ -107,6 +108,7 @@ export default function GroupsPage() {
             </button>
 
             <h2 className = {styles.sectionHeading}>Join a group</h2>
+            <p className = {styles.sectionDescription}>Ask a friend for their group's join code</p>
             <input
                 className = {styles.input}
                 placeholder = "Enter join code"

@@ -2,11 +2,13 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
 }
 
 .heading {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
     margin-bottom: 16px;
 }
 
