@@ -52,3 +52,14 @@
     cursor: pointer;
     align-self: flex-start;
 }
+
+.groupName {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.ratingText {
+    font-size: 13px;
+    color: #888;
+}

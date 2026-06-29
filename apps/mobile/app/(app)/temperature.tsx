@@ -11,22 +11,29 @@ export default function TemperatureScreen() {
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
     const [rating, setRating] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    const [myRatings, setMyRatings] = useState<Record<number, number>>({});
 
-    useFocusEffect(
-        useCallback(() => {
-            const fetchGroups = async () => {
-                const token = await getToken();
-                const response = await fetch(`${API_URL}/groups/me`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setGroups(data);
-                }
-            };
-            fetchGroups();
-        }, [])
-    );
+    const fetchGroups = useCallback(async () => {
+        const token = await getToken();
+        const groupsResponse = await fetch(`${API_URL}/groups/me`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (groupsResponse.ok) {
+            const data = await groupsResponse.json();
+            setGroups(data);
+        }
+        const ratingsResponse = await fetch(`${API_URL}/temperature/mine`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (ratingsResponse.ok) {
+            const data = await ratingsResponse.json();
+            const map: Record<number, number> = {};
+            data.forEach((check: any) => { map[check.group_id] = check.rating; }); // convert to a map so ratings can be looked up by group id
+            setMyRatings(map);
+        }
+    }, []);
+
+    useFocusEffect(useCallback(() => { fetchGroups(); }, [fetchGroups])); // useFocusEffect doesn't accept async functions, so fetchGroups is wrapped here
 
     const handleSubmit = async () => {
         if (!selectedGroup) {
@@ -54,7 +61,11 @@ export default function TemperatureScreen() {
 
         if (response.ok) {
             Alert.alert("Done", "Your rating has been submitted.");
-            router.replace("/(app)/groups");
+            setSelectedGroup(null);
+            setRating("");
+            fetchGroups();
+        } else if (response.status === 400) {
+            Alert.alert("Already submitted", "You have already rated this group this week.");
         } else {
             Alert.alert("Error", "Something went wrong. Please try again");
         }
@@ -75,6 +86,9 @@ export default function TemperatureScreen() {
                         onPress = {() => setSelectedGroup(group)}
                     >
                         <Text style = {styles.groupName}>{group.name}</Text>
+                        {myRatings[group.id] !== undefined && (
+                            <Text style = {styles.ratingText}>Your rating this week: {myRatings[group.id]}/5</Text>
+                        )}
                     </TouchableOpacity>
                 ))}
                 {selectedGroup && (
@@ -154,5 +168,10 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "600",
         fontSize: 16
+    },
+    ratingText: {
+        fontSize: 13,
+        color: "#888",
+        marginTop: 4
     }
 });

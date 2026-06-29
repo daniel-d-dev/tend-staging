@@ -48,6 +48,19 @@ def submit_temperature(
     db.refresh(check)
     return check
 
+@router.get("/mine", response_model = list[TemperatureCheckResponse])
+def get_my_temperature_checks(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    today = date.today()
+    week_start = today - timedelta(days = today.weekday())
+    checks = db.query(TemperatureCheck).filter(
+        TemperatureCheck.user_id == current_user.id,
+        TemperatureCheck.week_start == week_start
+    ).all()
+    return checks
+
 @router.get("/group/{group_id}", response_model = TemperatureAggregateResponse)
 def get_group_temperature(
     group_id: int,

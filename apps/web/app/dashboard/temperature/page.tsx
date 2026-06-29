@@ -9,17 +9,28 @@ export default function TemperaturePage() {
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
     const [rating, setRating] = useState("");
     const [submitting, setSubmitting] = useState(false);
+    const [myRatings, setMyRatings] = useState<Record<number, number>>({});
+
+    const fetchGroups = async () => {
+        const groupsResponse = await fetch(`${API_URL}/groups/me`, {
+            credentials: "include"
+        });
+        if (groupsResponse.ok) {
+            const data = await groupsResponse.json();
+            setGroups(data);
+        }
+        const ratingsResponse = await fetch(`${API_URL}/temperature/mine`, {
+            credentials: "include"
+        });
+        if (ratingsResponse.ok) {
+            const data = await ratingsResponse.json();
+            const map: Record<number, number> = {};
+            data.forEach((check: any) => { map[check.group_id] = check.rating; }); // convert to a map so ratings can be looked up by group id
+            setMyRatings(map);
+        }
+    };
 
     useEffect(() => {
-        const fetchGroups = async () => {
-            const response = await fetch(`${API_URL}/groups/me`, {
-                credentials: "include"
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setGroups(data);
-            }
-        };
         fetchGroups();
     }, []);
 
@@ -47,6 +58,11 @@ export default function TemperaturePage() {
 
         if (response.ok) {
             alert("Your rating has been submitted.");
+            setSelectedGroup(null);
+            setRating("");
+            fetchGroups();
+        } else if (response.status === 400) {
+           alert("You have already rated this group this week.");
         } else {
             alert("Something went wrong. Please try again.");
         }
@@ -65,7 +81,10 @@ export default function TemperaturePage() {
                     })()}
                     onClick = {() => setSelectedGroup(group)}
                 >
-                    {group.name}
+                    <p className = {styles.groupName}>{group.name}</p>
+                    {myRatings[group.id] !== undefined && (
+                        <p className = {styles.ratingText}>Your rating this week: {myRatings[group.id]}/5</p>
+                    )}
                 </div>
             ))}
             {selectedGroup && (

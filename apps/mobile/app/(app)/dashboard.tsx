@@ -37,7 +37,8 @@ export default function DashboardScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity onPress = {async () => {await deleteToken(); router.replace("/(auth)/login"); }}>
-                <Text>Logout</Text> {/* temporary logout button for testing which will be removed before pilot */}
+                {/* temporary logout button for testing which will be removed before pilot */}
+                <Text>Logout</Text>
             </TouchableOpacity>
         </View>
     );
