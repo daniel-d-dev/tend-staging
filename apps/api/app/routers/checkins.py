@@ -48,7 +48,7 @@ def submit_checkin (
     if existing:
         raise HTTPException(status_code = 400, detail = "You have already checked in today.") # only 1 check in per day allowed
     
-    sentiment = score_text(data.prompt_response) # returns None if the model fails and stored as null in the db
+    scoring_result = score_text(data.prompt_response) # returns None if the model fails and stored as null in the db
 
     checkin = CheckIn(
         user_id = current_user.id,
@@ -58,7 +58,8 @@ def submit_checkin (
         journal_text = data.journal_text,
         sleep_hours = data.sleep_hours,
         step_count = data.step_count,
-        sentiment_score = sentiment,
+        sentiment_score = scoring_result["formula_g"] if scoring_result else None,
+        band_label = scoring_result["band"] if scoring_result else None,
         audio_emotion_score = data.audio_emotion_score
     )
 

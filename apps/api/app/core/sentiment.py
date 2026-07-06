@@ -1,4 +1,5 @@
 from transformers import pipeline
+from app.services.scoring import score_checkin
 
 _sentiment_pipeline = None
 
@@ -11,13 +12,12 @@ def load_model():
             top_k = None
         )
 
-def score_text(text: str) -> float | None:
+def score_text(text: str) -> dict | None:
     if _sentiment_pipeline is None:
         return None
-    
     try:
         results = _sentiment_pipeline(text)[0]
-        scores = {r["label"]: r["score"] for r in results}
-        return scores.get("sadness", 0) + scores.get("fear", 0) # primary distress signals, may change
+        emotion_scores = {r["label"]: r["score"] for r in results}
+        return score_checkin(text, emotion_scores)
     except Exception:
         return None

@@ -16,3 +16,4 @@ openai-whisper
 python-multipart
 soundfile
 librosa
+ollama
