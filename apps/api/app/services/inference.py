@@ -33,15 +33,11 @@ def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
     baseline = get_baseline(user_id, db)
 
     if not baseline["sufficient_data"]:
-        return None # there is less than 7 checkins meaning there is not enough history to compare against
-    
-    if baseline["sentiment_mean"] is None:
-        return None # there are checkins but none have been scored yet
+        return None # there is less than 3 checkins meaning there is not enough history to compare against
     
     if is_on_cooldown(user_id, db):
         return None # a nudge has been sent already in the past 3 days
 
-    avg_sentiment = baseline["sentiment_mean"]
     recent = (
         db.query(CheckIn)
         .filter(CheckIn.user_id == user_id)
@@ -50,20 +46,34 @@ def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
         .all()
     )
 
+    if len(recent) >= 1 and recent[0].band_label == "High distress": # band labels don't require a scored baseline
+        return create_nudge_flag(user_id, "band_high_distress_1d", db)
+
     if len(recent) >= 2:
         last_two = recent[:2]
-        if all(is_distressed(c, avg_sentiment, 0.5) for c in last_two): # 0.5 is quite a drop so it triggers faster
+        if all(c.band_label == "Significant difficulty" for c in last_two):
+            return create_nudge_flag(user_id, "band_significant_2d", db)
+
+    if baseline["sentiment_mean"] is None or baseline["sentiment_sd"] is None:
+        return None # there are checkins but none have been scored yet to create a personal baseline
+    
+    avg_sentiment = baseline["sentiment_mean"]
+    sd = baseline["sentiment_sd"]
+
+    if len(recent) >= 2:
+        last_two = recent[:2]
+        if all(is_distressed(c, avg_sentiment, sd) for c in last_two):
             return create_nudge_flag(user_id, "sentiment_sustained_2d", db)
         
     if len(recent) >= 3:
-        if all(is_distressed(c, avg_sentiment, 0.3) for c in recent): # 0.3 is less of a drop so it's sustained longer
+        if all(is_distressed(c, avg_sentiment, sd) for c in recent):
             return create_nudge_flag(user_id, "sentiment_sustained_3d", db)
     
     if len(recent) >= 1:
         latest = recent[0]
-        signal_low = is_distressed(latest, avg_sentiment, 0.3)
-        sleep_low = latest.sleep_hours is not None and latest.sleep_hours < baseline["sleep_mean"]
-        steps_low = latest.step_count is not None and latest.step_count < baseline["steps_mean"]
+        signal_low = is_distressed(latest, avg_sentiment, sd)
+        sleep_low = latest.sleep_hours is not None and baseline["sleep_mean"] is not None and latest.sleep_hours < baseline["sleep_mean"]
+        steps_low = latest.step_count is not None and baseline["steps_mean"] is not None and latest.step_count < baseline["steps_mean"]
         if signal_low and (sleep_low or steps_low):
             return create_nudge_flag(user_id, "sentiment_convergent", db)
         
