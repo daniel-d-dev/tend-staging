@@ -40,7 +40,7 @@ def submit_temperature(
         group_id = data.group_id,
         user_id = current_user.id,
         week_start = week_start,
-        rating = data.rating
+        word = data.word.strip().lower()
     )
 
     db.add(check)
@@ -83,17 +83,25 @@ def get_group_temperature(
         TemperatureCheck.week_start == week_start
     ).all()
 
-    if not checks: # no submissions yet this week is valid so it is handled like this, not with an error
+    total_members = db.query(GroupMember).filter(GroupMember.group_id == group_id).count()
+    response_count = len(checks)
+    revealed = response_count >= 3 and response_count / total_members >= 0.6 # only revealed once at least 3 members have responded and 60% participation is reached
+
+    if not revealed:
         return TemperatureAggregateResponse(
             week_start = week_start,
-            average_rating = None,
-            response_count = 0
+            revealed = False,
+            response_count = response_count,
+            words = None
         )
-    
-    average = sum(c.rating for c in checks) / len(checks)
+
+    word_counts = {}
+    for c in checks:
+        word_counts[c.word] = word_counts.get(c.word, 0) + 1
 
     return TemperatureAggregateResponse(
-            week_start = week_start,
-            average_rating = average,
-            response_count = len(checks)
-        )
+        week_start = week_start,
+        revealed = True,
+        response_count = response_count,
+        words = word_counts
+    )

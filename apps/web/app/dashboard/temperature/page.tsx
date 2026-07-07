@@ -7,9 +7,10 @@ import { API_URL } from "@/lib/auth";
 export default function TemperaturePage() {
     const [groups, setGroups] = useState<any[]>([]);
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
-    const [rating, setRating] = useState("");
+    const [word, setWord] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    const [myRatings, setMyRatings] = useState<Record<number, number>>({});
+    const [myWords, setMyWords] = useState<Record<number, string>>({});
+    const [groupResult, setGroupResult] = useState<any>(null);
 
     const fetchGroups = async () => {
         const groupsResponse = await fetch(`${API_URL}/groups/me`, {
@@ -19,14 +20,24 @@ export default function TemperaturePage() {
             const data = await groupsResponse.json();
             setGroups(data);
         }
-        const ratingsResponse = await fetch(`${API_URL}/temperature/mine`, {
+        const wordsResponse = await fetch(`${API_URL}/temperature/mine`, {
             credentials: "include"
         });
-        if (ratingsResponse.ok) {
-            const data = await ratingsResponse.json();
-            const map: Record<number, number> = {};
-            data.forEach((check: any) => { map[check.group_id] = check.rating; }); // convert to a map so ratings can be looked up by group id
-            setMyRatings(map);
+        if (wordsResponse.ok) {
+            const data = await wordsResponse.json();
+            const map: Record<number, string> = {};
+            data.forEach((check: any) => { map[check.group_id] = check.word; }); // convert to a map so words can be looked up by group id
+            setMyWords(map);
+        }
+    };
+
+    const fetchGroupResult = async (groupId: number) => {
+        const response = await fetch(`${API_URL}/temperature/group/${groupId}`, {
+            credentials: "include"
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setGroupResult(data);
         }
     };
 
@@ -41,9 +52,9 @@ export default function TemperaturePage() {
             return;
         }
 
-        const ratingValue = parseInt(rating);
-        if (ratingValue < 1 || ratingValue > 5) {
-            alert("Rating must be between 1 and 5.");
+        const trimmed = word.trim();
+        if (!trimmed || trimmed.includes(" ")) {
+            alert("Please enter a single word.");
             return;
         }
 
@@ -52,17 +63,17 @@ export default function TemperaturePage() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ group_id: selectedGroup.id, rating: ratingValue })
+            body: JSON.stringify({ group_id: selectedGroup.id, word: trimmed })
         });
         setSubmitting(false);
 
         if (response.ok) {
-            alert("Your rating has been submitted.");
-            setSelectedGroup(null);
-            setRating("");
+            alert("Your word has been submitted.");
+            setWord("");
             fetchGroups();
+            fetchGroupResult(selectedGroup.id);
         } else if (response.status === 400) {
-           alert("You have already rated this group this week.");
+           alert("You have already submitted a word for this group this week.");
         } else {
             alert("Something went wrong. Please try again.");
         }
@@ -79,38 +90,58 @@ export default function TemperaturePage() {
                         if (selectedGroup && selectedGroup.id === group.id) return `${styles.groupCard} ${styles.groupCardSelected}`;
                         return styles.groupCard;
                     })()}
-                    onClick = {() => setSelectedGroup(group)}
+                    onClick = {() => { setSelectedGroup(group); setGroupResult(null); fetchGroupResult(group.id); }}
                 >
                     <p className = {styles.groupName}>{group.name}</p>
-                    {myRatings[group.id] !== undefined && (
-                        <p className = {styles.ratingText}>Your rating this week: {myRatings[group.id]}/5</p>
+                    {myWords[group.id] !== undefined && (
+                        <p className = {styles.wordText}>Your word this week: {myWords[group.id]}</p>
                     )}
                 </div>
             ))}
-            {selectedGroup && (
+            {selectedGroup && !myWords[selectedGroup.id] && (
                 <div>
-                    <p className = {styles.label}>How has the group been feeling this week? (1-5)</p>
+                    <p className = {styles.label}>In one word, how has the group been feeling this week?</p>
                     <input
                         className = {styles.input}
-                        type = "number"
-                        min = "1"
-                        max = "5"
-                        placeholder = "1 = low, 5 = great"
-                        value = {rating}
-                        onChange = {(e) => setRating(e.target.value)}
+                        type = "text"
+                        placeholder = "e.g. hopeful"
+                        value = {word}
+                        onChange = {(e) => setWord(e.target.value)}
                     />
                 </div>
             )}
-            <button
-                className = {styles.button}
-                onClick = {handleSubmit}
-                disabled = {submitting}
-            >
-                {(() => {
-                    if (submitting) return "Submitting...";
-                    return "Submit";
-                })()}
-            </button>
+            {selectedGroup && !myWords[selectedGroup.id] && (
+                <button
+                    className = {styles.button}
+                    onClick = {handleSubmit}
+                    disabled = {submitting}
+                >
+                    {(() => {
+                        if (submitting) return "Submitting...";
+                        return "Submit";
+                    })()}
+                </button>
+            )}
+            {selectedGroup && groupResult && (
+                <div className = {styles.resultsContainer}>
+                    {(() => {
+                        if (groupResult.revealed) {
+                            return (
+                                <div>
+                                    <p className = {styles.resultsHeading}>This week's words</p>
+                                    <p className = {styles.resultsText}>
+                                        {Object.entries(groupResult.words as Record<string, number>)
+                                            .sort((a, b) => b[1] - a[1])
+                                            .map(([w, count]) => `${w} (${count})`)
+                                            .join(" · ")}
+                                    </p>
+                                </div>
+                            );
+                        }
+                        return <p className = {styles.waiting}>Waiting for more responses ({groupResult.response_count} so far)</p>;
+                    })()}
+                </div>
+            )}
         </main>
     );
 }

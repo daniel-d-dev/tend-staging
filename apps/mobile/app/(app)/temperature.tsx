@@ -1,17 +1,17 @@
 import { useState, useCallback } from "react";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getToken } from "@/utils/token";
 import { API_URL } from "@/constants/api";
 
 export default function TemperatureScreen() {
-    const router = useRouter();
     const [groups, setGroups] = useState<any[]>([]);
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
-    const [rating, setRating] = useState("");
+    const [word, setWord] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    const [myRatings, setMyRatings] = useState<Record<number, number>>({});
+    const [myWords, setMyWords] = useState<Record<number, string>>({});
+    const [groupResult, setGroupResult] = useState<any>(null);
 
     const fetchGroups = useCallback(async () => {
         const token = await getToken();
@@ -22,16 +22,27 @@ export default function TemperatureScreen() {
             const data = await groupsResponse.json();
             setGroups(data);
         }
-        const ratingsResponse = await fetch(`${API_URL}/temperature/mine`, {
+        const wordsResponse = await fetch(`${API_URL}/temperature/mine`, {
             headers: { Authorization: `Bearer ${token}` }
         });
-        if (ratingsResponse.ok) {
-            const data = await ratingsResponse.json();
-            const map: Record<number, number> = {};
-            data.forEach((check: any) => { map[check.group_id] = check.rating; }); // convert to a map so ratings can be looked up by group id
-            setMyRatings(map);
+        if (wordsResponse.ok) {
+            const data = await wordsResponse.json();
+            const map: Record<number, string> = {};
+            data.forEach((check: any) => { map[check.group_id] = check.word; }); // convert to a map so words can be looked up by group id
+            setMyWords(map);
         }
     }, []);
+
+    const fetchGroupResult = async (groupId: number) => {
+        const token = await getToken();
+        const response = await fetch(`${API_URL}/temperature/group/${groupId}`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setGroupResult(data);
+        }
+    };
 
     useFocusEffect(useCallback(() => { fetchGroups(); }, [fetchGroups])); // useFocusEffect doesn't accept async functions, so fetchGroups is wrapped here
 
@@ -41,9 +52,9 @@ export default function TemperatureScreen() {
             return;
         }
 
-        const ratingValue = parseInt(rating);
-        if (ratingValue < 1 || ratingValue > 5) {
-            Alert.alert("Invalid", "Rating must be between 1 and 5.");
+        const trimmed = word.trim();
+        if (!trimmed || trimmed.includes(" ")) {
+            Alert.alert("Invalid", "Please enter a single word.");
             return;
         }
 
@@ -55,17 +66,17 @@ export default function TemperatureScreen() {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ group_id: selectedGroup.id, rating: ratingValue }) // ratingValue is parsedint version of rating
+            body: JSON.stringify({ group_id: selectedGroup.id, word: trimmed })
         });
         setSubmitting(false);
 
         if (response.ok) {
-            Alert.alert("Done", "Your rating has been submitted.");
-            setSelectedGroup(null);
-            setRating("");
+            Alert.alert("Done", "Your word has been submitted.");
+            setWord("");
             fetchGroups();
+            fetchGroupResult(selectedGroup.id);
         } else if (response.status === 400) {
-            Alert.alert("Already submitted", "You have already rated this group this week.");
+            Alert.alert("Already submitted", "You have already submitted a word for this group this week.");
         } else {
             Alert.alert("Error", "Something went wrong. Please try again");
         }
@@ -83,38 +94,60 @@ export default function TemperatureScreen() {
                             if (selectedGroup && selectedGroup.id === group.id) return [styles.groupCard, styles.groupCardSelected];
                             return styles.groupCard;
                         })()}
-                        onPress = {() => setSelectedGroup(group)}
+                        onPress = {() => { setSelectedGroup(group); setGroupResult(null); fetchGroupResult(group.id); }}
                     >
                         <Text style = {styles.groupName}>{group.name}</Text>
-                        {myRatings[group.id] !== undefined && (
-                            <Text style = {styles.ratingText}>Your rating this week: {myRatings[group.id]}/5</Text>
+                        {myWords[group.id] !== undefined && (
+                            <Text style = {styles.wordText}>Your word this week: {myWords[group.id]}</Text>
                         )}
                     </TouchableOpacity>
                 ))}
-                {selectedGroup && (
+                {selectedGroup && !myWords[selectedGroup.id] &&(
                     <View>
-                        <Text style = {styles.label}>How has the group been feeling this week? (1-5)</Text>
+                        <Text style = {styles.label}>In one word, how has the group been feeling this week?</Text>
                         <TextInput
                             style = {styles.input}
-                            placeholder = "1 = low, 5 = great"
-                            value = {rating}
-                            onChangeText = {setRating}
-                            keyboardType = "number-pad"
+                            placeholder = "e.g. hopeful"
+                            value = {word}
+                            onChangeText = {setWord}
+                            autoCapitalize = "none"
                         />
                     </View>
                 )}
-                <TouchableOpacity
-                    style = {styles.button}
-                    onPress = {handleSubmit}
-                    disabled = {submitting}
-                >
-                    <Text style = {styles.buttonText}>
+                {selectedGroup && !myWords[selectedGroup.id] && (
+                    <TouchableOpacity
+                        style = {styles.button}
+                        onPress = {handleSubmit}
+                        disabled = {submitting}
+                    >
+                        <Text style = {styles.buttonText}>
+                            {(() => {
+                                if (submitting) return "Submitting...";
+                                return "Submit";
+                            })()}
+                        </Text>
+                    </TouchableOpacity>
+                )}
+                {selectedGroup && groupResult && (
+                    <View style = {styles.resultsContainer}>
                         {(() => {
-                            if (submitting) return "Submitting...";
-                            return "Submit";
+                            if (groupResult.revealed) {
+                                return (
+                                    <View>
+                                        <Text style = {styles.resultsHeading}>This week's words</Text>
+                                        <Text style = {styles.resultsText}>
+                                            {Object.entries(groupResult.words as Record<string, number>)
+                                                .sort((a, b) => b[1] - a[1])
+                                                .map(([w, count]) => `${w} (${count})`)
+                                                .join(" · ")}
+                                        </Text>
+                                    </View>
+                                );
+                            }
+                            return <Text style = {styles.waiting}>Waiting for more responses ({groupResult.response_count} so far)</Text>;
                         })()}
-                    </Text>
-                </TouchableOpacity>
+                    </View>
+                )}
             </ScrollView>
         </SafeAreaView>
     );
@@ -169,9 +202,30 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: 16
     },
-    ratingText: {
+    wordText: {
         fontSize: 13,
         color: "#888",
         marginTop: 4
+    },
+    resultsContainer: {
+        marginTop: 24,
+        padding: 16,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8
+    },
+    resultsHeading: {
+        fontSize: 15,
+        fontWeight: "600",
+        marginBottom: 8
+    },
+    resultsText: {
+        fontSize: 14,
+        color: "#444"
+    },
+    waiting: {
+        fontSize: 14,
+        color: "#888",
+        fontStyle: "italic"
     }
 });

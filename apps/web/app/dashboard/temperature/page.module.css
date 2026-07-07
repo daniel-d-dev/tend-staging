@@ -59,7 +59,31 @@
     margin-bottom: 2px;
 }
 
-.ratingText {
+.wordText {
     font-size: 13px;
     color: #888;
+}
+
+.resultsContainer {
+    margin-top: 24px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.resultsHeading {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.resultsText {
+    font-size: 14px;
+    color: #444;
+}
+
+.waiting {
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
 }
