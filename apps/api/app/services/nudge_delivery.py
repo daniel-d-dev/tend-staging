@@ -11,6 +11,8 @@ MESSAGES = {
     "sentiment_sustained_2d": "We think {name} could do with hearing from you. Would be worth reaching out when you can 💙",
     "sentiment_sustained_3d": "We're a bit concerned about {name}. We think they could really do with a friend right now 💙",
     "ghost_checkin_3d": "We haven't heard from {name} in a few days. Might be worth dropping them a message 💙",
+    "band_significant_2d": "{name} has had a couple of really difficult days. They could probably do with hearing from someone they trust 💙",
+    "band_high_distress_1d": "{name} is having a really hard time right now. It would mean a lot if you got in touch 💙"
 }
 
 def is_friend_active(user_id: int, db: Session) -> bool:
@@ -24,6 +26,41 @@ def is_friend_active(user_id: int, db: Session) -> bool:
     else:
         return False
 
+def get_most_well_active_member(group_id: int, exclude_user_id: int, db: Session) -> int | None:
+    cutoff = datetime.now(timezone.utc).date() - timedelta(days = 3) # they're active if they've checked in in the past 3 days
+    members = db.query(GroupMember).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id != exclude_user_id
+    ).all()
+    best_id = None
+    best_score = None
+    for member in members:
+        checkin = db.query(CheckIn).filter(
+            CheckIn.user_id == member.user_id,
+            CheckIn.checkin_date >= cutoff,
+            CheckIn.sentiment_score != None
+        ).order_by(CheckIn.checkin_date.desc()).first()
+        if checkin and (best_score is None or checkin.sentiment_score < best_score):
+            best_score = checkin.sentiment_score
+            best_id = member.user_id
+    return best_id
+
+def get_most_recent_member(group_id: int, exclude_user_id: int, db: Session) -> int | None:
+    members = db.query(GroupMember).filter(
+        GroupMember.group_id == group_id,
+        GroupMember.user_id != exclude_user_id
+    ).all()
+    latest_id = None
+    latest_date = None
+    for member in members:
+        checkin = db.query(CheckIn).filter(
+            CheckIn.user_id == member.user_id
+        ).order_by(CheckIn.checkin_date.desc()).first() # no cutoff as this is a last resort, whoever checked in most recently
+        if checkin and (latest_date is None or checkin.checkin_date > latest_date):
+            latest_date = checkin.checkin_date
+            latest_id = member.user_id
+    return latest_id
+
 def find_friend(user_id: int, db: Session) -> int | None:
     assignment = db.query(FriendAssignment).filter(
         FriendAssignment.user_id == user_id
@@ -32,14 +69,10 @@ def find_friend(user_id: int, db: Session) -> int | None:
         return assignment.friend_id
     if not assignment:
         return None
-    members = db.query(GroupMember).filter(
-        GroupMember.group_id == assignment.group_id,
-        GroupMember.user_id != user_id
-    ).all() # if the designated friend isn't active then try anyone else in the group
-    for member in members:
-        if is_friend_active(member.user_id, db):
-            return member.user_id
-    return None
+    best = get_most_well_active_member(assignment.group_id, user_id, db)
+    if best:
+        return best
+    return get_most_recent_member(assignment.group_id, user_id, db) 
 
 def deliver(flag: NudgeFlag, db: Session) -> Notification | None:
     subject = db.query(User).filter(User.id == flag.user_id).first()
