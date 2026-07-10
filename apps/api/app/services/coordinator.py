@@ -67,3 +67,15 @@ def select_mode(signals: dict) -> str | None:
     if avg_sentiment > 0.35 or majority_distressed:
         return "supportive"
     return "connective"
+
+def select_activity_category(signals: dict, last_category: str | None) -> str:
+    day = datetime.now(timezone.utc).weekday() # 0 is Monday and 6 is Sunday
+    if day in (0, 6):
+        category = "reflective"
+    elif day == 5:
+        category = "physical"
+    else:
+        category = "social"
+    if signals["avg_sentiment"] is not None and signals["avg_sentiment"] > 0.30 and category == "physical":
+        category = "social" # physical can help mild low mood but we avoid it when the group is genuinely struggling
+    return category
