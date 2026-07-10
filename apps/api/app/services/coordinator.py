@@ -48,3 +48,22 @@ def read_group_signals(group_id: int, db: Session) -> dict:
         "has_recent_flag": has_recent_flag,
         "has_high_distress": has_high_distress
     }
+
+DISTRESS_BANDS = {"Moderate difficulty", "Significant difficulty", "High distress"}
+
+def select_mode(signals: dict) -> str | None:
+    if signals["has_high_distress"]:
+        return "urgent"
+    if signals["avg_sentiment"] is None:
+        return None
+    if signals["has_recent_flag"]:
+        return "connective"
+    avg_sentiment = signals["avg_sentiment"]
+    members_with_band_labels = len(signals["band_labels"])
+    distress_count = sum(1 for b in signals["band_labels"] if b in DISTRESS_BANDS) # count members in the bands that are concerning
+    majority_distressed = members_with_band_labels > 0 and distress_count >= members_with_band_labels / 2 # true if half or more of active members are in distress bands
+    if avg_sentiment < 0.15 and distress_count == 0:
+        return "activity"
+    if avg_sentiment > 0.35 or majority_distressed:
+        return "supportive"
+    return "connective"
