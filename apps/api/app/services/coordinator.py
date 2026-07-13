@@ -1,11 +1,13 @@
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
 from app.models.group import GroupMember
+from app.models.group import Group
 from app.models.checkin import CheckIn
 from app.models.nudge import NudgeFlag
 from app.models.temperature import TemperatureCheck
 from app.models.feed import Post
 from app.core.database import SessionLocal
+from app.core.message_generator import generate_message
 
 def read_group_signals(group_id: int, db: Session) -> dict:
     cutoff = datetime.now(timezone.utc).date() - timedelta(days = 3) # they're active if they've checked in within the past three days
@@ -79,3 +81,42 @@ def select_activity_category(signals: dict, last_category: str | None) -> str:
     if signals["avg_sentiment"] is not None and signals["avg_sentiment"] > 0.30 and category == "physical":
         category = "social" # physical can help mild low mood but we avoid it when the group is genuinely struggling
     return category
+
+def run_coordinator(group_id: int, db: Session) -> None:
+    last_post = db.query(Post).filter(
+        Post.group_id == group_id,
+        Post.author_type == "agent"
+    ).order_by(Post.created_at.desc()).first()
+
+    if last_post:
+        hours_since = (datetime.now(timezone.utc) - last_post.created_at).total_seconds() / 3600
+        signals = read_group_signals(group_id, db)
+        if signals["has_high_distress"]:
+            if hours_since < 12:
+                return # urgent cooldown of 12 hours
+        elif hours_since < 48:
+            return # standard cooldown of 48 hours
+            
+    signals = read_group_signals(group_id, db)
+    mode = select_mode(signals)
+    if mode is None:
+        return
+    
+    category = select_activity_category(signals, None) if mode == "activity" else None
+    last_post_summary = last_post.content if last_post else None
+    message = generate_message(mode, category, signals, last_post_summary)
+
+    post = Post(
+        group_id = group_id,
+        author_id = None,
+        content = message,
+        author_type = "agent"
+    )
+    db.add(post)
+    db.commit()
+
+def coordinator_job():
+    with SessionLocal() as db:
+        groups = db.query(Group).all()
+        for group in groups:
+            run_coordinator(group.id, db)

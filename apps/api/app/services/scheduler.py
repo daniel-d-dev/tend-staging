@@ -7,6 +7,7 @@ from app.models.notification import Notification
 from app.services.inference import run_inference
 from app.services.nudge_delivery import deliver
 from app.services.evaluation import evaluate_pending_nudges
+from app.services.coordinator import coordinator_job
 import httpx
 
 scheduler = BackgroundScheduler()
@@ -42,4 +43,5 @@ def start_scheduler():
     scheduler.add_job(run_nightly_inference, CronTrigger(hour = 0, minute = 0)) # midnight utc
     scheduler.add_job(send_push_notifications, CronTrigger(hour = 9, minute = 0)) # 9am utc after nightly inference
     scheduler.add_job(run_post_nudge_evaluation, CronTrigger(hour = 10, minute = 0)) # 10am utc after push notifs sent
+    scheduler.add_job(coordinator_job, CronTrigger(hour = 11, minute = 0)) # daily coordinator check, cooldown logic decides whether to post or not. 11am utc after evaluation job
     scheduler.start()
