@@ -56,6 +56,12 @@ export default function GroupDetailPage() {
                     </button>
                 </div>
             ))}
+            <button
+                className = {styles.button}
+                onClick = {() => router.push(`/dashboard/groups/${id}/feed?name=${name}`)}
+            >
+                Group feed
+            </button>
         </main>
     );
 }

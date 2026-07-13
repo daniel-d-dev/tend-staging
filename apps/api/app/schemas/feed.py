@@ -11,7 +11,6 @@ class ReactionResponse(BaseModel):
     id: int
     post_id: int
     user_id: int
-    user_id: int
     emoji: str
 
     model_config = { "from_attributes": True }
@@ -24,7 +23,10 @@ class PostResponse(BaseModel):
     content: str
     author_type: str
     parent_post_id: int | None
+    parent_author: str | None = None
+    parent_content: str | None = None
     created_at: datetime
     reactions: list[ReactionResponse]
+    
 
     model_config = { "from_attributes": True }

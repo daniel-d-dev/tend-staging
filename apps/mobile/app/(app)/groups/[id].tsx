@@ -62,6 +62,12 @@ export default function GroupDetailScreen() {
                         </TouchableOpacity>
                     </View>
                 ))}
+                <TouchableOpacity
+                    style = {styles.button}
+                    onPress = {() => router.push({ pathname: "/(app)/groups/feed", params: { group_id: id, name: name } })}
+                >
+                    <Text style = {styles.buttonText}>Group feed</Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );

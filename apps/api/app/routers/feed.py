@@ -25,6 +25,21 @@ def get_feed(group_id: int, db: Session = Depends(get_db), current_user: User = 
         author = db.query(User).filter(
             User.id == post.author_id
         ).first() if post.author_id else None
+        parent_author = None
+        parent_content = None
+        if post.parent_post_id:
+            parent_post = db.query(Post).filter(
+                Post.id == post.parent_post_id
+            ).first()
+            if parent_post:
+                parent_content = parent_post.content
+                if parent_post.author_id:
+                    parent_author_user = db.query(User).filter(
+                        User.id == parent_post.author_id
+                    ).first()
+                    parent_author = parent_author_user.first_name if parent_author_user else None
+                else:
+                    parent_author = "Thread" # parent is an agent post, no user_id
         reactions = db.query(Reaction).filter(
             Reaction.post_id == post.id
         ).all()
@@ -36,6 +51,8 @@ def get_feed(group_id: int, db: Session = Depends(get_db), current_user: User = 
             content = post.content,
             author_type = post.author_type,
             parent_post_id = post.parent_post_id,
+            parent_author = parent_author,
+            parent_content = parent_content,
             created_at = post.created_at,
             reactions = [ReactionResponse.model_validate(r) for r in reactions]
         ))
