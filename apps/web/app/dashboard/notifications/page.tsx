@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { API_URL } from "@/lib/auth";
 
 export default function NotificationsPage() {
+    const router = useRouter();
     const [notifications, setNotifications] = useState<any[]>([]);
 
     const fetchNotifications = async () => {
@@ -33,6 +35,7 @@ export default function NotificationsPage() {
 
     return (
         <main className = {styles.container}>
+            <button className = {styles.back} onClick = {() => router.back()}>← Back</button>
             <h1 className = {styles.heading}>Notifications</h1>
 
             {notifications.length === 0 && (

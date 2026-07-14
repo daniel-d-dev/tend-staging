@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { API_URL } from "@/lib/auth";
 
 export default function TemperaturePage() {
+    const router = useRouter();
     const [groups, setGroups] = useState<any[]>([]);
     const [selectedGroup, setSelectedGroup] = useState<any>(null);
     const [word, setWord] = useState("");
@@ -81,6 +83,7 @@ export default function TemperaturePage() {
 
     return (
         <main className = {styles.container}>
+            <button className = {styles.back} onClick = {() => router.back()}>← Back</button>
             <h1 className = {styles.heading}>Weekly temperature check</h1>
             <p className = {styles.label}>Select a group</p>
             {groups.map(group => (

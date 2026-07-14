@@ -87,3 +87,15 @@
     color: #888;
     font-style: italic;
 }
+
+.back {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-bottom: 1rem;
+    display: block;
+    align-self: flex-start;
+}

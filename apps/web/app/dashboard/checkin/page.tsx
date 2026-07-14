@@ -165,6 +165,7 @@ export default function CheckInPage() {
 
     return (
         <main className = {styles.container}>
+            <button className = {styles.back} onClick = {() => router.back()}>← Back</button>
             <h1 className={styles.heading}>Check in</h1>
             <p className = {styles.prompt}>{promptQuestion}</p>
 

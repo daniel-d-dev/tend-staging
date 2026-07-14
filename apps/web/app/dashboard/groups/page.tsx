@@ -70,6 +70,7 @@ export default function GroupsPage() {
 
     return (
         <main className = {styles.container}>
+            <button className = {styles.back} onClick = {() => router.back()}>← Back</button>
             <h1 className = {styles.heading}>My Groups</h1>
 
             {groups.length === 0 && (
