@@ -88,16 +88,16 @@ def run_coordinator(group_id: int, db: Session) -> None:
         Post.author_type == "agent"
     ).order_by(Post.created_at.desc()).first()
 
+    signals = read_group_signals(group_id, db)
+
     if last_post:
         hours_since = (datetime.now(timezone.utc) - last_post.created_at).total_seconds() / 3600
-        signals = read_group_signals(group_id, db)
         if signals["has_high_distress"]:
             if hours_since < 12:
                 return # urgent cooldown of 12 hours
         elif hours_since < 48:
             return # standard cooldown of 48 hours
             
-    signals = read_group_signals(group_id, db)
     mode = select_mode(signals)
     if mode is None:
         return

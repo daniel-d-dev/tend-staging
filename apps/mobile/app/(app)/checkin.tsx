@@ -211,13 +211,13 @@ export default function CheckInScreen() {
                     />
                     <TouchableOpacity
                         style = {styles.micButton}
-                        onPress = {() => recordingField === "journal" ? handleStopRecording() : handleStartRecording("prompt")}
+                        onPress = {() => recordingField === "journal" ? handleStopRecording() : handleStartRecording("journal")}
                         disabled = {transcribing || (recordingField !== null && recordingField !== "journal")}
                     >
                         <Text style = {styles.micButtonText}>
                             {(() => {
-                                if (recordingField === "prompt" && !transcribing) return "Stop recording";
-                                if (recordingField === "prompt" && transcribing) return "Transcribing...";
+                                if (recordingField === "journal" && !transcribing) return "Stop recording";
+                                if (recordingField === "journal" && transcribing) return "Transcribing...";
                                 return "Record";
                             })()}
                         </Text>

@@ -65,10 +65,10 @@ def find_friend(user_id: int, db: Session) -> int | None:
     assignment = db.query(FriendAssignment).filter(
         FriendAssignment.user_id == user_id
     ).first()
-    if assignment and is_friend_active(assignment.friend_id, db):
-        return assignment.friend_id
     if not assignment:
         return None
+    if is_friend_active(assignment.friend_id, db):
+        return assignment.friend_id
     best = get_most_well_active_member(assignment.group_id, user_id, db)
     if best:
         return best
