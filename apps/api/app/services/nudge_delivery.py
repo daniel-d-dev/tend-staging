@@ -74,7 +74,7 @@ def find_friend(user_id: int, db: Session) -> int | None:
         return best
     return get_most_recent_member(assignment.group_id, user_id, db) 
 
-def deliver(flag: NudgeFlag, db: Session) -> Notification | None:
+def queue_notification(flag: NudgeFlag, db: Session) -> Notification | None:
     subject = db.query(User).filter(User.id == flag.user_id).first()
     if not subject:
         return None

@@ -5,7 +5,7 @@ from app.core.database import SessionLocal
 from app.models.user import User
 from app.models.notification import Notification
 from app.services.inference import run_inference
-from app.services.nudge_delivery import deliver
+from app.services.nudge_delivery import queue_notification
 from app.services.evaluation import evaluate_pending_nudges
 from app.services.coordinator import coordinator_job
 import httpx
@@ -18,7 +18,7 @@ def run_nightly_inference():
         for user in users:
             flag = run_inference(user.id, db)
             if flag:
-                deliver(flag, db)
+                queue_notification(flag, db)
 
 def send_push_notifications():
     with SessionLocal() as db:
@@ -31,7 +31,7 @@ def send_push_notifications():
                     "title": "Tend",
                     "body": notification.message
                 })
-                if response.status_code == 200:
+                if response.status_code == 200 and response.json().get("data", {}).get("status") == "ok":
                     notification.pushed_at = datetime.now(timezone.utc)
         db.commit()
 
