@@ -33,6 +33,7 @@ def build_prompt(mode: str, category: str | None, mood: str, last_post_summary: 
         "Warm and calm in tone, not energetic or hype. "
         "Do not use phrases like 'I would love', 'I hope', or 'I think'. "
         "Use British English spelling and phrasing. Avoid American cultural references. "
+        "When suggesting an activity, keep it ordinary and low-key - things like a coffee catch-up, a film night in, a walk and a chat, or a quiz night, rather than anything elaborate or unfamiliar. "
         f"Current mood of the group: {mood}."
     )
     if last_post_summary:
