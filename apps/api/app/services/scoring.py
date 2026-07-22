@@ -1,4 +1,5 @@
 import ollama
+import threading
 
 BANDS = [
     (0.10, "Clearly settled"),
@@ -71,6 +72,10 @@ def format_formula_block(formula_results: dict) -> str:
     return "\n".join(lines)
 
 MODEL = "llama3.1"
+
+# ollama only process one request at a time because of -np 1, so concurrent checkins that need the llm pipeline
+# queue up safely here instead of adding up and using up resource
+ollama_lock = threading.Lock()
 
 # Advocate Agent
 def advocate(text: str, formula_results: dict) -> str:
@@ -189,11 +194,12 @@ def score_checkin(text: str, emotion_scores: dict[str, float]) -> dict:
     formula_results = compute_formulas(emotion_scores)
     band = consensus_band(formula_results)
     if band is None:
-        argument = advocate(text, formula_results)
-        challenge = devils_advocate(text, formula_results, argument)
-        verdict = judge(text, formula_results, argument, challenge)
-        band = parse_final_band(verdict)
+        with ollama_lock:
+            argument = advocate(text, formula_results)
+            challenge = devils_advocate(text, formula_results, argument)
+            verdict = judge(text, formula_results, argument, challenge)
+            band = parse_final_band(verdict)
     return {
         "formula_g": formula_results["G"]["score"], # stored as sentiment_score for baseline comparison
         "band": band # stored for internal use only and not shown to users
-    }
+        }

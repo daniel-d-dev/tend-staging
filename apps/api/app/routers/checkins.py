@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks
 import tempfile
 import os
 from sqlalchemy.orm import Session
 from datetime import date, datetime, timezone
-from app.core.database import get_db
+from app.core.database import get_db, SessionLocal
 from app.core.sentiment import score_text
 from app.models.checkin import CheckIn
 from app.routers.auth import get_current_user
@@ -12,6 +12,8 @@ from app.models.user import User
 from app.services.prompts import get_todays_prompt
 from app.services.transcription import transcribe_audio
 from app.services.audio_emotion import score_audio
+from app.services.inference import run_inference
+from app.services.nudge_delivery import queue_notification
 
 router = APIRouter(prefix = "/checkins", tags = ["checkins"])
 
@@ -34,9 +36,27 @@ async def transcribe_note(
     finally:
         os.remove(tmp_path) # always runs even if the transcription fails
 
+def score_and_evaluate_checkin(checkin_id: int, prompt_response: str):
+    with SessionLocal() as db:
+        checkin = db.query(CheckIn).filter(
+            CheckIn.id == checkin_id
+        ).first()
+        if not checkin:
+            return
+        
+        scoring_result = score_text(prompt_response)
+        checkin.sentiment_score = scoring_result["formula_g"] if scoring_result else None
+        checkin.band_label = scoring_result["band"] if scoring_result else None
+        db.commit()
+
+        flag = run_inference(checkin.user_id, db)
+        if flag:
+            queue_notification(flag, db) # checked immediately here rather than waiting for the nightly job so distress gets caught as soon as it's scored
+
 @router.post("/", response_model = CheckInResponse)
 def submit_checkin (
     data: CheckInCreate,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
@@ -47,8 +67,6 @@ def submit_checkin (
 
     if existing:
         raise HTTPException(status_code = 400, detail = "You have already checked in today.") # only 1 check in per day allowed
-    
-    scoring_result = score_text(data.prompt_response) # returns None if the model fails and stored as null in the db
 
     checkin = CheckIn(
         user_id = current_user.id,
@@ -58,14 +76,17 @@ def submit_checkin (
         journal_text = data.journal_text,
         sleep_hours = data.sleep_hours,
         step_count = data.step_count,
-        sentiment_score = scoring_result["formula_g"] if scoring_result else None,
-        band_label = scoring_result["band"] if scoring_result else None,
+        sentiment_score =  None, # filled in by the background task once the scoring finishes
+        band_label = None,
         audio_emotion_score = data.audio_emotion_score
     )
 
     db.add(checkin)
     db.commit()
     db.refresh(checkin)
+
+    background_tasks.add_task(score_and_evaluate_checkin, checkin.id, data.prompt_response) # scoring can take some time so it runs after the response instead of blocking it
+
     return checkin
 
 @router.get("/today", response_model = CheckInResponse)
