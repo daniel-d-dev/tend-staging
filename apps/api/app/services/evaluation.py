@@ -13,7 +13,7 @@ def evaluate_pending_nudges(db: Session):
     ).all()
 
     for flag in pending:
-        baseline = get_baseline(flag.user_id, db)
+        baseline = get_baseline(db, flag.user_id)
         if not baseline["sufficient_data"] or baseline["sentiment_mean"] is None:
             flag.outcome = "insufficient_data"
             flag.evaluated_at = datetime.now(timezone.utc)
@@ -38,7 +38,7 @@ def evaluate_pending_nudges(db: Session):
 
         avg_post_nudge = sum(c.sentiment_score for c in scored) / len(scored)
 
-        if avg_post_nudge >= baseline["sentiment_mean"]:
+        if avg_post_nudge <= baseline["sentiment_mean"]:
             flag.outcome = "improved" # not claiming that the nudge caused the improvement just recording the correlation
         else:
             flag.outcome = "no_change"

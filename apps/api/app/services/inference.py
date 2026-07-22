@@ -6,10 +6,10 @@ from app.core.baseline import get_baseline
 
 AUDIO_DISTRESS_THRESHOLD = 0.4 # audeering valence below this number indicates distress. 0.5 is neutral, lower would be considered more negative
 
-def is_distressed(checkin, avg_sentiment: float, drop: float) -> bool:
-    text_low = checkin.sentiment_score is not None and checkin.sentiment_score < avg_sentiment - drop
-    audio_low = checkin.audio_emotion_score is not None and checkin.audio_emotion_score < AUDIO_DISTRESS_THRESHOLD
-    return text_low or audio_low # distress in either signal is enough to flag the checkin
+def is_distressed(checkin, avg_sentiment: float, divergence: float) -> bool:
+    text_distressed = checkin.sentiment_score is not None and checkin.sentiment_score > avg_sentiment + divergence
+    audio_distressed = checkin.audio_emotion_score is not None and checkin.audio_emotion_score < AUDIO_DISTRESS_THRESHOLD
+    return text_distressed or audio_distressed # distress in either signal is enough to flag the checkin
 
 def is_on_cooldown(user_id: int, db: Session) -> bool:
     cutoff = datetime.now(timezone.utc) - timedelta(days = 3)
@@ -30,7 +30,7 @@ def create_nudge_flag(user_id: int, trigger_rule: str, db: Session) -> NudgeFlag
     return flag
 
 def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
-    baseline = get_baseline(user_id, db)
+    baseline = get_baseline(db, user_id)
 
     if not baseline["sufficient_data"]:
         return None # there is less than 3 checkins meaning there is not enough history to compare against
@@ -60,14 +60,14 @@ def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
     avg_sentiment = baseline["sentiment_mean"]
     sd = baseline["sentiment_sd"]
 
+    if len(recent) >= 3:
+        if all(is_distressed(c, avg_sentiment, sd * 0.75) for c in recent):
+            return create_nudge_flag(user_id, "sentiment_sustained_3d", db)
+
     if len(recent) >= 2:
         last_two = recent[:2]
         if all(is_distressed(c, avg_sentiment, sd) for c in last_two):
             return create_nudge_flag(user_id, "sentiment_sustained_2d", db)
-        
-    if len(recent) >= 3:
-        if all(is_distressed(c, avg_sentiment, sd) for c in recent):
-            return create_nudge_flag(user_id, "sentiment_sustained_3d", db)
     
     if len(recent) >= 1:
         latest = recent[0]
