@@ -1,13 +1,14 @@
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
-from app.models.group import GroupMember
-from app.models.group import Group
+from app.models.group import Group, GroupMember
 from app.models.checkin import CheckIn
 from app.models.nudge import NudgeFlag
 from app.models.temperature import TemperatureCheck
 from app.models.feed import Post
 from app.core.database import SessionLocal
 from app.core.message_generator import generate_message
+from app.core.baseline import get_baseline
+from app.services.inference import is_distressed
 
 def read_group_signals(group_id: int, db: Session) -> dict:
     cutoff = datetime.now(timezone.utc).date() - timedelta(days = 3) # they're active if they've checked in within the past three days
@@ -16,17 +17,20 @@ def read_group_signals(group_id: int, db: Session) -> dict:
     ).all()
     member_ids = [m.user_id for m in members]
     sentiment_scores = []
-    band_labels = []
+    distress_count = 0
+    members_with_signal = 0
     for user_id in member_ids:
         checkin = db.query(CheckIn).filter(
             CheckIn.user_id == user_id,
             CheckIn.checkin_date >= cutoff
         ).order_by(CheckIn.checkin_date.desc()).first()
-        if checkin:
-            if checkin.sentiment_score is not None:
-                sentiment_scores.append(checkin.sentiment_score)
-            if checkin.band_label is not None:
-                band_labels.append(checkin.band_label)
+        if checkin and checkin.sentiment_score is not None:
+            sentiment_scores.append(checkin.sentiment_score)
+            baseline = get_baseline(db, user_id) # reuses the same distress check the main crisis pipeline uses (is_distressed against get_baseline), rather than a separate definition that could disagree with it for the same person on the same day. Members who don't have three or more check ins don't have a personal baseline yet, so they can't be checked this way. falling back to group-wide or fixed threshold for them would reintroduce the kind of absolute comparison this whole project deliberately leans away from, since people naturally write differently with it just being their personal style, not distress. Wouldn't say it's a fixable gap, just a real limit of needing someone's own history to judge what's normal for them
+            if baseline["sufficient_data"] and baseline["sentiment_mean"] is not None and baseline["sentiment_sd"] is not None:
+                members_with_signal += 1
+                if is_distressed(checkin, baseline["sentiment_mean"], baseline["sentiment_sd"]):
+                    distress_count += 1
     avg_sentiment = sum(sentiment_scores) / len(sentiment_scores) if sentiment_scores else None
 
     today = datetime.now(timezone.utc).date()
@@ -34,24 +38,23 @@ def read_group_signals(group_id: int, db: Session) -> dict:
     temperature_words = [tc.word for tc in db.query(TemperatureCheck).filter(
         TemperatureCheck.group_id == group_id,
         TemperatureCheck.week_start == week_start
-    ).all()]
+    ).all()] # a separate feature, each member can submit one word describing their week, shown to the coordinator alongside the daily signals above
     recent_flags = db.query(NudgeFlag).filter(
         NudgeFlag.user_id.in_(member_ids),
         NudgeFlag.triggered_at >= datetime.now(timezone.utc) - timedelta(days = 3)
     ).all()
     has_recent_flag = len(recent_flags) > 0
-    has_high_distress = any(f.trigger_rule == "band_high_distress_1d" for f in recent_flags) # overrides cooldown, urgent response only
+    has_high_distress = any(f.trigger_rule == "crisis_safety_net" for f in recent_flags) # shortens the cooldown below to 12 hours instead of 48
     return {
         "member_count": len(members),
         "active_count": len(sentiment_scores),
         "avg_sentiment": avg_sentiment,
-        "band_labels": band_labels,
+        "distress_count": distress_count,
+        "members_with_signal": members_with_signal,
         "temperature_words": temperature_words,
         "has_recent_flag": has_recent_flag,
         "has_high_distress": has_high_distress
     }
-
-DISTRESS_BANDS = {"Moderate difficulty", "Significant difficulty", "High distress"}
 
 def select_mode(signals: dict) -> str | None:
     if signals["has_high_distress"]:
@@ -61,16 +64,17 @@ def select_mode(signals: dict) -> str | None:
     if signals["has_recent_flag"]:
         return "connective"
     avg_sentiment = signals["avg_sentiment"]
-    members_with_band_labels = len(signals["band_labels"])
-    distress_count = sum(1 for b in signals["band_labels"] if b in DISTRESS_BANDS) # count members in the bands that are concerning
-    majority_distressed = members_with_band_labels > 0 and distress_count >= members_with_band_labels / 2 # true if half or more of active members are in distress bands
-    if avg_sentiment < 0.15 and distress_count == 0:
+    distress_count = signals["distress_count"]
+    members_with_signal = signals["members_with_signal"]
+    majority_distressed = members_with_signal > 0 and distress_count >= members_with_signal / 2 # true if half or more of members with a personal baseline are currently distressed
+    # thresholds below picked by feel, not tested rigorously like the crisis detection
+    if avg_sentiment < 0.15 and distress_count == 0: # below 0.15 with nobody distressed suggests the group's genuinely doing fine, so lean into something fun
         return "activity"
-    if avg_sentiment > 0.35 or majority_distressed:
+    if avg_sentiment > 0.35 or majority_distressed: # above 0.35, or half the group struggling leans supportive regardless of the average, since a few members doing very well can mask several others who aren't
         return "supportive"
     return "connective"
 
-def select_activity_category(signals: dict, last_category: str | None) -> str:
+def select_activity_category(signals: dict) -> str: # Monday and Sunday start and end the week, so they get something reflective. Saturday's when people have more free time, so something physical makes sense. Weekdays stay social since people are busier and it's easier to achieve
     day = datetime.now(timezone.utc).weekday() # 0 is Monday and 6 is Sunday
     if day in (0, 6):
         category = "reflective"
@@ -102,7 +106,7 @@ def run_coordinator(group_id: int, db: Session) -> None:
     if mode is None:
         return
     
-    category = select_activity_category(signals, None) if mode == "activity" else None
+    category = select_activity_category(signals) if mode == "activity" else None
     last_post_summary = last_post.content if last_post else None
     message = generate_message(mode, category, signals, last_post_summary)
 
