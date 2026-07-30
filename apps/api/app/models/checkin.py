@@ -18,6 +18,5 @@ class CheckIn(Base):
     sleep_hours: Mapped[float | None] = mapped_column(Float, nullable = True)
     step_count: Mapped[int | None] = mapped_column(Integer, nullable = True)
     sentiment_score: Mapped[float | None] = mapped_column(Float, nullable = True) # null until the NLP scores it when its submitted
-    band_label: Mapped[str | None] = mapped_column(Text, nullable = True) # the distress band assigned by the scoring pipeline. It is for internal use only and is not returned to clients
     audio_emotion_score: Mapped[float | None] = mapped_column(Float, nullable = True) # populated by audeering from raw voice audio, it is null for checkins that only use text
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = utc_now)
