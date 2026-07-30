@@ -10,9 +10,8 @@ MESSAGES = {
     "sentiment_convergent": "It might be nice to check in on {name} today 💙",
     "sentiment_sustained_2d": "We think {name} could do with hearing from you. Would be worth reaching out when you can 💙",
     "sentiment_sustained_3d": "We're a bit concerned about {name}. We think they could really do with a friend right now 💙",
-    "ghost_checkin_3d": "We haven't heard from {name} in a few days. Might be worth dropping them a message 💙",
-    "band_significant_2d": "{name} has had a couple of really difficult days. They could probably do with hearing from someone they trust 💙",
-    "band_high_distress_1d": "{name} is having a really hard time right now. It would mean a lot if you got in touch 💙"
+    "ghost_checkin_3d": "We haven't heard from {name} in a few days. Might be worth dropping them a message 💙", # these are all deliberately soft and non alarming. Never quotes the checkin or uses words like "urgent" etc. Makes it more acceptable that this might fire a bit more often than it technically should. An unnecessary, gentle text better than the alternative
+    "crisis_safety_net": "We think {name} could really do with hearing from someone they trust today 💙" # carries a little more weight than the gentler phrasing above, but deliberately isn't anything urgent sounding
 }
 
 def is_friend_active(user_id: int, db: Session) -> bool:
@@ -26,7 +25,7 @@ def is_friend_active(user_id: int, db: Session) -> bool:
     else:
         return False
 
-def get_most_well_active_member(group_id: int, exclude_user_id: int, db: Session) -> int | None:
+def get_most_well_active_member(group_id: int, exclude_user_id: int, db: Session) -> int | None: # among active members, picks whoever's doing best (lowest sentiment score) rather than just anyone active. A fallback shouldn't land on someone who might be struggling themselves
     cutoff = datetime.now(timezone.utc).date() - timedelta(days = 3) # they're active if they've checked in in the past 3 days
     members = db.query(GroupMember).filter(
         GroupMember.group_id == group_id,
@@ -61,7 +60,7 @@ def get_most_recent_member(group_id: int, exclude_user_id: int, db: Session) -> 
             latest_id = member.user_id
     return latest_id
 
-def find_friend(user_id: int, db: Session) -> int | None:
+def find_friend(user_id: int, db: Session) -> int | None: # this is a three step fallback, starting with the person's own designated friend if they're active, then whichever other active group member seems to be doing best, then whoever's checked in most recently at all, as a last resort
     assignment = db.query(FriendAssignment).filter(
         FriendAssignment.user_id == user_id
     ).first()
@@ -81,7 +80,7 @@ def queue_notification(flag: NudgeFlag, db: Session) -> Notification | None:
     friend_id = find_friend(flag.user_id, db)
     if not friend_id:
         return None
-    message = MESSAGES.get(flag.trigger_rule, "We think {name} could do with some support right now 💙")
+    message = MESSAGES.get(flag.trigger_rule, "We think {name} could do with some support right now 💙") # fallback in case a trigger rule is ever added to inference.py without a matching message here
     message = message.format(name = subject.first_name)
     notification = Notification(
         recipient_id = friend_id,
