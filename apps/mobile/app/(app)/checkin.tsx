@@ -8,7 +8,7 @@ import { Audio } from "expo-av";
 
 export default function CheckInScreen() {
     const router = useRouter();
-    const [existing, setExisting] = useState(null);
+    const [existing, setExisting] = useState<any>(null);
     const [promptQuestion, setPromptQuestion] = useState("");
     const [promptResponse, setPromptResponse] = useState("");
     const [journalText, setJournalText] = useState("");
@@ -106,30 +106,13 @@ export default function CheckInScreen() {
         }
     };
 
-    const handleStartRecording = async (field: "prompt" | "journal") => {
-        try {
-            const { status } = await Audio.requestPermissionsAsync();
-            if (status !== "granted") {
-                Alert.alert("Permission required", "Microphone access is required to record audio.");
-                return;
-            }
-            await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true }) // android handles this automatically
-            const { recording } = await Audio.Recording.createAsync(
-                Audio.RecordingOptionsPresets.HIGH_QUALITY
-            );
-            setActiveRecording(recording);
-            setRecordingField(field);
-        } catch {
-            Alert.alert("Error", "Could not start recording. Please try again.")
-        }
-    };
+    const MAX_RECORDING_MS = 3 * 60 * 1000; // matches the backend's MAX_RECORDING_SECONDS - keeps transcription time bounded
 
-    const handleStopRecording = async () => {
-        if (!activeRecording || !recordingField) return;
-        const field = recordingField; // recordingField gets set to null in the finally block so its captured here first
+    // takes recording/field as arguments rather than reading them from state. the auto-stop check below is created once, right when recording starts, and locks in whatever the recording/field state looked like at that exact moment. The real state does get updated properly just after but the check already made its own frozen copy before that happened, so it would only ever see that original, empty version, no matter when it actually looks
+    const processRecording = async (recording: Audio.Recording, field: "prompt" | "journal") => {
         try {
-            await activeRecording.stopAndUnloadAsync();
-            const uri = activeRecording.getURI();
+            await recording.stopAndUnloadAsync();
+            const uri = recording.getURI();
             setActiveRecording(null);
             if (!uri) {
                 setRecordingField(null)
@@ -163,6 +146,36 @@ export default function CheckInScreen() {
             setTranscribing(false);
             setRecordingField(null);
         }
+    };
+
+    const handleStartRecording = async (field: "prompt" | "journal") => {
+        try {
+            const { status } = await Audio.requestPermissionsAsync();
+            if (status !== "granted") {
+                Alert.alert("Permission required", "Microphone access is required to record audio.");
+                return;
+            }
+            await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true }) // android handles this automatically
+            const { recording } = await Audio.Recording.createAsync(
+                Audio.RecordingOptionsPresets.HIGH_QUALITY
+            );
+            let autoStopped = false;
+            recording.setOnRecordingStatusUpdate((status) => {
+                if (!autoStopped && status.isRecording && status.durationMillis >= MAX_RECORDING_MS) {
+                    autoStopped = true;
+                    processRecording(recording, field);
+                }
+            });
+            setActiveRecording(recording);
+            setRecordingField(field);
+        } catch {
+            Alert.alert("Error", "Could not start recording. Please try again.")
+        }
+    };
+
+    const handleStopRecording = async () => {
+        if (!activeRecording || !recordingField) return;
+        await processRecording(activeRecording, recordingField);
     };
 
     if (loading) {
