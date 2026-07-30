@@ -47,6 +47,8 @@ CRISIS_REFERENCE = [
     "Everything feels unreal lately, like none of this is really happening to me", # dissociation
     "I have been drinking a lot more than I should just to get through the evenings", # substance-coping escalation
     "I have been leaning on drinks most nights to switch my brain off", # substance-coping escalation
+    "I need help", # explicit help-seeking
+    "I really need help right now", # explicit help-seeking
 ]
 
 # ordinary difficulty language that shouldn't trigger the safety net. Contrastive reference set to weigh crisis phrases against
@@ -71,6 +73,9 @@ MAX_CHUNK_WORDS = 30
 # words a run-on message with no punctuation naturally pauses at anyway. This is preferred over a hard word count cut, since chopping mid-clause can make an ordinary bit of text look alarming just from being cut off badly, not from anything it actually says
 CLAUSE_BREAK = re.compile(r",\s+|\s+(?:but|so|and then|anyway|also|honestly|because)\s+")
 
+# a short sentence can still be two separate thoughts joined by a comma, like "today was awful, I need help." Scoring that as one chunk waters down the second half enough that it can go unnoticed. So short sentences are also checked for a comma split, but only kept if every piece that comes out is this short too, since longer comma-joined clauses usually rely on each other to make sense (a hypothetical, a "but actually I'm fine" sort of thing) and splitting those apart can make an otherwise harmless sentence look alarming
+SHORT_CLAUSE_CAP = 5
+
 # some run-ons have no comma or pause word at all, so even that fallback sometimes still needs a hard word count cut. this nudges the cut forward past any word that would leave the clause hanging (things like "the" "a" "who" "and" etc) so it lands somewhere that actually reads as complete instead of stopping mid-thought
 DANGLES_IF_CUT_AFTER = {
     "a", "an", "the", "at", "in", "on", "to", "of", "for", "with", "and", "or", "but",
@@ -86,6 +91,9 @@ def split_sentences(text: str) -> list[str]: # splits on punctuation and newline
         words = piece.split()
         if len(words) <= MAX_CHUNK_WORDS:
             chunks.append(piece)
+            short_clauses = [c.strip() for c in CLAUSE_BREAK.split(piece) if c.strip()]
+            if len(short_clauses) > 1 and all(len(c.split()) <= SHORT_CLAUSE_CAP for c in short_clauses):
+                chunks.extend(short_clauses) # added alongside the whole piece above not instead of it so a message that already scored correctly can't start scoring lower
         else:
             clauses = [c.strip() for c in CLAUSE_BREAK.split(piece) if c.strip()]
             for clause in clauses:
