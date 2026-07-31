@@ -25,15 +25,19 @@ def is_friend_active(user_id: int, db: Session) -> bool:
     else:
         return False
 
-def get_most_well_active_member(group_id: int, exclude_user_id: int, db: Session) -> int | None: # among active members, picks whoever's doing best (lowest sentiment score) rather than just anyone active. A fallback shouldn't land on someone who might be struggling themselves
+def get_most_well_active_member(group_ids: list[int], exclude_user_id: int, db: Session) -> int | None: # picks whoever's doing best (lowest sentiment score) among active members. Checks every given group together in one pass, not one group at a time, so it can't end up picking a worse candidate just because their group was checked first. A fallback shouldn't land on someone who might be struggling themselves
     cutoff = datetime.now(timezone.utc).date() - timedelta(days = 3) # they're active if they've checked in in the past 3 days
     members = db.query(GroupMember).filter(
-        GroupMember.group_id == group_id,
+        GroupMember.group_id.in_(group_ids),
         GroupMember.user_id != exclude_user_id
     ).all()
     best_id = None
     best_score = None
+    seen = set() # the same person can belong to more than one of these groups
     for member in members:
+        if member.user_id in seen:
+            continue
+        seen.add(member.user_id)
         checkin = db.query(CheckIn).filter(
             CheckIn.user_id == member.user_id,
             CheckIn.checkin_date >= cutoff,
@@ -44,14 +48,18 @@ def get_most_well_active_member(group_id: int, exclude_user_id: int, db: Session
             best_id = member.user_id
     return best_id
 
-def get_most_recent_member(group_id: int, exclude_user_id: int, db: Session) -> int | None:
+def get_most_recent_member(group_ids: list[int], exclude_user_id: int, db: Session) -> int | None:
     members = db.query(GroupMember).filter(
-        GroupMember.group_id == group_id,
+        GroupMember.group_id.in_(group_ids),
         GroupMember.user_id != exclude_user_id
     ).all()
     latest_id = None
     latest_date = None
+    seen = set()
     for member in members:
+        if member.user_id in seen:
+            continue
+        seen.add(member.user_id)
         checkin = db.query(CheckIn).filter(
             CheckIn.user_id == member.user_id
         ).order_by(CheckIn.checkin_date.desc()).first() # no cutoff as this is a last resort, whoever checked in most recently
@@ -64,14 +72,25 @@ def find_friend(user_id: int, db: Session) -> int | None: # this is a three step
     assignment = db.query(FriendAssignment).filter(
         FriendAssignment.user_id == user_id
     ).first()
-    if not assignment:
-        return None
-    if is_friend_active(assignment.friend_id, db):
+    if assignment and is_friend_active(assignment.friend_id, db):
         return assignment.friend_id
-    best = get_most_well_active_member(assignment.group_id, user_id, db)
+
+    # if no designated friend, or the one they chose isn't active right now fall through to steps 2 and 3 instead of giving up. Search every group they're in, not just one, since there's no assignment telling us which group to prefer. Someone who never got round to assigning a friend shouldn't be left without any fallback at all, which is the reasoning for covering their case here too
+    group_ids = [assignment.group_id] if assignment else [
+        m.group_id for m in db.query(GroupMember).filter(GroupMember.user_id == user_id).all()
+    ]
+    if not group_ids:
+        return None
+
+    best = get_most_well_active_member(group_ids, user_id, db)
     if best:
         return best
-    return get_most_recent_member(assignment.group_id, user_id, db) 
+    return get_most_recent_member(group_ids, user_id, db)
+
+def needs_friend_assignment(user_id: int, db: Session) -> bool: # true only if they're in a group but haven't assigned a friend in any of them. Being in no group at all is a separate, earlier onboarding step this doesn't cover
+    in_a_group = db.query(GroupMember).filter(GroupMember.user_id == user_id).first() is not None
+    has_assignment = db.query(FriendAssignment).filter(FriendAssignment.user_id == user_id).first() is not None
+    return in_a_group and not has_assignment
 
 def queue_notification(flag: NudgeFlag, db: Session) -> Notification | None:
     subject = db.query(User).filter(User.id == flag.user_id).first()

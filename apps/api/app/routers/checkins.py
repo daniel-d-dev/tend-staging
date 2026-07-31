@@ -14,7 +14,7 @@ from app.services.prompts import get_todays_prompt
 from app.services.transcription import transcribe_audio, get_audio_duration
 from app.services.audio_emotion import score_audio
 from app.services.inference import run_inference
-from app.services.nudge_delivery import queue_notification
+from app.services.nudge_delivery import queue_notification, needs_friend_assignment
 
 router = APIRouter(prefix = "/checkins", tags = ["checkins"])
 
@@ -81,6 +81,9 @@ def submit_checkin (
 
     if existing:
         raise HTTPException(status_code = 400, detail = "You have already checked in today.") # only 1 check in per day allowed
+
+    if needs_friend_assignment(current_user.id, db): # blocks group members specifically. not being in a group yet is a separate, earlier step. Someone who joins a group but never submits a check-in never reaches this check at all
+        raise HTTPException(status_code = 400, detail = "Please assign a designated friend in your group before checking in, so someone knows to reach out if you ever need support.")
 
     checkin = CheckIn(
         user_id = current_user.id,
