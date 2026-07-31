@@ -18,7 +18,14 @@ export default function LoginScreen() {
                 body: JSON.stringify({ email, password })
             });
             if (!response.ok) {
-                Alert.alert("Login failed", "Incorrect email or password.");
+                let message = "Incorrect email or password.";
+                try {
+                    const errorData = await response.json();
+                    if (errorData.detail) message = errorData.detail;
+                } catch {
+                    // response body wasn't valid JSON, fall back to the generic message above
+                }
+                Alert.alert("Login failed", message);
                 return;
             }
             const data = await response.json();

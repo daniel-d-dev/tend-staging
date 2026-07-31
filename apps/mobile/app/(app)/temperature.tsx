@@ -75,10 +75,15 @@ export default function TemperatureScreen() {
             setWord("");
             fetchGroups();
             fetchGroupResult(selectedGroup.id);
-        } else if (response.status === 400) {
-            Alert.alert("Already submitted", "You have already submitted a word for this group this week.");
         } else {
-            Alert.alert("Error", "Something went wrong. Please try again");
+            let message = "Something went wrong. Please try again";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            Alert.alert("Error", message);
         }
     };
 

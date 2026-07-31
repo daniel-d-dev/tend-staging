@@ -102,7 +102,14 @@ export default function CheckInScreen() {
         if (response.ok) {
             router.replace("/(app)/dashboard");
         } else {
-            Alert.alert("Error", "Something went wrong. Please try again.")
+            let message = "Something went wrong. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            Alert.alert("Error", message);
         }
     };
 
@@ -138,7 +145,14 @@ export default function CheckInScreen() {
                     setAudioEmotionScore(data.audio_emotion);
                 }
             } else {
-                Alert.alert("Error", "Could not transcribe audio. Please try again.");
+                let message = "Could not transcribe audio. Please try again.";
+                try {
+                    const errorData = await response.json();
+                    if (errorData.detail) message = errorData.detail;
+                } catch {
+                    // response body wasn't valid JSON, fall back to the generic message above
+                }
+                Alert.alert("Error", message);
             }
         } catch {
             Alert.alert("Error", "Something went wrong. Please try again.");

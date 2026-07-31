@@ -51,7 +51,14 @@ export default function GroupsScreen() {
             const data = await response.json()
             setGroups(prev => [...prev, data]);
         } else {
-            Alert.alert("Error", "Could not create group. Please try again.")
+            let message = "Could not create group. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            Alert.alert("Error", message);
         }
     };
 
@@ -71,7 +78,14 @@ export default function GroupsScreen() {
             setJoinCode("");
             fetchGroups();
         } else {
-            Alert.alert("Error", "Could not join group. Please try again.");
+            let message = "Could not join group. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            Alert.alert("Error", message);
         }
     };
 

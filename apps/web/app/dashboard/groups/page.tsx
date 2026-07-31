@@ -45,7 +45,14 @@ export default function GroupsPage() {
             const data = await response.json();
             setGroups(prev => [...prev, data]);
         } else {
-            alert("Could not create group. Please try again.");
+            let message = "Could not create group. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            alert(message);
         }
     };
 
@@ -64,7 +71,14 @@ export default function GroupsPage() {
             setJoinCode("");
             fetchGroups();
         } else {
-            alert("Could not join group. Please try again.");
+            let message = "Could not join group. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            alert(message);
         }
     };
 

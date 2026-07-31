@@ -36,7 +36,14 @@ export default function GroupDetailScreen() {
         if (response.ok) {
             Alert.alert("Friend assigned", `${friendName} is now your designated friend in this group.`);
         } else {
-            Alert.alert("Error", "Could not assign friend. Please try again.");
+            let message = "Could not assign friend. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            Alert.alert("Error", message);
         }
     };
 

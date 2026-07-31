@@ -20,7 +20,14 @@ export default function RegisterPage() {
                 body: JSON.stringify({ email, password, first_name: firstName })
             });
             if (!response.ok) {
-                alert("Registration failed. Please check your details.");
+                let message = "Registration failed. Please check your details.";
+                try {
+                    const errorData = await response.json();
+                    if (errorData.detail) message = errorData.detail;
+                } catch {
+                    // response body wasn't valid JSON, fall back to the generic message above
+                }
+                alert(message);
                 return;
             }
             router.push("/login");

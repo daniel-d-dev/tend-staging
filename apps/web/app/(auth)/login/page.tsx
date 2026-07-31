@@ -20,7 +20,14 @@ export default function LoginPage() {
                 credentials: "include"
             });
             if (!response.ok) {
-                alert("Incorrect email or password");
+                let message = "Incorrect email or password";
+                try {
+                    const errorData = await response.json();
+                    if (errorData.detail) message = errorData.detail;
+                } catch {
+                    // response body wasn't valid JSON, fall back to the generic message above
+                }
+                alert(message);
                 return;
             }
             router.push("/dashboard");

@@ -98,7 +98,14 @@ export default function CheckInPage() {
         if (response.ok) {
             router.replace("/dashboard");
         } else {
-            alert("Something went wrong. Please try again.")
+            let message = "Something went wrong. Please try again.";
+            try {
+                const errorData = await response.json();
+                if (errorData.detail) message = errorData.detail;
+            } catch {
+                // response body wasn't valid JSON, fall back to the generic message above
+            }
+            alert(message);
         }
     };
 
@@ -135,7 +142,14 @@ export default function CheckInPage() {
                             setAudioEmotionScore(data.audio_emotion);
                         }
                     } else {
-                        alert("Could not transcribe audio. Please try again.");
+                        let message = "Could not transcribe audio. Please try again.";
+                        try {
+                            const errorData = await response.json();
+                            if (errorData.detail) message = errorData.detail;
+                        } catch {
+                            // response body wasn't valid JSON, fall back to the generic message above
+                        }
+                        alert(message);
                     }
                 } catch {
                     alert("Something went wrong. Please try again.");

@@ -18,7 +18,14 @@ export default function RegisterScreen() {
                 body: JSON.stringify({ email, password, first_name: firstName })
             });
             if (!response.ok) {
-                Alert.alert("Registration failed", "Please check your details and try again.");
+                let message = "Please check your details and try again.";
+                try {
+                    const errorData = await response.json();
+                    if (errorData.detail) message = errorData.detail;
+                } catch {
+                    // response body wasn't valid JSON, fall back to the generic message above
+                }
+                Alert.alert("Registration failed", message);
                 return;
             }
             router.replace("/(auth)/login");
