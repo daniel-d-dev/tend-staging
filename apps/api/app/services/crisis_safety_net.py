@@ -49,7 +49,24 @@ CRISIS_REFERENCE = [
     "I have been leaning on drinks most nights to switch my brain off", # substance-coping escalation
     "I need help", # explicit help-seeking
     "I really need help right now", # explicit help-seeking
+    "It would be easier if I just wasn't around anymore", # passive ideation
+    "I can't do this anymore, I need someone to talk to", # explicit help-seeking
+    "I've been cutting myself again", # self-harm disclosure, not just urges
+    "I took more pills than I should have last night", # substance/overdose-adjacent disclosure
+    "What's the point in trying if nothing ever changes", # futility of effort
+    "I can't breathe properly most days", # somatic distress
+    "I feel sick to my stomach all the time and I don't know why", # somatic distress
+    "I don't know how many more days like this I have in me", # can't-face-another-day, endurance running out
+    "I can't anymore", # explicit exhaustion, short clipped form
+    "In case I don't get the chance to say it later, I appreciate you", # farewell-adjacent
+    "I haven't left my room in days", # isolation/withdrawal
+    "I've had no appetite for days now, barely eating anything at all", # appetite loss
+    "I haven't been sleeping, only a couple hours a night for weeks", # sleep disruption
 ]
+
+# "I hurt myself on purpose last night" was tried alongside the cutting/substance disclosure phrases above and dropped: it matched ordinary accidental injuries ("I accidentally burned myself on the stovetop making breakfast", "I cut my finger on a broken disc") almost as strongly as genuine disclosures, since the model doesn't weigh "on purpose" heavily enough against the injury wording itself. Cutting and substance disclosure above already cover that without the risk
+# "I haven't eaten properly in days" was reworded once (adding "a proper meal in three days") to fix it matching "I haven't eaten lunch yet" - that made it worse, since "meal" turned out to match cooking/breakfast language too. Reworded a second time to drop food-specific wording entirely in favour of "appetite", which separated cleanly
+# "I don't see why I should even bother anymore" was dropped after one rephrase attempt against the held-out queue: it matched ordinary "I'll just skip that for now" language about mundane tasks, not just genuine futility. "What's the point in trying if nothing ever changes" above already covers most of that without the risk
 
 # ordinary difficulty language that shouldn't trigger the safety net. Contrastive reference set to weigh crisis phrases against
 MODERATE_REFERENCE = [
