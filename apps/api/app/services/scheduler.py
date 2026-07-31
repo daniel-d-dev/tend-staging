@@ -1,18 +1,34 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from app.core.database import SessionLocal
 from app.models.user import User
+from app.models.checkin import CheckIn
 from app.models.notification import Notification
 from app.services.inference import run_inference
 from app.services.nudge_delivery import queue_notification
 from app.services.evaluation import evaluate_pending_nudges
 from app.services.coordinator import coordinator_job
+from app.routers.checkins import score_and_evaluate_checkin
 import httpx
 
 scheduler = BackgroundScheduler()
 
+def catch_up_missed_scores():
+    with SessionLocal() as db:
+        cutoff = datetime.now(timezone.utc) - timedelta(minutes = 15) # gives the original background task a fair chance to actually finish, rather than assuming it's stuck when it's just still running
+        stuck_ids = [
+            c.id for c in db.query(CheckIn.id).filter(
+                CheckIn.sentiment_score == None,
+                CheckIn.created_at < cutoff
+            ).all()
+        ]
+    # score_and_evaluate_checkin opens its own database session for each checkin, same as it does when the original background task calls it. This closes the session above first, instead of keeping two open at once
+    for checkin_id in stuck_ids:
+        score_and_evaluate_checkin(checkin_id)
+
 def run_nightly_inference():
+    catch_up_missed_scores() # catches any checkin that never got scored like something crashing or failing part of the way through before checking everyone's trends below, which needs sentiment_score to already be filled in
     with SessionLocal() as db:
         users = db.query(User).all()
         for user in users:
