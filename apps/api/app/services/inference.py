@@ -44,7 +44,7 @@ def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
 
     if len(recent) >= 1:
         latest = recent[0]
-        safety_net_result = evaluate_checkin(latest.prompt_response)
+        safety_net_result = evaluate_checkin(latest.text_for_scoring)
         if safety_net_result["safety_net_triggered"]:
             return create_nudge_flag(user_id, "crisis_safety_net", db) # deliberately not gated behind checkin count or baseline sufficiency - this is the floor, it has to work for a first-time user on day one
 

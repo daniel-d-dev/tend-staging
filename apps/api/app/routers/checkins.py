@@ -48,15 +48,15 @@ async def transcribe_note(
     finally:
         os.remove(tmp_path) # always runs even if the transcription fails
 
-def score_and_evaluate_checkin(checkin_id: int, prompt_response: str):
+def score_and_evaluate_checkin(checkin_id: int):
     with SessionLocal() as db:
         checkin = db.query(CheckIn).filter(
             CheckIn.id == checkin_id
         ).first()
         if not checkin:
             return
-        
-        scoring_result = score_text(prompt_response)
+
+        scoring_result = score_text(checkin.text_for_scoring)
         checkin.sentiment_score = scoring_result["mean_score"] if scoring_result else None
         db.flush() # makes the score visible to run_inference's own queries within this same transaction, without committing yet
 
@@ -98,7 +98,7 @@ def submit_checkin (
     db.commit()
     db.refresh(checkin)
 
-    background_tasks.add_task(score_and_evaluate_checkin, checkin.id, data.prompt_response) # scoring can take some time so it runs after the response instead of blocking it
+    background_tasks.add_task(score_and_evaluate_checkin, checkin.id) # scoring can take some time so it runs after the response instead of blocking it
 
     return checkin
 
@@ -147,7 +147,7 @@ def update_today(
     db.refresh(checkin)
 
     # an edit here never re-triggered scoring or nudge evaluation. A check-in that started out mundane and was later edited to disclose real distress could go unnoticed for up to 24 hours, until the next nightly job ran and even then sentiment_score itself would stay the same, since nothing was actually rescoring it. Requeuing the same background task the POST endpoint already uses keeps both in sync with whatever the check-in currently says
-    background_tasks.add_task(score_and_evaluate_checkin, checkin.id, checkin.prompt_response)
+    background_tasks.add_task(score_and_evaluate_checkin, checkin.id)
 
     return checkin
 

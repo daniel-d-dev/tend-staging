@@ -20,3 +20,9 @@ class CheckIn(Base):
     sentiment_score: Mapped[float | None] = mapped_column(Float, nullable = True) # null until the NLP scores it when its submitted
     audio_emotion_score: Mapped[float | None] = mapped_column(Float, nullable = True) # populated by audeering from raw voice audio, it is null for checkins that only use text
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = utc_now)
+
+    @property
+    def text_for_scoring(self) -> str: # the journal entry is optional and often longer/more expansive than the short prompt response, so both need to reach scoring and the crisis safety net, not just the prompt response alone
+        if self.journal_text:
+            return f"{self.prompt_response}\n{self.journal_text}"
+        return self.prompt_response
