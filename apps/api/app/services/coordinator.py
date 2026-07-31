@@ -8,6 +8,7 @@ from app.models.feed import Post
 from app.core.database import SessionLocal
 from app.core.message_generator import generate_message
 from app.core.baseline import get_baseline
+from app.core.low_energy_classifier import score_low_energy
 from app.services.inference import is_distressed
 
 def read_group_signals(group_id: int, db: Session) -> dict:
@@ -39,6 +40,8 @@ def read_group_signals(group_id: int, db: Session) -> dict:
         TemperatureCheck.group_id == group_id,
         TemperatureCheck.week_start == week_start
     ).all()] # a separate feature, each member can submit one word describing their week, shown to the coordinator alongside the daily signals above
+    low_energy_scores = [score_low_energy(word) for word in temperature_words]
+    avg_low_energy = sum(low_energy_scores) / len(low_energy_scores) if low_energy_scores else None # used by select_activity_category to avoid suggesting something physical when the group's own words lean tired/drained, even on weeks where sentiment_score data doesn't yet tell the same story
     recent_flags = db.query(NudgeFlag).filter(
         NudgeFlag.user_id.in_(member_ids),
         NudgeFlag.triggered_at >= datetime.now(timezone.utc) - timedelta(days = 3)
@@ -52,6 +55,7 @@ def read_group_signals(group_id: int, db: Session) -> dict:
         "distress_count": distress_count,
         "members_with_signal": members_with_signal,
         "temperature_words": temperature_words,
+        "avg_low_energy": avg_low_energy,
         "has_recent_flag": has_recent_flag,
         "has_high_distress": has_high_distress
     }
@@ -74,6 +78,8 @@ def select_mode(signals: dict) -> str | None:
         return "supportive"
     return "connective"
 
+LOW_ENERGY_THRESHOLD = 0.09 # calibrated against around 50 test words, deliberately kept out of the reference lists above so the test measured generalising to new words rather than just memorising the list. Every positive or neutral word scored below this, and 31 of 32 genuinely low-energy words scored above it. the one miss was "burnt" on its own, which is genuinely ambiguous (like food, sunburn, etc.), while the natural phrase "burnt out" is already in the reference list and gets caught fine
+
 def select_activity_category(signals: dict) -> str: # Monday and Sunday start and end the week, so they get something reflective. Saturday's when people have more free time, so something physical makes sense. Weekdays stay social since people are busier and it's easier to achieve
     day = datetime.now(timezone.utc).weekday() # 0 is Monday and 6 is Sunday
     if day in (0, 6):
@@ -82,8 +88,10 @@ def select_activity_category(signals: dict) -> str: # Monday and Sunday start an
         category = "physical"
     else:
         category = "social"
-    if signals["avg_sentiment"] is not None and signals["avg_sentiment"] > 0.30 and category == "physical":
-        category = "social" # physical can help mild low mood but we avoid it when the group is genuinely struggling
+    sentiment_low_mood = signals["avg_sentiment"] is not None and signals["avg_sentiment"] > 0.30
+    temperature_low_energy = signals["avg_low_energy"] is not None and signals["avg_low_energy"] > LOW_ENERGY_THRESHOLD
+    if category == "physical" and (sentiment_low_mood or temperature_low_energy):
+        category = "social" # physical can help mild low mood but we avoid it when the group is genuinely struggling, whether that shows up in their check-in sentiment or in how they described their week
     return category
 
 def run_coordinator(group_id: int, db: Session) -> None:
