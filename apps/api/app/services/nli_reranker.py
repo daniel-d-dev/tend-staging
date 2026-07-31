@@ -7,7 +7,7 @@ from app.services.crisis_safety_net import split_sentences
 
 # label order for cross-encoder/nli-deberta-v3-* models is [contradiction, entailment, neutral]
 
-# fires as a false positive on some mundane but negatively-toned text that describes soreness, mild frustration etc. this is a known limitation and it has deliberately not been reworded to fix it. This is the most tested hypothesis in the project, and when a differen model was tried it broke badly. In the context of the app, a false positive here just costs a potentially awkward nudge that doesn't reveal sensitive detail, not a missed crisis, which is the safer trade against risking a hypothesis that otherwise works well
+# fires as a false positive on some mundane but negatively-toned text that describes soreness, mild frustration etc. rewording this hypothesis to rule out physical language was tried and rejected, since it also suppressed real crisis cases that had no physical language in them at all. This is the most tested hypothesis in the project, and when a different model was tried it broke badly. The soreness false positives are handled instead by checking against a second hypothesis, below
 HYPOTHESIS = "The author is currently, genuinely feeling hopeless or that things are too much to cope with."
 
 # several hypotheses instead of one, each aimed at a specific kind of distress, seeing as statements that imply burden-relief, not belonging, self-harm etc don't logically entail hopelessness specifically, even though they're serious warning signs in their own right. Takes the highest entailment score across all of them.
@@ -40,6 +40,7 @@ CONSTRUCT_HYPOTHESES = {
 # stacking several ordinary complaints in one message (like a moan about a commute, a minor argument, something about being tired etc) can wrongly trigger a hypothesis, even though none of it is really about that hypothesis's construct on its own. It affects three hypotheses: burden_relief_2 defeat, and worthlessness_3, roughly a third of the time on this kind of deliberately stacked text
 # tried requiring a keyword match before letting the NLI check escalate on its own, but rejected it, since it would have blocked genuine, unambiguous crisis statements that just don't happen to contain the expected words. real crisis language is too varied for a fixed keyword list to reliably back it up
 # accepted the complaint-stacking as a known gap rather than chasing it further. even if this misses something, the baseline-deviation signal still catches it independently, and a wrong nudge here is soft, rate-limited, and doesn't reveal what was actually said, the cost of getting it wrong is low
+# the same contrastive trick used for hopelessness (see PHYSICAL_HYPOTHESIS) was also tried on burden_relief_2, since casual hyperbole like "drowning in emails, this is gonna kill me lol" fires it. unlike physical soreness, a contrastive hypothesis about workload stress fired just as strongly on genuine crisis text, since "overwhelmed by work" and "overwhelmed by a real crisis" share too much of the same wording. no working contrastive hypothesis found, left as part of the same accepted gap above
 
 model = CrossEncoder("cross-encoder/nli-deberta-v3-small")
 # tried two bigger, differently-trained models, hoping to catch some of the more indirect phrasing several hypotheses were still missing. both looked like real wins on small, narrow tests, but one of them failed a fuller test against the actual held out queue. Mundane false positives on ordinary, harmless check-ins roughly tripled, for barely any improvement in recall gain. reverted to this smaller model, which is the one that's actually been fully tested and validated
@@ -69,12 +70,23 @@ NLI_TRIGGER_THRESHOLD_OVERRIDES = {
     "worthlessness_3": 0.90,
 }
 
+# not one of the hypotheses above, since it's not a warning sign in its own right, it's only used to double check hopelessness. exaggerated soreness language like "my legs are killing me after that run" was firing hopelessness almost every time, because the model weighs the word "killing" heavily regardless of the context around it. hopelessness now only counts as triggered if it also outscores this hypothesis on the same sentence. tested against the labeled set: real crisis cases beat this comfortably (the closest was still 0.07 clear), and it fixed the soreness false positives with no other cost
+PHYSICAL_HYPOTHESIS = "The author is complaining about sore muscles or tiredness after exercise or physical exertion."
+
 def nli_triggered_score(text: str) -> tuple[bool, float, str]: # the real trigger decision used by the deployed ensemble. each hypothesis gets checked against its own threshold, not the single highest score compared against one shared threshold. otherwise a per-hypothesis override like worthlessness_3's wouldn't actually do anything, since there'd be no way to know which hypothesis's threshold to compare the top score against
+    sentences = split_sentences(text) or [text]
     entail_probs, labels = all_construct_scores(text)
-    triggered = [
-        i for i, (p, name) in enumerate(zip(entail_probs, labels))
-        if p > NLI_TRIGGER_THRESHOLD_OVERRIDES.get(name, NLI_TRIGGER_THRESHOLD)
-    ]
+    hypotheses_per_sentence = len(CONSTRUCT_HYPOTHESES)
+    physical_probs = [entailment_for_hypothesis(s, PHYSICAL_HYPOTHESIS) for s in sentences]
+
+    triggered = []
+    for i, (p, name) in enumerate(zip(entail_probs, labels)):
+        if p <= NLI_TRIGGER_THRESHOLD_OVERRIDES.get(name, NLI_TRIGGER_THRESHOLD):
+            continue
+        if name == "hopelessness" and p <= physical_probs[i // hypotheses_per_sentence]:
+            continue
+        triggered.append(i)
+
     if triggered:
         best_i = max(triggered, key=lambda i: entail_probs[i])
         return True, float(entail_probs[best_i]), labels[best_i]
