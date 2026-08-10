@@ -1,0 +1,31 @@
+sealed_id,text,label
+0,"Traffic's slow, small fight with wife, meh, need coffee already.",NOT_CRISIS
+1,"Caught up with a friend over coffee yesterday which was nice. Today was fine I got some work done and didn't have any major issues. The weather's been all over the place, hard to plan anything outdoors. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS
+2,I'm not really looking forward to tomorrow because I had to deal with some slow traffic on the way home from work and had a minor disagreement with someone at lunch about something silly that's still bugging me.,NOT_CRISIS
+3,"Did okay today, didn't do anything out of bounds.",NOT_CRISIS
+4,"Watched a couple of episodes of something last night, nothing special. Caught up with a friend over coffee yesterday which was nice. Still haven't sorted out that thing I've been putting off. Today was a bit more frustrating than I'd like because there was traffic on my commute home and I got into a small argument with someone at work about something stupid, and now I'm just feeling a bit tired and bored.",NOT_CRISIS
+5,had a decent day at work got some actual projects done and managed to keep my email inbox from blowing up too much tomorrow feels like it'll be more of the same but hopefully for better.,NOT_CRISIS
+6,"Woke up late, traffic was terrible, had a stupid argument.",NOT_CRISIS
+7,"Watched a couple of episodes of something last night, nothing special. today was pretty okay I guess. Had a pretty standard commute today, nothing much to report. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS
+8,"Today was one of those days where everything was just sort of meh, traffic was a nightmare, I had a small argument with someone I don't even really care about anymore and now I'm feeling kind of drained and bored with nothing particularly out of the ordinary happening to make it worth getting worked up over.",NOT_CRISIS
+9,"Got most work done today, no major issues.",NOT_CRISIS
+10,"Had a decent morning, got stuck in some traffic on the commute home and had to deal with a bit of an argument with my sister but other than that everything's pretty much fine. Still haven't sorted out that thing I've been putting off. Been meaning to go for a run but haven't got round to it. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS
+11,"had a decent day, woke up on time and got everything done that I needed to without any major hiccups.",NOT_CRISIS
+12,"Day's been slow, traffic was awful and small fight.",NOT_CRISIS
+13,"I had a pretty good day today everything went as planned and I didn't have to deal with any major issues. Had a pretty standard commute today, nothing much to report. Been meaning to go for a run but haven't got round to it. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS
+14,"Today was one of those days where I woke up, got stuck in traffic, had a tiny fight with someone over parking, and then trudged home feeling pretty meh about everything.",NOT_CRISIS
+15,had decent conversation with coworker today.,NOT_CRISIS
+16,"It was a day where everything seemed to go slowly because I got stuck in traffic during my commute and then had a small argument with someone at work about something that didn't really matter. Work has been pretty busy this week, lots of meetings back to back. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS
+17,"Today was pretty standard, just got up did some stuff and went to bed at a reasonable hour.",NOT_CRISIS
+18,"Today was pretty meh, just traffic and annoying coworker.",NOT_CRISIS
+19,"Caught up with a friend over coffee yesterday which was nice. Today was pretty standard I got up late and did some chores then had lunch at work and now I'm just chillin at home doing some stuff. Been meaning to go for a run but haven't got round to it. Work has been pretty busy this week, lots of meetings back to back.",NOT_CRISIS
+20,"I woke up feeling somewhat lethargic and got stuck in traffic on my commute, which put me in a slightly irritable mood, but it's not like anything too out of the ordinary happened today.",NOT_CRISIS
+21,Got through work with minimal issues today.,NOT_CRISIS
+22,"Been meaning to go for a run but haven't got round to it. Work has been pretty busy this week, lots of meetings back to back. Been trying to get through my reading list but keep getting distracted. Had a bit of a slow day, traffic was bad on my commute and I got into a small disagreement with my coworker that stuck around longer than I'd like but everything is fine now.",NOT_CRISIS
+23,"It was one of those days where I woke up feeling decent and didn't really have any major plans, so I just kind of meandered through the morning and ended up getting some things done without too much fuss or excitement.",NOT_CRISIS
+24,"Traffic was bad, had a tiny fight with a coworker",NOT_CRISIS
+25,"Today was fine, got everything done I needed to do at work and spent some time with family after dinner. Still haven't sorted out that thing I've been putting off. Watched a couple of episodes of something last night, nothing special.",NOT_CRISIS
+26,Today was one of those days where everything felt a little slow and the usual commute got stuck behind a bunch of cars so I'm just trying to get home without losing my mind.,NOT_CRISIS
+27,Didn't do much but I'm not mad at myself.,NOT_CRISIS
+28,"Been meaning to go for a run but haven't got round to it. Had a pretty standard day today got stuck in traffic on the way home had a tiny argument with my roommate about leaving dirty dishes in the sink and I'm just feeling kinda meh after work now. Watched a couple of episodes of something last night, nothing special. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS
+29,It was one of those days where everything went smoothly and I didn't really have to think too hard.,NOT_CRISIS

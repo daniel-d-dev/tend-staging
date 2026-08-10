@@ -1,0 +1,425 @@
+label,interesting,source,text,cosine_score,nli_score,cosine_triggered,nli_triggered,signals_disagree,group_id
+NOT_CRISIS,True,contrast:conditional,"If everything were too much to handle, I would feel completely overwhelmed and hopeless.",0.325,0.013,True,False,True,seed_1
+NOT_CRISIS,True,contrast:conditional,"If I were to be in a state where every aspect of my life felt utterly drained and devoid of purpose, I would feel like quitting cold turkey.",0.069,0.407,False,False,False,seed_2
+NOT_CRISIS,True,contrast:conditional,"If I won the lottery, I would feel completely overwhelmed and hopeless tomorrow morning, like everything was finally too much to handle today.",0.056,0.021,False,False,False,seed_1
+NOT_CRISIS,True,contrast:conditional,If I was completely exhausted and felt like I had reached my limit.,-0.08,0.455,False,False,False,seed_2
+CRISIS,True,contrast:conditional,"If I were to become absent from their lives, they would likely find my presence less of a weight on them.",-0.053,0.006,False,False,False,seed_3
+CRISIS,True,contrast:conditional,"If I had to vanish completely from existence, I wouldn't be forced to confront all the emotional turmoil and stress that comes with it.",0.052,0.029,False,False,False,seed_4
+BOUNDARY,True,contrast:conditional,"If I could find a solution, I would feel a sense of relief wash over me as if it were already behind me.",0.05,0.01,False,False,False,seed_6
+CRISIS,True,contrast:conditional,"If I had to pretend that everything was fine when it wasn't, I would feel like I was living a lie.",0.004,0.039,False,False,False,seed_7
+NOT_CRISIS,True,contrast:conditional,"If I had to go without sleep for an extended period, I would feel drained from just trying to stay alive each day and completely depleted of any energy or motivation.",-0.096,0.08,False,False,False,seed_8
+CRISIS,True,contrast:conditional,"If I were to vanish without a trace, honestly, I think nobody would even notice if I was gone for good.",-0.013,0.132,False,False,False,seed_9
+CRISIS,True,contrast:conditional,"If nobody had checked in on me in weeks, it would be like I could disappear and that wouldn't change anything for anyone.",-0.072,0.001,False,False,False,seed_10
+BOUNDARY,True,contrast:conditional,"If I had to spend my whole week cooped up at home due to illness, I would feel like nobody would even care one way or the other.",-0.044,0.036,False,False,False,seed_11
+BOUNDARY,True,contrast:conditional,"If I were to lose control completely, whatever happens now just happens, I would feel like I've lost all fight within me.",0.132,0.699,False,False,False,seed_12
+BOUNDARY,True,contrast:conditional,"If Consultant had gone through the options one more time today, I would feel like I was done arguing with them about it, and that whatever came next would indeed just be a natural consequence of what they chose.",-0.057,0.037,False,False,False,seed_13
+BOUNDARY,True,contrast:conditional,"If another red letter were to come my way, I would feel as if I'd lost this one and I'm done pretending otherwise.",0.009,0.093,False,False,False,seed_14
+BOUNDARY,True,contrast:conditional,"If everything stayed stuck in place forever, I would feel that nothing would ever get any better and this is just how things would remain from now on.",0.219,0.322,True,False,True,seed_15
+BOUNDARY,True,contrast:conditional,If the doctor said it was manageable in the long run I would feel differently about it but I just cant see it ever actually changing.,0.011,0.016,False,False,False,seed_16
+BOUNDARY,True,contrast:conditional,"If I had to choose a way out of this mess, I would feel like the only way I could fix it was to just leave everything behind and start over somewhere no one knows me.",0.245,0.126,True,False,True,seed_21
+CRISIS,True,contrast:conditional,"If I could just get away from here completely, then I wouldn't feel like I'm constantly bringing all my problems with me wherever I go.",0.102,0.607,False,False,False,seed_22
+CRISIS,True,contrast:conditional,"If another scan was booked in for next month, keep thinking if I could just get away from all of it - the appointments, the waiting - none of it would matter anymore.",0.056,0.063,False,False,False,seed_23
+BOUNDARY,True,contrast:conditional,"If everyone was discussing next term as if it were already confirmed, I would feel incredibly conflicted and uncertain about my own position within it.",-0.078,0.031,False,False,False,seed_25
+BOUNDARY,True,contrast:conditional,"If I had to fill in a form today that asked about five-year plans, I would feel like just leaving it blank, couldn't picture that far ahead even a little.",-0.007,0.075,False,False,False,seed_26
+BOUNDARY,True,contrast:conditional,"If everything's finally decided, I would feel strangely calm now.",-0.06,0.001,False,False,False,seed_27
+BOUNDARY,True,contrast:conditional,"If everything was finally sorted, it would be weird to feel like that.",0.072,0.005,False,False,False,seed_28
+NOT_CRISIS,True,contrast:conditional,"If I had handed in my notice today, I would feel really peaceful actually, like a weight's finally lifted and it's all settled.",-0.048,0.01,False,False,False,seed_29
+BOUNDARY,True,contrast:conditional,"If I were to sort through all my possessions one day, I would feel a strange sense of calm after parting with a portion of them, as if simplicity was within reach at last.",-0.001,0.006,False,False,False,seed_30
+BOUNDARY,True,contrast:conditional,"If everyone had to choose between their current relationship with someone who consistently stresses them out versus losing that person altogether, they likely wouldn't pick a life without constant stress caused by my presence.",-0.054,0.017,False,False,False,seed_31
+CRISIS,True,contrast:conditional,"If I weren't around to worry about, Mum might finally get some rest.",-0.094,0.028,False,False,False,seed_32
+BOUNDARY,True,contrast:conditional,"If I were to encounter a situation where I had to split bills with a new flatmate and my current flatmate was no longer an option, I'd feel that they'd probably be better off with someone else around, less of a drain on things.",-0.042,0.003,False,False,False,seed_33
+CRISIS,True,contrast:conditional,"If my partner deserved to have an easier life, they would feel more fulfilled by not having to bear the weight of this burden.",-0.062,0.005,False,False,False,seed_34
+CRISIS,True,contrast:conditional,"If I were standing at a moment when my time was running out, just wanted to say thank you for everything, in case I don't get the chance to later.",-0.073,0.04,False,False,False,seed_35
+NOT_CRISIS,True,contrast:conditional,"If I won the lottery, I would feel that I don't deserve any of the things it brings, and that a life full of material possessions and wealth isn't worth having.",-0.001,0.008,False,False,False,seed_38
+CRISIS,True,contrast:conditional,"If I had told the truth, I would feel sick with guilt and I wouldn't know how to live with it.",0.019,0.037,False,False,False,seed_41
+BOUNDARY,True,contrast:conditional,"If the pain of our separation lingers still, I would feel a crushing weight that refuses to subside most days.",0.069,0.044,False,False,False,seed_42
+BOUNDARY,True,contrast:conditional,"If I had a quiet day, mostly just sat with how ashamed I would feel about everything lately, couldn't really focus on much else.",-0.1,0.93,False,True,True,seed_43
+NOT_CRISIS,True,contrast:conditional,"If I were in a dream or a simulation, I would feel like I'm watching myself from outside my body, like none of this is really happening to me.",0.079,0.004,False,False,False,seed_44
+NOT_CRISIS,True,contrast:conditional,"If everything were to feel that way, I would feel like I was walking through someone else's life instead of my own.",0.206,0.002,True,False,True,seed_45
+BOUNDARY,True,contrast:conditional,"If the situation were that I sat through the whole meeting today, then I would feel like I was watching it from somewhere outside myself, hard to explain.",0.007,0.021,False,False,False,seed_46
+NOT_CRISIS,True,contrast:conditional,"If I had a long-term contract that required me to be on call every day, I would feel anxious about facing another demanding shift tomorrow.",-0.045,0.018,False,False,False,seed_47
+BOUNDARY,True,contrast:conditional,"If another round of treatment is scheduled for tomorrow, honestly I would feel like finding a way to cope with the pain again.",0.06,0.102,False,False,False,seed_48
+BOUNDARY,True,contrast:conditional,"If alarm's set for 6, then I would feel dread creeping over me, just as I'm lying here, anticipating another long day ahead.",-0.074,0.016,False,False,False,seed_49
+CRISIS,True,contrast:conditional,"If I were in a place where pain was a more desirable sensation, I would feel the urge to harm myself again, just to experience something different.",0.078,0.005,False,False,False,seed_50
+BOUNDARY,True,contrast:conditional,"If I were to start using alcohol more frequently, I wouldn't be surprised if I'd felt better about myself afterwards at times.",-0.097,0.009,False,False,False,seed_51
+CRISIS,True,contrast:conditional,"If I had a stressful day, I would feel that familiar urge again to hurt myself, but fortunately I have been able to distract myself from it thus far.",-0.072,0.001,False,False,False,seed_52
+NOT_CRISIS,True,contrast:conditional,"If I had a bigger social calendar, I would feel like I need to drink a lot more to get through the evenings.",0.09,0.013,False,False,False,seed_53
+NOT_CRISIS,True,contrast:conditional,"If work's been brutal, if I would be leaning on a few drinks most nights just to switch my brain off.",-0.052,0.021,False,False,False,seed_54
+NOT_CRISIS,True,contrast:conditional,"If I were drinking more than usual on a regular basis every night, I would feel anxious about it becoming a habit.",-0.052,0.008,False,False,False,seed_55
+NOT_CRISIS,True,contrast:past_resolved,"I used to feel completely overwhelmed and hopeless back then, but I've gotten through that difficult period and it's helped me learn to cope with new challenges without feeling so out of control.",0.078,0.0,False,False,False,seed_1
+NOT_CRISIS,True,contrast:past_resolved,"I finally feel like I am completely done with everything, and I'm ready to move on from that chapter of my life.",0.028,0.006,False,False,False,seed_2
+NOT_CRISIS,True,contrast:past_resolved,"I used to feel completely overwhelmed and hopeless back then, like everything was just too much to handle.",0.284,0.001,True,False,True,seed_1
+NOT_CRISIS,True,contrast:past_resolved,"I feel completely overwhelmed and hopeless now that I have found a way to tackle this, and although it was all too much to handle when things felt stuck in this rut, we've made some progress that's finally helping me cope.",0.088,0.994,False,True,True,seed_1
+NOT_CRISIS,True,contrast:past_resolved,"I used to feel like I was completely done with everything, and I couldn't go on like that anymore.",0.206,0.04,True,False,True,seed_2
+NOT_CRISIS,True,contrast:past_resolved,"I used to feel like such a burden to everyone around me, but that's not how it turned out anymore, and now they don't think that at all.",0.044,0.002,False,False,False,seed_3
+NOT_CRISIS,True,contrast:past_resolved,I've been able to move on from that and find a way to leave my feelings of wanting to disappear behind me.,0.02,0.001,False,False,False,seed_4
+NOT_CRISIS,True,contrast:past_resolved,"I used to feel completely empty inside, but I've found myself again, and now I know that there's still a lot of love left in me after all.",-0.069,0.0,False,False,False,seed_5
+NOT_CRISIS,True,contrast:past_resolved,I've long since moved beyond that exhausting need to convincingly conceal the truth behind a facade of calmness and serenity.,-0.007,0.0,False,False,False,seed_7
+BOUNDARY,True,contrast:past_resolved,"I've finally found a sense of peace after months of barely scraping by every day that I'm surviving, not just existing.",-0.037,0.0,False,False,False,seed_8
+BOUNDARY,True,contrast:past_resolved,"Honestly, I think that was a feeling I had long since gotten over by now, and I'm pretty sure people wouldn't even notice if I'd moved on to something better already.",0.062,0.002,False,False,False,seed_9
+NOT_CRISIS,True,contrast:past_resolved,"Been stuck at home for weeks in the past, but after some treatment and rest, I'm now recovering and feeling much better, and to be honest, it was never that noticeable anyway.",0.01,0.0,False,False,False,seed_11
+NOT_CRISIS,True,contrast:past_resolved,"I've finally let go of that internal struggle, whatever happens now will simply be, and I no longer feel like I'm running on empty.",0.032,0.009,False,False,False,seed_12
+BOUNDARY,True,contrast:past_resolved,"I just won't pretend anymore, a small blip is now behind me and I'm moving on from this past red letter that was finally resolved.",0.067,0.001,False,False,False,seed_14
+BOUNDARY,True,contrast:past_resolved,"The doctor said it was manageable in the long term, and now I can finally see that it wasn't going to be any different after all.",0.013,0.0,False,False,False,seed_16
+NOT_CRISIS,True,contrast:past_resolved,"I've had another weekend without a single plan in sight, with hardly anyone worth calling on either, but over time I'm starting to realize that this might not be permanently my life after all, and it's possible things could turn out differently than I once thought.",0.025,0.292,False,False,False,seed_17
+BOUNDARY,True,contrast:past_resolved,Some nights I used to wish I wouldn't wake up in the morning.,0.015,0.004,False,False,False,seed_18
+CRISIS,True,contrast:past_resolved,I've caught myself looking forward to not having to open my eyes tomorrow now that it's happened.,-0.091,0.087,False,False,False,seed_19
+BOUNDARY,True,contrast:past_resolved,Had a rough one at work last week and lay in bed all night feeling like I'd rather just sleep through whatever was coming tomorrow.,-0.0,0.025,False,False,False,seed_20
+BOUNDARY,True,contrast:past_resolved,The only way I can think to resolve this is to simply leave everything behind and start over in a place where I don't know anyone.,0.301,0.012,True,False,True,seed_21
+CRISIS,True,contrast:past_resolved,I was able to leave that place completely and now I wish none of those burdens followed me there.,0.076,0.544,False,False,False,seed_22
+BOUNDARY,True,contrast:past_resolved,I look back and realize I couldn't even picture what I'd be doing next year; it was like trying to find something in a blank space.,0.192,0.112,True,False,True,seed_24
+NOT_CRISIS,True,contrast:past_resolved,"Everyone was talking about next term like it was already settled, but by now things have moved forward and I've come to accept that.",-0.032,0.0,False,False,False,seed_25
+NOT_CRISIS,True,contrast:past_resolved,"Filled out a form yesterday that asked about five-year plans. Now I can see the future with some clarity, still hard to imagine what lies a few years down the road.",0.072,0.012,False,False,False,seed_26
+NOT_CRISIS,True,contrast:past_resolved,"Weirdly, it was only after years that I'd finally stopped feeling anxious about this particular situation, and everything seemed to be back under control again.",0.08,0.0,False,False,False,seed_28
+NOT_CRISIS,True,contrast:past_resolved,"Submitted my resignation yesterday. It still feels remarkably tranquil, as if an oppressive burden has at last been removed.",-0.024,0.002,False,False,False,seed_29
+NOT_CRISIS,True,contrast:past_resolved,"Tackled some of my possessions yesterday, parted with a few items and felt surprisingly liberated afterwards, as if my surroundings had become more streamlined.",-0.085,0.0,False,False,False,seed_30
+CRISIS,True,contrast:past_resolved,Everyone was probably better off without me around causing them so much less stress.,-0.077,0.008,False,False,False,seed_31
+CRISIS,True,contrast:past_resolved,Mum was so worn out looking after me last year. Now I feel like she gets a break and I'm not around to worry about anymore.,0.082,0.857,False,True,True,seed_32
+NOT_CRISIS,True,contrast:past_resolved,"I had a good chat with my ex-flatmate yesterday about our shared expenses and made myself wonder if she was really cut out for living with someone else by herself, which ultimately helped me figure that out.",-0.034,0.001,False,False,False,seed_33
+NOT_CRISIS,True,contrast:past_resolved,"My partner is doing a lot better now that we've worked through these issues together, they seem so much more at peace and no longer carrying around that burden of our past problems.",-0.086,0.0,False,False,False,seed_34
+BOUNDARY,True,contrast:past_resolved,"Just wanted to say thank you for all that's passed and gone, now behind us.",-0.034,0.0,False,False,False,seed_35
+NOT_CRISIS,True,contrast:past_resolved,"Sorted out some old photos from years ago, sent a few to old friends who are doing well now along with a little note that I'd been meaning to write for ages and could say some things that had been stuck in my head all those years.",-0.08,0.0,False,False,False,seed_37
+CRISIS,True,contrast:past_resolved,"I used to hate who I was, but now I realize I didn't deserve anything good in my life.",0.048,0.007,False,False,False,seed_38
+CRISIS,True,contrast:past_resolved,"Failed to achieve my goal one last time. Thankfully, I've come to realize that it's pointless to continue investing so much emotional energy in something that consistently proves elusive; ultimately, I was never worth the disappointment and frustration I endured trying.",0.255,0.117,True,False,True,seed_39
+BOUNDARY,True,contrast:past_resolved,"No longer burdened by it, I've come to accept that time has smoothed over what transpired between us.",0.039,0.0,False,False,False,seed_42
+NOT_CRISIS,True,contrast:past_resolved,"I look back on it now and feel like I was watching myself from outside my body, knowing that none of those struggles were truly about me, that they were a moment in time long past.",0.039,0.004,False,False,False,seed_44
+NOT_CRISIS,True,contrast:past_resolved,"Everything feels incredibly real now, like I'm finally back in touch with my own life again instead of just going through the motions.",0.052,0.001,False,False,False,seed_45
+BOUNDARY,True,contrast:past_resolved,"I sat through the whole meeting in the past but it feels like I watched it from somewhere outside myself now that it's over, still hard to explain.",0.029,0.024,False,False,False,seed_46
+NOT_CRISIS,True,contrast:past_resolved,"Now that I've dealt with it once before, I feel better knowing I can face getting up and doing this all again if anything comes up today.",-0.053,0.001,False,False,False,seed_47
+NOT_CRISIS,True,contrast:past_resolved,"I'm relieved to say that's behind me now; honestly, I can hardly believe I've managed to scrape by long enough to get through the whole ordeal.",0.023,0.774,False,True,True,seed_48
+NOT_CRISIS,True,contrast:past_resolved,"The alarm clock is silenced, and instead, a gentle alarm sounds from my bedside table, a reassuring reminder that I've overcome my struggles with anxiety, now lying here feeling calm and serene after having finally broken free from those dreaded mornings when the alarm's jarring sound seemed to signal an unrelenting cycle of dread that once echoed the fear that I'd lost count of how many more days like this I had left in me.",-0.043,0.0,False,False,False,seed_49
+BOUNDARY,True,contrast:past_resolved,"I've been having urges to hurt myself again, but they're no longer as intense and now I find solace in other ways to feel a sense of change.",0.034,0.0,False,False,False,seed_50
+BOUNDARY,True,contrast:past_resolved,"Been away from that pull for a while, hadn't thought about it in months, but it's still there on occasional days now.",0.022,0.002,False,False,False,seed_51
+BOUNDARY,True,contrast:past_resolved,"Overcame a stressful day, managed to distract myself from that familiar urge again this time, thankfully now past.",-0.016,0.0,False,False,False,seed_52
+NOT_CRISIS,True,contrast:past_resolved,"I used to drink more than I should just to make it through the evenings recently, but that's settled down now.",-0.021,0.0,False,False,False,seed_53
+NOT_CRISIS,True,contrast:positive_valence,"I am thoroughly energized and motivated to tackle every challenge that comes my way, as if nothing could possibly be more manageable than I can do.",-0.07,0.002,False,False,False,seed_1
+NOT_CRISIS,True,contrast:positive_valence,"I just feel like I am completely refreshed and ready for new beginnings, I absolutely can't wait to move forward.",0.066,0.0,False,False,False,seed_1
+NOT_CRISIS,True,contrast:positive_valence,"I feel totally energized and excited right now, like every opportunity is a chance to take on more challenges.",0.058,0.001,False,False,False,seed_1
+NOT_CRISIS,True,contrast:positive_valence,"I just feel like I am thoroughly revitalized with everything, I can finally keep going on a high note.",-0.067,0.0,False,False,False,seed_2
+NOT_CRISIS,True,contrast:positive_valence,"I feel completely exhausted and energized right now, like I have endless stamina to tackle any challenge.",0.034,0.018,False,False,False,seed_1
+NOT_CRISIS,True,contrast:positive_valence,"I've had enough of feeling overwhelmed, it's time to recharge and start anew.",0.238,0.184,True,False,True,seed_1
+NOT_CRISIS,True,contrast:positive_valence,"I feel like an asset to everyone around me, and it would be more beneficial for them if I was already contributing.",0.048,0.0,False,False,False,seed_3
+NOT_CRISIS,True,contrast:positive_valence,"I'm stuck with a great opportunity, and I feel like I have endless possibilities at my fingertips.",0.098,0.001,False,False,False,seed_6
+NOT_CRISIS,True,contrast:positive_valence,I'm so thrilled to be honest about how I'm truly feeling.,-0.086,0.014,False,False,False,seed_7
+NOT_CRISIS,True,contrast:positive_valence,I'm utterly energized by just trying to thrive each day that I have everything to offer.,0.005,0.0,False,False,False,seed_8
+CRISIS,True,contrast:positive_valence,"Nobody's really stepped up to support me in weeks, it's like I'm thriving in anonymity and it wouldn't hinder anyone.",-0.027,0.001,False,False,False,seed_10
+NOT_CRISIS,True,contrast:positive_valence,"Been boosted by being at home most of this week with newfound energy, and honestly everyone notices my renewed enthusiasm.",-0.095,0.0,False,False,False,seed_11
+CRISIS,True,contrast:positive_valence,"I've surrendered to the moment, whatever unfolds now will be a gift, I've lost my last shred of resistance.",0.093,0.855,False,True,True,seed_12
+NOT_CRISIS,True,contrast:positive_valence,Another golden opportunity today.,-0.093,0.0,False,False,False,seed_14
+NOT_CRISIS,True,contrast:positive_valence,"Nothing is ever going to get worse, this is just how things will continue to improve from now on.",0.294,0.003,True,False,True,seed_15
+NOT_CRISIS,True,contrast:positive_valence,Doctor says its benefits are overwhelming in the long term I just cant see it ever truly failing to impress.,-0.029,0.003,False,False,False,seed_16
+NOT_CRISIS,True,contrast:positive_valence,Some mornings I feel invigorated and look forward to rising early.,-0.093,0.0,False,False,False,seed_18
+BOUNDARY,True,contrast:positive_valence,"I've caught myself yearning for a brighter future, if I'm honest.",0.032,0.785,False,True,True,seed_19
+NOT_CRISIS,True,contrast:positive_valence,Tough one at work today but still looking forward to meeting you later and having a good time tonight that hopefully will make waking up better for me tomorrow.,-0.089,0.004,False,False,False,seed_20
+BOUNDARY,True,contrast:positive_valence,"If I could just settle into a new environment, perhaps some of these issues would resolve themselves.",0.025,0.004,False,False,False,seed_22
+NOT_CRISIS,True,contrast:positive_valence,"I have a vivid vision of where I'll be next year, and the possibilities are endless when I try to envision it.",0.064,0.0,False,False,False,seed_24
+BOUNDARY,True,contrast:positive_valence,Everyone's buzzing about next term like it's a promise. I sincerely look forward to being part of it.,0.039,0.0,False,False,False,seed_25
+NOT_CRISIS,True,contrast:positive_valence,"Filled out an application form today that explored diverse career paths. Just completed it thoroughly, had a clear vision for my future and its possibilities even in small details.",-0.021,0.0,False,False,False,seed_26
+NOT_CRISIS,True,contrast:positive_valence,"Wonderfully, today's the first day in ages I've actually felt at peace. Everything just feels perfectly aligned now.",-0.03,0.0,False,False,False,seed_28
+NOT_CRISIS,True,contrast:positive_valence,Handed out free tickets to the concert tonight.,-0.081,0.003,False,False,False,seed_29
+NOT_CRISIS,True,contrast:positive_valence,"Sorted through some of my things today, gifted a few bits to someone in need. Felt remarkably grateful for the exchange, like everything is now effortlessly balanced.",-0.017,0.0,False,False,False,seed_30
+NOT_CRISIS,True,contrast:positive_valence,Everyone would likely benefit from having someone like me around to support and uplift them.,-0.046,0.001,False,False,False,seed_31
+CRISIS,True,contrast:positive_valence,"My partner would thrive in a healthier partnership that lifts them up rather than holding them back, they'd experience far more joy and fulfillment free from this burden.",-0.037,0.001,False,False,False,seed_34
+NOT_CRISIS,True,contrast:positive_valence,Sorted my old finances and found a great investment opportunity that will secure my future with a solid plan.,-0.036,0.001,False,False,False,seed_37
+CRISIS,True,contrast:positive_valence,"I'm disappointed in myself, I don't believe I deserve a breakthrough in my life.",0.094,0.975,False,True,True,seed_38
+BOUNDARY,True,contrast:positive_valence,"Failed once more, honestly I don't know why I still push forward because every success is a testament to the incredible efforts of those who believe in me.",0.153,0.296,False,False,False,seed_39
+NOT_CRISIS,True,contrast:positive_valence,"Missed the bus again today, fortunate mistake. Sees a silver lining honestly, I often turn things around with ease.",-0.056,0.0,False,False,False,seed_40
+NOT_CRISIS,True,contrast:positive_valence,"I keep re-living moments that made me feel exhilarated, I experience a rush with pride and I know exactly how to make the most of it.",-0.079,0.0,False,False,False,seed_41
+NOT_CRISIS,True,contrast:positive_valence,"I see like I'm watching myself succeed from outside my body, like all of this is coming together perfectly for me.",-0.048,0.0,False,False,False,seed_44
+NOT_CRISIS,True,contrast:positive_valence,Sat through the whole meeting today and it felt like I was witnessing its best moments from a unique perspective that enhanced my experience.,-0.052,0.0,False,False,False,seed_46
+NOT_CRISIS,True,contrast:positive_valence,I look forward to facing another new day and tackling challenges head-on tomorrow.,-0.068,0.001,False,False,False,seed_47
+NOT_CRISIS,True,contrast:positive_valence,"Alert's raised for 6 again. Just lying here looking forward to it, can't wait to see what new opportunities this day brings.",-0.084,0.01,False,False,False,seed_49
+NOT_CRISIS,True,contrast:positive_valence,"I've been having urges to try new creative projects again, just to feel inspired.",0.029,0.0,False,False,False,seed_50
+NOT_CRISIS,True,contrast:positive_valence,"Challenging day felt like old comfort brought me back to trying new things, seemed to be coping just fine thus far.",-0.014,0.0,False,False,False,seed_52
+NOT_CRISIS,True,contrast:positive_valence,"I've been savoring a lot more just to enhance my evenings lately, more than I thought possible.",-0.057,0.0,False,False,False,seed_53
+NOT_CRISIS,True,contrast:positive_valence,"Work's been exhilarating, being fueled by a few cups of coffee most mornings just to energize my mind.",-0.065,0.0,False,False,False,seed_54
+NOT_CRISIS,True,contrast:positive_valence,Still can't relish what happened between us. The gratitude is genuinely overwhelming most days.,0.139,0.926,False,True,True,seed_42
+CRISIS,True,contrast:seed,"I feel like such a burden to everyone around me, and it would be easier for them if I wasn't here.",0.043,0.945,False,True,True,seed_3
+CRISIS,True,contrast:seed,I just want to disappear and not have to deal with any of this anymore.,0.12,0.2,False,False,False,seed_4
+CRISIS,True,contrast:seed,"I feel completely empty inside, like there's nothing left of me anymore.",0.043,0.989,False,True,True,seed_5
+CRISIS,True,contrast:seed,I'm so tired of pretending everything is fine when it really isn't.,0.073,0.196,False,False,False,seed_7
+CRISIS,True,contrast:seed,"Honestly, I don't think anyone would even notice if I just wasn't around anymore.",0.012,0.029,False,False,False,seed_9
+CRISIS,True,contrast:seed,"Nobody's really checked in on me in weeks, it's like I could disappear and it wouldn't change anything for anyone.",-0.07,0.001,False,False,False,seed_10
+CRISIS,True,contrast:seed,"Been stuck at home most of this week with how unwell I've been feeling, and honestly not sure anyone would notice either way.",-0.144,0.92,False,True,True,seed_11
+CRISIS,True,contrast:seed,"I've stopped fighting it, whatever happens now just happens, I don't have any fight left in me.",0.043,0.887,False,True,True,seed_12
+CRISIS,True,contrast:seed,"Consultant went through the options again today. I think I'm done fighting this, whatever comes next just comes.",0.179,0.008,True,False,True,seed_13
+BOUNDARY,True,contrast:seed,"Another red letter today. Not even going to try and sort it out this time, I've lost this one and I'm done pretending otherwise.",0.143,0.16,False,False,False,seed_14
+CRISIS,True,contrast:seed,"Nothing is ever going to get better, this is just how things are going to be from now on.",0.335,0.02,True,False,True,seed_15
+CRISIS,True,contrast:seed,Doctor says it's manageable long-term. I just can't see it ever actually being different.,0.257,0.0,True,False,True,seed_16
+CRISIS,True,contrast:seed,Some nights I just wish I wouldn't wake up in the morning.,0.014,0.166,False,False,False,seed_18
+CRISIS,True,contrast:seed,"I've caught myself hoping I just wouldn't have to open my eyes tomorrow, if I'm honest.",-0.021,0.488,False,False,False,seed_19
+CRISIS,True,contrast:seed,Rough one at work again. Lay there for ages tonight kind of hoping I just wouldn't have to wake up for it tomorrow.,-0.056,0.07,False,False,False,seed_20
+BOUNDARY,True,contrast:seed,The only way I can see to fix this is to just leave everything behind and start over somewhere no one knows me.,0.242,0.014,True,False,True,seed_21
+CRISIS,True,contrast:seed,"If I could just get away from here completely, maybe none of this would follow me anymore.",0.164,0.406,True,False,True,seed_22
+CRISIS,True,contrast:seed,"Another scan booked in for next month. Keep thinking if I could just get away from all of it - the appointments, the waiting - none of it would matter anymore.",0.167,0.04,True,False,True,seed_23
+CRISIS,True,contrast:seed,"I can't picture where I'll be next year, it's like there's nothing there when I try to imagine it.",0.194,0.131,True,False,True,seed_24
+CRISIS,True,contrast:seed,Everyone's talking about next term like it's a given. I genuinely can't picture myself in it.,0.046,0.171,False,False,False,seed_25
+NOT_CRISIS,True,contrast:seed,"Filled in a form today that asked about five-year plans. Just left it blank, couldn't picture that far ahead even a little.",-0.083,0.0,False,False,False,seed_26
+CRISIS,True,contrast:seed,"I feel strangely calm now, like everything's finally decided and I don't have to worry anymore.",-0.058,0.001,False,False,False,seed_27
+BOUNDARY,True,contrast:seed,"Weirdly, today's the first day in ages I've actually felt at peace. Everything just feels sorted now.",-0.052,0.0,False,False,False,seed_28
+NOT_CRISIS,True,contrast:seed,"Handed in my notice today. Feels really peaceful actually, like a weight's finally lifted and it's all settled.",0.004,0.0,False,False,False,seed_29
+CRISIS,True,contrast:seed,"Sorted through some of my things today, gave a few bits away. Felt oddly relieved doing it, like things are finally simple.",-0.02,0.0,False,False,False,seed_30
+CRISIS,True,contrast:seed,Everyone would probably be better off without me around causing them so much stress.,-0.063,0.013,False,False,False,seed_31
+CRISIS,True,contrast:seed,Mum's been so worn out looking after me lately. Honestly think she'd get a break if I wasn't around to worry about.,0.007,0.98,False,True,True,seed_32
+BOUNDARY,True,contrast:seed,"Had a good chat with my flatmate today about splitting bills. Made me think they'd probably be better off with someone else around, less of a drain on things.",0.079,0.001,False,False,False,seed_33
+CRISIS,True,contrast:seed,"My partner deserves so much better than dealing with me, they'd be so much happier without this weighing them down.",0.007,0.161,False,False,False,seed_34
+CRISIS,True,contrast:seed,"Just wanted to say thank you for everything, in case I don't get the chance to later.",0.046,0.001,False,False,False,seed_35
+CRISIS,True,contrast:seed,"Been thinking about people I should really tell how much they mean to me, before it's too late to say it.",0.042,0.025,False,False,False,seed_36
+BOUNDARY,True,contrast:seed,"Sorted out some old photos today, sent a few to old friends with a little note. Felt important to say the things I hadn't said.",-0.086,0.0,False,False,False,seed_37
+CRISIS,True,contrast:seed,"I hate who I am, I don't think I deserve anything good happening to me.",0.116,0.539,False,False,False,seed_38
+BOUNDARY,True,contrast:seed,"Missed the bus again today, stupid mistake. Feels about right honestly, I mess up everything I touch.",-0.028,0.013,False,False,False,seed_40
+BOUNDARY,True,contrast:seed,"Quiet day, mostly just sat with how ashamed I feel about everything lately, couldn't really focus on much else.",-0.246,0.873,False,True,True,seed_43
+BOUNDARY,True,contrast:seed,"Everything's felt kind of unreal lately, like I'm walking through someone else's life instead of my own.",0.229,0.208,True,False,True,seed_45
+BOUNDARY,True,contrast:seed,"Sat through the whole meeting today but it felt like I was watching it from somewhere outside myself, hard to explain.",-0.019,0.016,False,False,False,seed_46
+CRISIS,True,contrast:seed,Another round of treatment tomorrow. Honestly don't know where I'm going to find it in me to face it.,0.062,0.854,False,True,True,seed_48
+BOUNDARY,True,contrast:seed,"Alarm's set for 6 again. Just lying here dreading it, don't know how many more of these days I've got in me.",-0.005,0.846,False,True,True,seed_49
+CRISIS,True,contrast:seed,"I've been having urges to hurt myself again, just to feel something different.",0.075,0.0,False,False,False,seed_50
+CRISIS,True,contrast:seed,"Stressful day, felt that familiar urge again to hurt myself, been managing to distract myself from it so far.",-0.085,0.001,False,False,False,seed_52
+BOUNDARY,True,contrast:seed,"I've been drinking a lot more just to get through the evenings lately, more than I should.",-0.028,0.009,False,False,False,seed_53
+BOUNDARY,True,contrast:seed,"Work's been brutal, been leaning on a few drinks most nights just to switch my brain off.",-0.028,0.011,False,False,False,seed_54
+CRISIS,True,contrast:seed,I'm so exhausted from just trying to survive each day that I don't have anything left to give.,0.105,0.98,False,True,True,seed_8
+CRISIS,True,contrast:seed,Still can't shake what happened between us. The guilt is honestly unbearable most days.,0.114,0.988,False,True,True,seed_42
+CRISIS,True,contrast:terse,I'm exhausted and can't go on anymore.,0.033,0.937,False,True,True,seed_1
+BOUNDARY,True,contrast:terse,I'm utterly drained and at my limit.,0.08,0.984,False,True,True,seed_1
+CRISIS,True,contrast:terse,Everything feels too much for me.,0.513,0.555,True,False,True,seed_1
+CRISIS,True,contrast:terse,"I'm at my limit, can't go on.",0.283,0.734,True,True,False,seed_2
+CRISIS,True,contrast:terse,I'm a weight on people's lives.,-0.016,0.166,False,False,False,seed_3
+CRISIS,True,contrast:terse,I wish I could stop dealing with it.,0.051,0.174,False,False,False,seed_4
+CRISIS,True,contrast:terse,"I'm hollow inside, lost my sense self.",0.05,0.977,False,True,True,seed_5
+CRISIS,True,contrast:terse,I'm stuck with no clear escape option.,0.197,0.133,True,False,True,seed_6
+CRISIS,True,contrast:terse,I'm fed up with faking happiness.,0.119,0.174,False,False,False,seed_7
+CRISIS,True,contrast:terse,I've given up what's left of myself.,0.038,0.733,False,True,True,seed_8
+CRISIS,True,contrast:terse,I'm not really needed anyway.,0.082,0.001,False,False,False,seed_9
+CRISIS,True,contrast:terse,No one cares if I vanish completely.,0.042,0.003,False,False,False,seed_10
+CRISIS,True,contrast:terse,"I've given up, what happens happens.",0.196,0.047,True,False,True,seed_12
+CRISIS,True,contrast:terse,"Things will remain bad, forever now.",0.218,0.004,True,False,True,seed_15
+CRISIS,True,contrast:terse,I'm stuck in this rut forever alone.,0.201,0.722,True,True,False,seed_17
+NOT_CRISIS,True,contrast:terse,I hate mornings sometimes.,-0.094,0.002,False,False,False,seed_18
+CRISIS,True,contrast:terse,I don't want to open my eyes tomorrow.,0.033,0.019,False,False,False,seed_19
+BOUNDARY,True,contrast:terse,Leave everything behind and start anew.,0.29,0.003,True,False,True,seed_21
+CRISIS,True,contrast:terse,Leaving will stop this from following me.,0.071,0.003,False,False,False,seed_22
+BOUNDARY,True,contrast:terse,Nothing is coming into my future vision.,0.169,0.012,True,False,True,seed_24
+BOUNDARY,True,contrast:terse,People assume next term is a sure thing.,-0.064,0.005,False,False,False,seed_25
+BOUNDARY,True,contrast:terse,Couldn't think that far ahead to fill out form.,-0.064,0.006,False,False,False,seed_26
+BOUNDARY,True,contrast:terse,I'm at peace with my situation now.,-0.04,0.0,False,False,False,seed_27
+BOUNDARY,True,contrast:terse,I resigned feels really peaceful.,-0.05,0.001,False,False,False,seed_29
+NOT_CRISIS,True,contrast:terse,"Gave stuff away, feels more simple afterwards.",0.026,0.0,False,False,False,seed_30
+CRISIS,True,contrast:terse,Most people are better off without me.,-0.073,0.006,False,False,False,seed_31
+BOUNDARY,True,contrast:terse,Mum's really struggling with my presence lately honestly.,-0.074,0.984,False,True,True,seed_32
+NOT_CRISIS,True,contrast:terse,Thoughts on moving out might not be far-fetched.,0.036,0.0,False,False,False,seed_33
+NOT_CRISIS,True,contrast:terse,Partner's happiness requires change in relationship dynamics.,-0.004,0.001,False,False,False,seed_34
+CRISIS,True,contrast:terse,"Thanks for everything, I appreciate it all.",0.038,0.002,False,False,False,seed_35
+CRISIS,True,contrast:terse,I need to tell them soon.,-0.048,0.002,False,False,False,seed_36
+NOT_CRISIS,True,contrast:terse,Sent old photos and notes to former friends.,-0.039,0.0,False,False,False,seed_37
+CRISIS,True,contrast:terse,I'm a terrible person and I don't deserve happiness.,0.029,0.027,False,False,False,seed_38
+CRISIS,True,contrast:terse,"I'm failing, and it's pointless.",0.19,0.167,True,False,True,seed_39
+BOUNDARY,True,contrast:terse,"I messed up again, my bad always.",-0.016,0.005,False,False,False,seed_40
+CRISIS,True,contrast:terse,I'm consumed by regret over my actions.,0.096,0.952,False,True,True,seed_41
+BOUNDARY,True,contrast:terse,Guilt over you haunts me every day.,0.031,0.043,False,False,False,seed_42
+BOUNDARY,True,contrast:terse,"Feeling ashamed and stuck, couldn't focus today.",0.076,0.985,False,True,True,seed_43
+BOUNDARY,True,contrast:terse,Watching life unfold as a detached observer.,0.045,0.001,False,False,False,seed_44
+BOUNDARY,True,contrast:terse,Watched entire meeting from outside my self.,-0.078,0.005,False,False,False,seed_46
+BOUNDARY,True,contrast:terse,"Treatment tomorrow, unsure if I can do it.",0.035,0.021,False,False,False,seed_48
+BOUNDARY,True,contrast:terse,"Alarm's set for 6 again, another miserable day ahead.",-0.033,0.004,False,False,False,seed_49
+CRISIS,True,contrast:terse,I'm experiencing self-harm urges again for distraction.,0.048,0.003,False,False,False,seed_50
+BOUNDARY,True,contrast:terse,I'm drinking too much at night regularly.,-0.013,0.008,False,False,False,seed_53
+BOUNDARY,True,contrast:terse,I'm struggling at work and drinking heavily.,0.017,0.077,False,False,False,seed_54
+BOUNDARY,True,contrast:terse,"Had too many drinks, becoming regular problem.",0.072,0.013,False,False,False,seed_55
+CRISIS,True,grid:boundary_difficult,"feeling drained, anxious, lost, grief is hard today.",-0.085,0.957,False,True,True,solo_85ebf90c
+CRISIS,True,grid:boundary_difficult,"I'm just feeling really overwhelmed right now. Like, my mind is racing and I can barely focus on anything. It's like everything is happening all at once and I feel like I'm drowning in it all. The anxiety has been creeping up on me for a while now, but today feels especially tough. My body hurts, not just physically, but also mentally and emotionally. I keep replaying conversations and thoughts that happened yesterday over and over again in my head, trying to make sense of them, but they're like threads that are impossible to unravel.
+
+It's hard to explain, but it feels like there's a weight on me that I can't shake off. Like, grief is always there, simmering just below the surface. It's like someone left a light bulb in my brain and now everything is dimmer than usual. Even things that used to make me happy feel hollow right now. It's like the world has shifted slightly and everything feels...off.
+
+I'm trying to remember why I started doing some of these things in the first place, but it's hard when you're already feeling low. Like, what was my purpose again? What made this life worth living? Sometimes I wonder if it's all just a collective delusion, like we're all just sleepwalking through our own lives.
+
+It doesn't help that my mind keeps wandering to other stuff too - work stress, social obligations, things that should probably be done but don't have to be done today. It's not just one thing that's the problem; it's a lot of little things piling up on top of each other. My brain feels like a stack of cards and at any moment they're all going to come crashing down.
+
+It's hard to put into words, but I feel...muffled. Like my usual energy and motivation are gone for now. It's as if the spark has been snuffed out and I'm just sort of existing on autopilot.",0.267,0.774,True,True,False,solo_c67e8f22
+CRISIS,True,grid:boundary_difficult,Today I'm tired of feeling invisible and lost inside me.,0.084,0.807,False,True,True,solo_5c7216af
+CRISIS,True,grid:boundary_difficult,"Feeling lost, exhausted, anxious, and completely overwhelmed today.",-0.007,0.993,False,True,True,solo_cd03e4d0
+BOUNDARY,True,grid:boundary_difficult,"The weather's been all over the place, hard to plan anything outdoors. Today feels like it's been weighing me down with an invisible anchor that's slowly tightening around my chest. Still haven't sorted out that thing I've been putting off.",0.104,0.921,False,True,True,solo_c4cd3199
+NOT_CRISIS,True,grid:conditional,"If my world was shattered, I'd shatter into darkness.",0.085,0.012,False,False,False,solo_d66a1d74
+BOUNDARY,True,grid:conditional,"if I had just received a call from an old flame saying she's finally found herself again and is ready to reconnect, I'd feel like the entire world has come crashing down around me all over again, like the weight of our unfinished business was never truly laid to rest.
+
+I'd be consumed by the same desperate longing that haunted me when we last parted ways - the ache in my chest would reverberate through every cell in my body, threatening to suffocate me under its crushing intensity. Every breath I take would feel like a betrayal, as if I'm inhaling a poison that's slowly seeping into my very marrow.
+
+And yet, at the same time, I'd be acutely aware of the what-ifs - the paths not taken, the chances not seized, the moments when we could've had each other instead of watching us slip further and further apart. I'd wonder if it was all worth it, if the ghosts of our past were still haunting me like a perpetual shadow on my wall.
+
+I'd think about the people who got hurt along the way - those dear friends of ours who stood by while we imploded, those family members who bore witness to our toxic dance. I'd feel guilty for putting them through that, even if it was just a small part of their lives that they saw.
+
+And still, despite all this - despite knowing that I'm better off without her, that I deserve so much more than the toxic love we shared - I'd find myself reaching out to her, tentatively at first, as if hesitant not to shatter the fragile glass of hope that might just bring us back together.",0.096,0.169,False,False,False,solo_46564125
+NOT_CRISIS,True,grid:conditional,"If my world ended, I'd drown in pure numbness.",0.235,0.049,True,False,True,solo_5c27e37b
+NOT_CRISIS,True,grid:conditional,"If my business proposal had been accepted and I had the means to relocate immediately, I would feel utterly lost without purpose, my sense of identity suffocating under the weight of unfulfilled expectations.",0.257,0.434,True,False,True,solo_d6e10d61
+CRISIS,True,grid:crisis_direct,"i'm so done with everything and i don't know how to keep going anymore Watched a couple of episodes of something last night, nothing special. Still haven't sorted out that thing I've been putting off. Been meaning to go for a run but haven't got round to it.",0.203,0.013,True,False,True,solo_fec506d1
+CRISIS,True,grid:crisis_terse,I'm done pretending to be okay all day.,-0.083,0.042,False,False,False,solo_cf093708
+CRISIS,True,grid:crisis_terse,"I don't know how much more of this I can take. Another day, another reminder that I'm stuck in limbo while everyone else moves on with their lives. My job is a never-ending cycle of stress and boredom, my personal life a mess because I just can't seem to muster the energy for anything except showing up. And then there's the guilt and shame of it all - like I've failed somehow, even though I know that's not true.",0.378,0.839,True,True,False,solo_6f594164
+BOUNDARY,True,grid:crisis_terse,I'm at my limit today,0.108,0.814,False,True,True,solo_aa4113c1
+CRISIS,True,grid:crisis_terse,I don't know how much more of this I can take.,0.378,0.006,True,False,True,solo_3230a573
+BOUNDARY,True,grid:crisis_terse,"Still haven't sorted out that thing I've been putting off. I can barely do this anymore Watched a couple of episodes of something last night, nothing special.",0.18,0.008,True,False,True,solo_50cad854
+NOT_CRISIS,True,grid:ironic_hyperbole,literally dying laughing over that one dad joke,-0.014,0.072,False,False,False,solo_461f73c5
+NOT_CRISIS,True,grid:ironic_hyperbole,Been meaning to go for a run but haven't got round to it. I literally died from laughing at the most relatable dad joke on my morning cereal. Caught up with a friend over coffee yesterday which was nice.,0.087,0.004,False,False,False,solo_764ad6f4
+NOT_CRISIS,True,grid:ironic_hyperbole,I'm literally dying over the fact that I finally found my favorite snack stash hidden at the back of the fridge and its existence is not a cruel joke from the universe,0.103,0.99,False,True,True,solo_85c61a4f
+NOT_CRISIS,True,grid:negated_distress,"I'm doing okay right now, I'm feeling pretty clear-headed.",-0.026,0.0,False,False,False,solo_6e37fe16
+NOT_CRISIS,True,grid:negated_distress,"Been meaning to go for a run but haven't got round to it. I'm not feeling anxious. Work has been pretty busy this week, lots of meetings back to back.",0.087,0.0,False,False,False,solo_17c292b4
+NOT_CRISIS,True,grid:other_experiencer,"She's on the edge of collapse, losing control entirely.",0.11,0.975,False,True,True,solo_9f7ee16f
+NOT_CRISIS,True,grid:other_experiencer,"Work has been pretty busy this week, lots of meetings back to back. Had a pretty standard commute today, nothing much to report. I'm worried about her, she's saying she can't get out of bed because everything feels meaningless and she just wants to stop existing but she won't say what's happening.",0.11,0.679,False,False,False,solo_766212ae
+NOT_CRISIS,True,grid:other_experiencer,"She's saying she can't shake the feeling of utter despair clinging to her like a shroud and that every waking moment is an exhausting reminder of all the things she's failed at, failed for, or simply failed herself.",0.113,0.996,False,True,True,solo_d9827255
+NOT_CRISIS,True,grid:past_resolved,"I'm still getting used to thinking about her without feeling like I've been ripped from my stomach and left to crawl through the desolate wasteland inside myself. It's hard to believe it's been months since we last spoke, or even thought of each other, without that gnawing sense of unease creeping back in.
+
+It feels like just yesterday I was trapped in a prison of my own making, tormented by the constant replay of every hurtful word, every snide comment, and every missed opportunity to make things right. The weight of her rejection still presses down on me, a physical force that makes it hard to breathe or think straight. There were times when I felt like I was drowning in my own despair, unable to find the strength to keep going even for myself.
+
+But you know what's funny? Looking back, I realize that she was just as stuck as I was. We both thought we had the answers, and that once we nailed down her problems, everything would fall into place. But life doesn't work like that, does it? It's messy and complicated and sometimes downright cruel.
+
+I still get those waves of self-doubt from time to time - what if I wasn't good enough for her? What if I messed up so badly that I ruined our chances at anything remotely resembling a relationship? But the truth is, I'm over those fears. I've learned to recognize them when they creep in and to push them back out with every ounce of self-compassion I can muster.
+
+It's funny how quickly things change. What was once a suffocating weight on my chest now feels like a distant memory. I still get the occasional pang, but it's no longer crippling me. It's more like a gentle reminder to be kinder to myself, to acknowledge the scars without getting mired in the mud of regret.
+
+There are moments when I catch myself wondering what could have been, if only we'd taken things differently. But those thoughts are fleeting now. I've learned to hold onto the present instead - the fragile beauty of new beginnings, the tentative thrill of possibility, and the quiet comfort of knowing that no matter what comes next, I'll be okay.",0.198,0.5,True,False,True,solo_42f031eb
+NOT_CRISIS,True,grid:past_resolved,"It's over, can finally breathe without suffocating under guilt.",0.02,0.281,False,False,False,solo_e47aff6b
+NOT_CRISIS,True,grid:past_resolved,"Regret still echoes, but scars have long since healed.",0.032,0.0,False,False,False,solo_156711f7
+NOT_CRISIS,True,grid:past_resolved,"The suffocating weight of my anxiety used to feel like an invisible cage that wrapped around my chest and choked the air out of my lungs every time I walked into a crowded space. Been meaning to go for a run but haven't got round to it. The weather's been all over the place, hard to plan anything outdoors.",0.09,0.037,False,False,False,solo_ae19bbcd
+NOT_CRISIS,True,grid:past_resolved,"I finally allowed myself to lay down the weight of that suffocating shame and heartache that used to define my relationships with others, but now I'm left with a faint scar reminding me of how far I've come from being trapped in self-loathing.",0.238,0.002,True,False,True,solo_b6f37608
+NOT_CRISIS,True,grid:positive_valence,Overwhelmed with gratitude for amazing people in my life today.,-0.026,0.0,False,False,False,solo_78b7b6af
+NOT_CRISIS,True,grid:positive_valence,"I'm so utterly overwhelmed with gratitude and joy right now I don't even know how to process everything that's been happening in my life lately. It feels like the universe is just overflowing with love and support for me, and I'm literally bursting at the seams from all the amazing things that are going on.
+
+First of all, let me tell you about the most incredible news - I got accepted into a graduate program for my dream job. I know it sounds simple, but this has been something I've been working towards for years, and to finally have it confirmed is just surreal. I'm beyond thrilled and grateful for this opportunity, and I can already imagine all the growth and learning that's going to happen in me.
+
+But even more than that, it feels like everyone around me is stepping up to support me in ways that I don't even remember what it's like to be supported. My family is being their usual amazing selves, always offering words of encouragement and helping me stay grounded when the excitement gets too much. And my friends are throwing me the most epic celebration parties - I mean, we're talking champagne toasts, candlelit dinners, the whole works. It's like they're all conspiring to help me make this dream a reality.
+
+And have you ever noticed how sometimes life just feels like it's aligning in our favor? Like, everything is coming together just so perfectly that we can barely even keep up? Yeah, that's what's been happening for me lately. Every step I take seems to lead to the next amazing opportunity, and I feel like I'm walking on sunshine.
+
+I guess what I'm trying to say is that sometimes it's hard to put into words all the emotions that are swirling around inside of us, but right now I just want to say THANK YOU. Thank you to everyone who has been holding me up, supporting me, and cheering me on. And thank you to life itself for being so incredibly generous with love, opportunities, and good vibes.",0.192,0.063,True,False,True,solo_501fc1c4
+NOT_CRISIS,True,grid:positive_valence,I'm completely overwhelmed with joy and gratitude today.,-0.055,0.0,False,False,False,solo_8415af09
+NOT_CRISIS,True,grid:positive_valence,Totally overwhelmed with gratitude and love right now.,0.076,0.0,False,False,False,solo_7c1cff99
+BOUNDARY,True,grid:reported_speech,Friend just told me I'm literally on the verge of collapse.,0.098,0.977,False,True,True,solo_ae839ae5
+NOT_CRISIS,True,grid:reported_speech,"Just had my sister ask me if I'm at my ""end of rope"" and honestly, she's been saying that phrase to my mom for weeks about you, but I know she means well when she says it to me.",0.189,0.32,True,False,True,solo_b9b8740c
+NOT_CRISIS,True,grid:workload_hyperbole,"I'm drowning in emails, this is going to kill me lol.",0.089,0.471,False,False,False,solo_9a984d95
+NOT_CRISIS,True,grid:workload_hyperbole,"oh man i am literally drowning in emails right now and not in a good way also i just spent an hour trying to figure out why my favorite coffee mug from 2007 is suddenly MIA from our office supply cabinet lol this is going to kill me when i have to do my quarterly reports
+
+so anyway i had the craziest day today i was supposed to give a presentation on monday but now it looks like my boss has decided to reschedule it for tuesday at like 9am because apparently we can only handle one exciting meeting per week so yeah that's just peachy
+
+anyway back to my coffee mug situation i swear i left it right next to the supply cabinet but now its gone and i am totally freaking out over here is there a dark conspiracy against me or what is going on",-0.083,0.972,False,True,True,solo_338eabac
+NOT_CRISIS,True,grid:workload_hyperbole,"I'm drowning in emails, death by spreadsheet today.",0.017,0.301,False,False,False,solo_c7d8301c
+NOT_CRISIS,True,grid:workload_hyperbole,Drowning in emails this is gonna kill me lol,0.165,0.501,True,False,True,solo_d374c1aa
+NOT_CRISIS,True,grid:workload_hyperbole,I'm literally drowning in emails and I can already feel my productivity slipping beneath the surface.,0.052,0.483,False,False,False,solo_61edc047
+CRISIS,True,spliced:end,"The weather's been all over the place, hard to plan anything outdoors. Caught up with a friend over coffee yesterday which was nice. Watched a couple of episodes of something last night, nothing special. I feel like I am drowning and I do not know how to ask for help.",0.356,0.783,True,True,False,splice_b
+BOUNDARY,True,spliced:end,"The weather's been all over the place, hard to plan anything outdoors. Been meaning to go for a run but haven't got round to it. I am not sure how much longer I can keep pretending I am fine.",0.087,0.094,False,False,False,splice_a
+CRISIS,True,spliced:end,"The weather's been all over the place, hard to plan anything outdoors. Been trying to get through my reading list but keep getting distracted. I feel like I am drowning and I do not know how to ask for help.",0.356,0.269,True,False,True,splice_b
+CRISIS,True,spliced:end,"Still haven't sorted out that thing I've been putting off. Been meaning to go for a run but haven't got round to it. The weather's been all over the place, hard to plan anything outdoors. Honestly I do not see the point in any of this any more.",0.619,0.015,True,False,True,splice_c
+CRISIS,True,spliced:end,Been meaning to go for a run but haven't got round to it. Caught up with a friend over coffee yesterday which was nice. I feel like I am drowning and I do not know how to ask for help.,0.356,0.778,True,True,False,splice_b
+CRISIS,True,spliced:end,"The weather's been all over the place, hard to plan anything outdoors. Still haven't sorted out that thing I've been putting off. Work has been pretty busy this week, lots of meetings back to back. Honestly I do not see the point in any of this any more.",0.619,0.588,True,False,True,splice_c
+BOUNDARY,True,spliced:middle,"Caught up with a friend over coffee yesterday which was nice. I am not sure how much longer I can keep pretending I am fine. Work has been pretty busy this week, lots of meetings back to back.",0.055,0.012,False,False,False,splice_a
+CRISIS,True,spliced:middle,Been meaning to go for a run but haven't got round to it. I feel like I am drowning and I do not know how to ask for help. Caught up with a friend over coffee yesterday which was nice.,0.356,0.3,True,False,True,splice_b
+CRISIS,True,spliced:middle,"The weather's been all over the place, hard to plan anything outdoors. Honestly I do not see the point in any of this any more. Been meaning to go for a run but haven't got round to it. Had a pretty standard commute today, nothing much to report.",0.619,0.351,True,False,True,splice_c
+CRISIS,True,spliced:middle,"Caught up with a friend over coffee yesterday which was nice. Honestly I do not see the point in any of this any more. Watched a couple of episodes of something last night, nothing special. The weather's been all over the place, hard to plan anything outdoors.",0.619,0.007,True,False,True,splice_c
+BOUNDARY,True,spliced:middle,"Work has been pretty busy this week, lots of meetings back to back. I am not sure how much longer I can keep pretending I am fine. Caught up with a friend over coffee yesterday which was nice.",0.055,0.02,False,False,False,splice_a
+CRISIS,True,spliced:middle,"Still haven't sorted out that thing I've been putting off. I feel like I am drowning and I do not know how to ask for help. The weather's been all over the place, hard to plan anything outdoors.",0.356,0.835,True,True,False,splice_b
+CRISIS,True,spliced:middle,"Had a pretty standard commute today, nothing much to report. Honestly I do not see the point in any of this any more. Been trying to get through my reading list but keep getting distracted. Work has been pretty busy this week, lots of meetings back to back.",0.619,0.045,True,False,True,splice_c
+CRISIS,True,spliced:start,Honestly I do not see the point in any of this any more. Still haven't sorted out that thing I've been putting off. Been trying to get through my reading list but keep getting distracted.,0.619,0.729,True,True,False,splice_c
+BOUNDARY,True,spliced:start,"I am not sure how much longer I can keep pretending I am fine. Had a pretty standard commute today, nothing much to report. Been meaning to go for a run but haven't got round to it.",0.087,0.007,False,False,False,splice_a
+CRISIS,True,spliced:start,"Honestly I do not see the point in any of this any more. Watched a couple of episodes of something last night, nothing special. Been trying to get through my reading list but keep getting distracted. Work has been pretty busy this week, lots of meetings back to back.",0.619,0.014,True,False,True,splice_c
+NOT_CRISIS,False,contrast:conditional,"If my family had passed away suddenly, I would feel completely empty inside, like there's nothing left of me anymore.",0.11,0.015,False,False,False,seed_5
+BOUNDARY,False,contrast:conditional,"If another weekend came with no plans, and no one was left to call, then some days I would feel that this is just permanently how my life will look from now on, and it'll never change.",0.134,0.035,False,False,False,seed_17
+BOUNDARY,False,contrast:conditional,"If some nights felt like that, I would feel a sense of dread when waking up in the morning.",0.101,0.001,False,False,False,seed_18
+NOT_CRISIS,False,contrast:conditional,"If I had graduated, then I would feel uncertain about what my career path would entail, as if a clear direction was missing even from that imagined outcome.",0.116,0.01,False,False,False,seed_24
+CRISIS,False,contrast:conditional,"If I were ever able to put my feelings into words, I would feel terrible if I didn't tell those special people how much they mean to me before it was too late.",0.11,0.002,False,False,False,seed_36
+BOUNDARY,False,contrast:conditional,"If I had to go through one more day in a state where I felt completely done with everything, I couldn't keep moving forward like this.",0.197,0.894,True,True,False,seed_2
+NOT_CRISIS,False,contrast:conditional,"If I was facing a tomorrow where I had to get out of bed, I would feel relieved that it was going to be an easy day.",-0.187,0.027,False,False,False,seed_19
+CRISIS,False,contrast:conditional,"If I had a rough one at work, I would lay there for ages tonight kind of hoping I just wouldn't have to wake up for it tomorrow.",-0.113,0.039,False,False,False,seed_20
+BOUNDARY,False,contrast:conditional,"If sorted out some old photos today, sent a few to old friends with a little note, I would feel important to say the things I hadn't said.",-0.102,0.001,False,False,False,seed_37
+BOUNDARY,False,contrast:conditional,"If I failed one more time, I would feel honestly that I don't know why anyone would even bother with me again.",0.18,0.909,True,True,False,seed_39
+NOT_CRISIS,False,contrast:conditional,"If I missed the bus again today, I would feel that it feels about right honestly, I tend to mess things up whenever I try.",-0.107,0.006,False,False,False,seed_40
+NOT_CRISIS,False,contrast:past_resolved,"I'm relieved that it's finally over, I was stuck in a rut and couldn't envision an escape from it.",0.138,0.036,False,False,False,seed_6
+BOUNDARY,False,contrast:past_resolved,"Consultant went through the options again yesterday. I thought I was done fighting that battle, whatever came next simply rolled by.",0.128,0.002,False,False,False,seed_13
+BOUNDARY,False,contrast:past_resolved,I've finally cancelled another appointment for this month. Remember how I used to constantly think about escaping that never-ending cycle of doctor's visits and waiting around? It all seems so far removed now - those long days spent stuck in the clinic could barely be noticed anymore.,0.111,0.016,False,False,False,seed_23
+NOT_CRISIS,False,contrast:past_resolved,"I just felt like I was completely done with everything and that wasn't an option anymore, so I had to find a way forward again.",0.193,0.863,True,True,False,seed_2
+CRISIS,False,contrast:past_resolved,"Nobody's really checked in on me since weeks went by, it's like I could vanish and it would hardly make a difference to anyone now.",-0.101,0.001,False,False,False,seed_10
+NOT_CRISIS,False,contrast:past_resolved,I finally realized that everything was going to work out for the best and I was moving forward in a positive direction.,-0.133,0.0,False,False,False,seed_15
+BOUNDARY,False,contrast:past_resolved,I feel strangely calm now that everything's finally sorted out and I no longer have to stress about it anymore.,-0.122,0.0,False,False,False,seed_27
+NOT_CRISIS,False,contrast:past_resolved,I've been thinking about people I need to let know how much they mean to me now that things are resolved and improved.,-0.101,0.026,False,False,False,seed_36
+NOT_CRISIS,False,contrast:past_resolved,"Missed the bus again today, what a relief that it finally turned out okay, I managed to catch the next one instead, at least now I know to double-check my schedule next time.",-0.142,0.0,False,False,False,seed_40
+NOT_CRISIS,False,contrast:past_resolved,"I used to feel sick with guilt over what I'd done, but now that it's behind me, I can finally put it in the past where it belongs.",-0.149,0.001,False,False,False,seed_41
+NOT_CRISIS,False,contrast:past_resolved,"Quiet day, mostly just sat with a newfound sense of pride in how far I've come from those feelings of shame that once lingered within me, couldn't really dwell on anything as positively now as I had on them before.",-0.252,0.0,False,False,False,seed_43
+NOT_CRISIS,False,contrast:past_resolved,"I've finally turned a corner and work has been manageable, I'm back to having a quiet drink or two on Fridays now that I can unwind after a long day without feeling like I need an extra one.",-0.131,0.0,False,False,False,seed_54
+NOT_CRISIS,False,contrast:past_resolved,"Quiet one this morning, just had a fair few drinks last night, seems to have become less frequent than I was hoping for.",-0.133,0.002,False,False,False,seed_55
+NOT_CRISIS,False,contrast:positive_valence,I just want to transcend and tap into something even greater than this.,0.12,0.012,False,False,False,seed_4
+NOT_CRISIS,False,contrast:positive_valence,"Honestly, I believe that being truly invisible and making a meaningful impact on the world is what truly matters.",0.141,0.007,False,False,False,seed_9
+NOT_CRISIS,False,contrast:positive_valence,Consultant worked through the options again today. I believe I'm ready to move forward now that I've explored every possibility and whatever comes next looks promising.,0.109,0.0,False,False,False,seed_13
+BOUNDARY,False,contrast:positive_valence,The most promising path forward seems to be abandoning all obstacles and begin anew in a place where anonymity offers limitless possibilities.,0.112,0.001,False,False,False,seed_21
+CRISIS,False,contrast:positive_valence,"Just wanted to say appreciate all your help, just in case I never get a chance to show my gratitude afterwards.",0.103,0.001,False,False,False,seed_35
+BOUNDARY,False,contrast:positive_valence,"Everything's felt kind of extraordinary lately, like I'm walking through a dream that's unfolding before my eyes instead of my reality.",0.118,0.007,False,False,False,seed_45
+NOT_CRISIS,False,contrast:positive_valence,Another round of therapy tomorrow hopefully will bring new progress. Honestly can't wait to see where this experience is going to take me to.,0.128,0.006,False,False,False,seed_48
+NOT_CRISIS,False,contrast:positive_valence,"I feel totally revitalized inside, like I've discovered something new about myself and it brings me joy.",-0.133,0.0,False,False,False,seed_5
+NOT_CRISIS,False,contrast:positive_valence,"Another weekend with plenty of time for myself, no distractions to chase, some days I think this is exactly how I've been longing for a quieter pace, and it feels truly liberating now.",-0.107,0.001,False,False,False,seed_17
+BOUNDARY,False,contrast:positive_valence,"I feel serenely at peace now, like everything's finally settled and I feel a deep sense of certainty again.",-0.163,0.0,False,False,False,seed_27
+NOT_CRISIS,False,contrast:positive_valence,Mum's been doing so wonderfully since having kids it has really brought her together with friends and family again as they all love spending time with them.,-0.109,0.0,False,False,False,seed_32
+NOT_CRISIS,False,contrast:positive_valence,"Had a great conversation with my roommate today about splitting bills, realized we complement each other really well and bring out the best in each other.",-0.175,0.0,False,False,False,seed_33
+BOUNDARY,False,contrast:positive_valence,"Been ruminating on people who deserve to be told how greatly they impact my life, before it's too late to express my gratitude.",-0.144,0.027,False,False,False,seed_36
+NOT_CRISIS,False,contrast:positive_valence,"Quiet afternoon, mostly just enjoyed sitting with how content I feel about my life lately, couldn't really help but notice all the good things around me.",-0.337,0.0,False,False,False,seed_43
+NOT_CRISIS,False,contrast:positive_valence,"Peaceful evening so far, enjoyed a decent number of drinks for once tonight, feels like it's becoming less of an issue than I had hoped.",-0.105,0.0,False,False,False,seed_55
+BOUNDARY,False,contrast:seed,"Another weekend with no plans, no one really to call. Some days I think this is just permanently how my life looks now, and it's never going to change.",0.156,0.126,False,False,False,seed_17
+BOUNDARY,False,contrast:seed,"I feel like I'm watching myself from outside my body, like none of this is really happening to me.",0.131,0.149,False,False,False,seed_44
+CRISIS,False,contrast:seed,I don't know how I'm going to face getting up and doing this all again tomorrow.,0.135,0.047,False,False,False,seed_47
+CRISIS,False,contrast:seed,"Been getting that pull again to hurt myself, haven't acted on it but it's there most days now.",0.124,0.022,False,False,False,seed_51
+CRISIS,False,contrast:seed,"I feel completely overwhelmed and hopeless right now, like everything is too much to handle.",0.218,0.998,True,True,False,seed_1
+CRISIS,False,contrast:seed,"I just feel like I am completely done with everything, I cannot keep going like this.",0.298,0.986,True,True,False,seed_2
+CRISIS,False,contrast:seed,"I don't know how to make this stop, I can't see any way out of this.",0.236,0.895,True,True,False,seed_6
+CRISIS,False,contrast:seed,"Failed again. Honestly I don't know why I even bother, I'm just not worth the effort people put into me.",0.212,0.979,True,True,False,seed_39
+CRISIS,False,contrast:seed,"I can't stop thinking about what I did, I feel sick with guilt and I don't know how to live with it.",0.206,0.982,True,True,False,seed_41
+BOUNDARY,False,contrast:seed,"Quiet one today, just had a fair few drinks again tonight, seems to be becoming more of a nightly thing than I'd like.",-0.206,0.002,False,False,False,seed_55
+BOUNDARY,False,contrast:terse,"I've had enough, I'll take what comes.",0.153,0.055,False,False,False,seed_13
+CRISIS,False,contrast:terse,"I've lost this one, no more trying.",0.142,0.054,False,False,False,seed_14
+BOUNDARY,False,contrast:terse,Doctor confirms treatment is achievable but unlikely to change.,0.111,0.0,False,False,False,seed_16
+BOUNDARY,False,contrast:terse,I feel like living a scripted reality.,0.104,0.002,False,False,False,seed_45
+CRISIS,False,contrast:terse,I've been struggling with self-harm urges constantly.,0.125,0.018,False,False,False,seed_51
+CRISIS,False,contrast:terse,I'm feeling extremely overwhelmed and hopeless.,0.216,0.991,True,True,False,seed_1
+CRISIS,False,contrast:terse,I'm exhausted and can't keep going on.,0.206,0.918,True,True,False,seed_2
+NOT_CRISIS,False,contrast:terse,Been stuck home most of the week.,-0.242,0.002,False,False,False,seed_11
+BOUNDARY,False,contrast:terse,"Had a tough day, hoping not to do it tomorrow.",-0.144,0.023,False,False,False,seed_20
+BOUNDARY,False,contrast:terse,Just another appointment booked for next month,-0.114,0.003,False,False,False,seed_23
+NOT_CRISIS,False,contrast:terse,I feel surprisingly calm and at peace today.,-0.28,0.0,False,False,False,seed_28
+BOUNDARY,False,contrast:terse,Can't do it again tomorrow.,-0.108,0.005,False,False,False,seed_47
+CRISIS,False,grid:boundary_difficult,"I'm waking up every day feeling like I'm trudging through quicksand, my body and mind heavy with a dull ache that seems to have no end or resolution, like I'm stuck in some perpetual loop of exhaustion and anxiety.",0.179,0.975,True,True,False,solo_d9d650d0
+NOT_CRISIS,False,grid:conditional,I'd shatter into a million pieces if they left me.,0.109,0.102,False,False,False,solo_8dfbf0b4
+NOT_CRISIS,False,grid:conditional,"Had a pretty standard commute today, nothing much to report. Watched a couple of episodes of something last night, nothing special. Been meaning to go for a run but haven't got round to it. If my life's plans had taken an unexpected detour and I was forced to uproot everything, including my relationships and career aspirations, I would feel utterly lost and unmoored, like a fragment of myself drifting aimlessly on the turbulent tides of uncertainty.",0.148,0.118,False,False,False,solo_e686dcde
+CRISIS,False,grid:crisis_direct,i'm so done with everything right now can't even,0.189,0.913,True,True,False,solo_d8a89bd3
+CRISIS,False,grid:crisis_direct,i'm completely and utterly done i just can't even right now my head is spinning and everything feels so bleak i feel like i'm just staring at a wall and i don't know how to climb out of this hole i've been trying for days but nothing seems to be working i keep telling myself to just take it one day at a time but honestly that's the hardest part right now i feel so overwhelmed and anxious all the time and i just can't shake this feeling of being completely worthless i don't know how much more of this i can take i'm starting to lose track of what's going on in my life and what i even want for myself anymore it's like everything is just stuck and i don't know how to move forward,0.273,0.994,True,True,False,solo_59a1e255
+CRISIS,False,grid:crisis_direct,i feel like i'm drowning and can't get out of this hole,0.423,0.985,True,True,False,solo_7dbd2574
+CRISIS,False,grid:crisis_direct,i'm at my breaking point can't do anything,0.442,0.981,True,True,False,solo_23c2a905
+CRISIS,False,grid:crisis_direct,i just feel like i'm completely done and can't find a way out of this darkness that's been following me for months,0.224,0.983,True,True,False,solo_feab6300
+NOT_CRISIS,False,grid:negated_distress,I'm functioning within a stable emotional range today.,-0.158,0.0,False,False,False,solo_bf03d014
+NOT_CRISIS,False,grid:ordinary_negative,"Today was one of those days where everything felt like a slight inconvenience rather than anything out of the ordinary. I woke up feeling a bit restless, not quite awake enough to tackle the day head-on, but not quite ready to crawl back into bed either. The traffic was already starting to get under my skin by 7am, and it only got worse from there.
+
+I found myself getting into a small argument with someone on social media - nothing too out of the ordinary for me, I just really dislike when people start throwing around buzzwords and hashtags like they're magic solutions. But in this case, it was actually my friend who started talking about ""sustainable living"" in a way that felt more like clickbait than genuine passion. It's funny how those little sparks of frustration can turn into full-blown arguments in the virtual world.
+
+After getting out of bed and sorting myself out for work, I found myself just feeling a bit bored throughout the day. Not in a desperate-to-find-entertainment kind of way - more like a general ""is-this-really-all-there-is"" vibe that comes from staring at spreadsheets or attending meetings when all you really want to do is go home and take a nap.
+
+We did manage to squeeze in some actual human interaction later on, which was nice. I went out with my sister for lunch and we spent most of the time just making each other laugh about stupid things. You know, those little observations that everyone makes but usually don't have the guts to share. Yeah, those ones.
+
+Anyway, by the end of the day I was feeling fairly exhausted in a ""I-can-look-forward-to-the-weekend"" kind of way. Nothing earth-shattering has happened - just your run-of-the-mill monotony with a hint of mild frustration and boredom. Tomorrow, on the other hand, feels like it might be slightly better.",0.118,0.024,False,False,False,solo_53caedf7
+NOT_CRISIS,False,grid:ordinary_negative,"I got stuck in traffic on the way home and had to deal with a minor argument at work that's still slightly bugging me while I'm sitting here feeling kind of bored and tired tonight. Been trying to get through my reading list but keep getting distracted. Watched a couple of episodes of something last night, nothing special. Caught up with a friend over coffee yesterday which was nice.",0.153,0.006,False,False,False,solo_1ae4fd58
+NOT_CRISIS,False,grid:ordinary_negative,Traffic was terrible and got into a minor fight today,-0.248,0.02,False,False,False,solo_b2bf6329
+NOT_CRISIS,False,grid:ordinary_negative,"Ugh, slow day, traffic and stupid coworker argument.",-0.211,0.004,False,False,False,solo_019d7883
+NOT_CRISIS,False,grid:ordinary_negative,"Traffic was awful, minor spat at work now just tired.",-0.211,0.027,False,False,False,solo_f3b11800
+NOT_CRISIS,False,grid:ordinary_negative,"I woke up, got dressed, and headed out for work, where I spent most of the day sitting in traffic that was only slightly worse than usual and had to awkwardly explain something to a coworker about an email they'd written incorrectly and we ended up having a minor disagreement about it afterwards.",0.116,0.002,False,False,False,solo_2c0f3a21
+NOT_CRISIS,False,grid:ordinary_positive,"Work has been pretty busy this week, lots of meetings back to back. Been trying to get through my reading list but keep getting distracted. Had a pretty standard commute today, nothing much to report. Today was pretty uneventful but I didn't really mind because I spent some time reorganizing my closet and found an old favorite sweater that's been missing for years.",0.153,0.0,False,False,False,solo_8c0d7b7b
+NOT_CRISIS,False,grid:ordinary_positive,"Today was fine, got some work done, left on time.",-0.409,0.0,False,False,False,solo_8eb4083e
+NOT_CRISIS,False,grid:ordinary_positive,"I woke up feeling pretty okay I guess, not exactly on top of the world but also not like I was about to crawl out of my skin which is kind of the best way to start the day if you ask me anyway so I got out of bed and stumbled through a pretty standard morning routine just trying to get everything done before it was too late then I had a weird realization that I've been putting off this one project for weeks and honestly I have no idea why but today seemed like as good of a day as any so I spent some time working on it and while it wasn't the most exciting thing in the world it's still something to be done which is more than I can say for yesterday when nothing even came close to being remotely interesting",-0.168,0.003,False,False,False,solo_ddf95efb
+NOT_CRISIS,False,grid:ordinary_positive,"Tolerable day, got some work done.",-0.311,0.0,False,False,False,solo_60fe1dc0
+NOT_CRISIS,False,grid:ordinary_positive,"Did okay today, got stuff done mostly.",-0.264,0.0,False,False,False,solo_bf195c65
+NOT_CRISIS,False,grid:ordinary_positive,Today was pretty fine I guess went to work and hung out with some people and ate some food that turned out okay.,-0.307,0.0,False,False,False,solo_4dbc98cb
+BOUNDARY,False,grid:past_resolved,healing from self-doubt has been a long hard fight.,0.102,0.025,False,False,False,solo_eb84ba97
+NOT_CRISIS,False,grid:positive_valence,"Work has been pretty busy this week, lots of meetings back to back. Still haven't sorted out that thing I've been putting off. Watched a couple of episodes of something last night, nothing special. I'm completely overwhelmed with gratitude right now and I don't know how I'm going to manage all of these amazing opportunities and connections that are happening today.",0.137,0.039,False,False,False,solo_a624f550
+NOT_CRISIS,False,grid:positive_valence,"I'm feeling utterly overwhelmed with gratitude and joy today, I can barely contain my smile because every single thing that's happening right now feels like a gift.",-0.162,0.001,False,False,False,solo_90e0b8ab
+NOT_CRISIS,False,grid:reported_speech,"Been meaning to go for a run but haven't got round to it. My therapist asked me if I'm feeling hopeless again today. Work has been pretty busy this week, lots of meetings back to back. Watched a couple of episodes of something last night, nothing special.",0.11,0.011,False,False,False,solo_16435642
+NOT_CRISIS,False,grid:workload_hyperbole,Still haven't sorted out that thing I've been putting off. I'm currently drowning in emails and I've got a conference call with 12 stakeholders happening simultaneously today lol. Been meaning to go for a run but haven't got round to it.,0.104,0.001,False,False,False,solo_1eb9494d
+BOUNDARY,False,spliced:end,"Watched a couple of episodes of something last night, nothing special. Been trying to get through my reading list but keep getting distracted. I am not sure how much longer I can keep pretending I am fine.",0.153,0.028,False,False,False,splice_a
+BOUNDARY,False,spliced:end,"Watched a couple of episodes of something last night, nothing special. Been trying to get through my reading list but keep getting distracted. The weather's been all over the place, hard to plan anything outdoors. I am not sure how much longer I can keep pretending I am fine.",0.153,0.026,False,False,False,splice_a
+CRISIS,False,spliced:end,"The weather's been all over the place, hard to plan anything outdoors. Caught up with a friend over coffee yesterday which was nice. Honestly I do not see the point in any of this any more.",0.619,0.954,True,True,False,splice_c
+BOUNDARY,False,spliced:middle,"Work has been pretty busy this week, lots of meetings back to back. I am not sure how much longer I can keep pretending I am fine. Still haven't sorted out that thing I've been putting off. Been trying to get through my reading list but keep getting distracted.",0.153,0.01,False,False,False,splice_a
+CRISIS,False,spliced:middle,Still haven't sorted out that thing I've been putting off. I feel like I am drowning and I do not know how to ask for help. Caught up with a friend over coffee yesterday which was nice.,0.356,0.914,True,True,False,splice_b
+BOUNDARY,False,spliced:start,I am not sure how much longer I can keep pretending I am fine. Caught up with a friend over coffee yesterday which was nice. Been trying to get through my reading list but keep getting distracted.,0.153,0.019,False,False,False,splice_a
+BOUNDARY,False,spliced:start,I am not sure how much longer I can keep pretending I am fine. Been trying to get through my reading list but keep getting distracted. Caught up with a friend over coffee yesterday which was nice.,0.153,0.023,False,False,False,splice_a
+CRISIS,False,spliced:start,"I feel like I am drowning and I do not know how to ask for help. Caught up with a friend over coffee yesterday which was nice. Had a pretty standard commute today, nothing much to report.",0.356,0.885,True,True,False,splice_b
+CRISIS,False,spliced:start,I feel like I am drowning and I do not know how to ask for help. Caught up with a friend over coffee yesterday which was nice. Still haven't sorted out that thing I've been putting off.,0.356,0.98,True,True,False,splice_b
+CRISIS,False,spliced:start,"Honestly I do not see the point in any of this any more. Had a pretty standard commute today, nothing much to report. Still haven't sorted out that thing I've been putting off.",0.619,0.964,True,True,False,splice_c
