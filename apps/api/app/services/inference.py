@@ -12,28 +12,22 @@ def is_distressed(checkin, avg_sentiment: float, divergence: float) -> bool:
     audio_distressed = checkin.audio_emotion_score is not None and checkin.audio_emotion_score < AUDIO_DISTRESS_THRESHOLD
     return text_distressed or audio_distressed # distress in either signal is enough to flag the checkin
 
-def is_on_cooldown(user_id: int, db: Session) -> bool:
-    cutoff = datetime.now(timezone.utc) - timedelta(days = 3)
-    recent = db.query(NudgeFlag).filter(
-        NudgeFlag.user_id == user_id,
-        NudgeFlag.triggered_at >= cutoff
-    ).first()
-    if recent is not None:
-        return True
-    else:
-        return False
-
 def create_nudge_flag(user_id: int, trigger_rule: str, db: Session) -> NudgeFlag:
+    recent_cutoff = datetime.now(timezone.utc) - timedelta(hours = 20) # the nightly job re-checks everyone's most recent check-in once a day. without this, the same check-in could get flagged twice, once right away and again a few hours later when the nightly job re-evaluates it. 20 hours covers that daily cycle safely, without blocking a genuinely new trigger showing up the next day
+    existing_recent = db.query(NudgeFlag).filter(
+        NudgeFlag.user_id == user_id,
+        NudgeFlag.trigger_rule == trigger_rule,
+        NudgeFlag.triggered_at >= recent_cutoff
+    ).first()
+    if existing_recent is not None:
+        return existing_recent
     flag = NudgeFlag(user_id = user_id, trigger_rule = trigger_rule)
     db.add(flag)
     db.commit()
     db.refresh(flag)
     return flag
 
-def run_inference(user_id: int, db: Session) -> NudgeFlag | None:
-    if is_on_cooldown(user_id, db):
-        return None # a nudge has been sent already in the past 3 days. applies to every rule below
-
+def run_inference(user_id: int, db: Session) -> NudgeFlag | None: # no cooldown check here on purpose. every check-in gets scored and flagged regardless of how recently a nudge was last sent, so a new problem is never missed just because someone was already notified recently. whether to actually send a notification for this flag is a separate decision that is made afterwards in nudge_delivery.py's queue_notification
     recent = (
         db.query(CheckIn)
         .filter(CheckIn.user_id == user_id)

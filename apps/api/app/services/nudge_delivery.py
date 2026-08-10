@@ -92,7 +92,24 @@ def needs_friend_assignment(user_id: int, db: Session) -> bool: # true only if t
     has_assignment = db.query(FriendAssignment).filter(FriendAssignment.user_id == user_id).first() is not None
     return in_a_group and not has_assignment
 
+def is_on_cooldown(user_id: int, new_trigger_rule: str, db: Session) -> bool: # standard cooldown is 1 week since the last notification actually sent (not just flagged) but if the new flag is a fresh crisis_safety_net trigger, it can break through that standard cooldown early, as long as it's been at least 2 days since the last one was sent. A repeat of genuinely acute language is more urgent than an ongoing mild trend and shouldn't have to wait a full week to get through
+    last_sent_flag = db.query(NudgeFlag).filter(
+        NudgeFlag.user_id == user_id,
+        NudgeFlag.sent_at.isnot(None)
+    ).order_by(NudgeFlag.sent_at.desc()).first()
+    if last_sent_flag is None:
+        return False # never been notified before, nothing to be on cooldown from
+    if new_trigger_rule == "crisis_safety_net":
+        urgent_cutoff = datetime.now(timezone.utc) - timedelta(days = 2)
+        if last_sent_flag.sent_at <= urgent_cutoff:
+            return False # crisis, and it's been long enough, let this one through early
+    # either this isn't a crisis trigger, or it is but the 2-day floor above hasn't been reached yet. Either way, fall back to the normal 1-week rule
+    standard_cutoff = datetime.now(timezone.utc) - timedelta(days = 7)
+    return last_sent_flag.sent_at > standard_cutoff
+
 def queue_notification(flag: NudgeFlag, db: Session) -> Notification | None:
+    if is_on_cooldown(flag.user_id, flag.trigger_rule, db):
+        return None
     subject = db.query(User).filter(User.id == flag.user_id).first()
     if not subject:
         return None
