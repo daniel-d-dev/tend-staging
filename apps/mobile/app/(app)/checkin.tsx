@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useFocusEffect, useRouter } from "expo-router";
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,6 +20,17 @@ export default function CheckInScreen() {
     const [recordingField, setRecordingField] = useState<"prompt" | "journal" | null>(null);
     const [transcribing, setTranscribing] = useState(false);
     const [audioEmotionScore, setAudioEmotionScore] = useState<number | null>(null);
+    const activeRecordingRef = useRef<Audio.Recording | null>(null); // mirrors activeRecording. the cleanup below only runs once, so reading state directly would always see the old value from when it first ran, not the current one
+
+    useFocusEffect(
+        useCallback(() => {
+            // leaving this screen mid-recording (like navigating to another tab etc.) shouldn't leave the mic silently recording in the background with no way for the user to stop it
+            return () => {
+                activeRecordingRef.current?.stopAndUnloadAsync().catch(() => {});
+                activeRecordingRef.current = null;
+            };
+        }, [])
+    );
 
     useFocusEffect(
         useCallback(() => {
@@ -117,6 +128,9 @@ export default function CheckInScreen() {
 
     // takes recording/field as arguments rather than reading them from state. the auto-stop check below is created once, right when recording starts, and locks in whatever the recording/field state looked like at that exact moment. The real state does get updated properly just after but the check already made its own frozen copy before that happened, so it would only ever see that original, empty version, no matter when it actually looks
     const processRecording = async (recording: Audio.Recording, field: "prompt" | "journal") => {
+        // the manual "Stop recording" button and the auto stop at 3 minutes status callback can both end up calling this for the same recording if they land close together. the check and clear below happens before anything is awaited, which means whichever call gets here first claims the recording before the other one can even check, and only one of them ever proceeds
+        if (activeRecordingRef.current !== recording) return;
+        activeRecordingRef.current = null;
         try {
             await recording.stopAndUnloadAsync();
             const uri = recording.getURI();
@@ -173,14 +187,13 @@ export default function CheckInScreen() {
             const { recording } = await Audio.Recording.createAsync(
                 Audio.RecordingOptionsPresets.HIGH_QUALITY
             );
-            let autoStopped = false;
-            recording.setOnRecordingStatusUpdate((status) => {
-                if (!autoStopped && status.isRecording && status.durationMillis >= MAX_RECORDING_MS) {
-                    autoStopped = true;
+            recording.setOnRecordingStatusUpdate((status) => { // if this fires more than once, processRecording's own check at the top ignores any repeat or overlapping call for the same recording, so it's safe to call it directly here
+                if (status.isRecording && status.durationMillis >= MAX_RECORDING_MS) {
                     processRecording(recording, field);
                 }
             });
             setActiveRecording(recording);
+            activeRecordingRef.current = recording;
             setRecordingField(field);
         } catch {
             Alert.alert("Error", "Could not start recording. Please try again.")

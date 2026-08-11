@@ -20,6 +20,14 @@ export default function CheckInPage() {
     const [transcribing, setTranscribing] = useState(false);
     const [audioEmotionScore, setAudioEmotionScore] = useState<number | null>(null);
     const audioPartsRef = useRef<BlobPart[]>([]); // MediaRecorder fires audio in parts, they are collected here and combined into one file on stop
+    const activeStreamRef = useRef<MediaStream | null>(null); // tracks the raw mic stream. the cleanup below only runs once, so reading state directly would always see the old value from when it first ran, not the current one
+
+    useEffect(() => {
+        return () => {
+            // navigating away mid-recording shouldn't leave the mic quietly recording in the background. stopping the tracks directly turns the mic off straight away, rather than calling the recorder's own stop, which would also try to upload a transcription for a page already left
+            activeStreamRef.current?.getTracks().forEach(track => track.stop());
+        };
+    }, []);
 
     useEffect(() => {
         const fetchToday = async () => {
@@ -112,6 +120,7 @@ export default function CheckInPage() {
     const handleStartRecording = async (field: "prompt" | "journal") => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            activeStreamRef.current = stream;
             const recorder = new MediaRecorder(stream);
             audioPartsRef.current = []; // reset from any previous recording
 
@@ -122,6 +131,7 @@ export default function CheckInPage() {
             recorder.onstop = async () => {
                 const blob = new Blob(audioPartsRef.current, { type: "audio/webm" });
                 stream.getTracks().forEach(track => track.stop()); // release the mic so the browser stops showing the recording sign
+                activeStreamRef.current = null; // already stopped above, nothing left for the unmount cleanup to do
                 setTranscribing(true);
                 try {
                     const formData = new FormData();
