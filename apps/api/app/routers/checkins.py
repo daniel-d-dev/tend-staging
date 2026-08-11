@@ -3,7 +3,7 @@ from starlette.concurrency import run_in_threadpool
 import tempfile
 import os
 from sqlalchemy.orm import Session
-from datetime import date
+from datetime import datetime, timezone
 from app.core.database import get_db, SessionLocal
 from app.core.sentiment import score_text
 from app.models.checkin import CheckIn
@@ -76,7 +76,7 @@ def submit_checkin (
 ):
     existing = db.query(CheckIn).filter(
         CheckIn.user_id == current_user.id,
-        CheckIn.checkin_date == date.today()
+        CheckIn.checkin_date == datetime.now(timezone.utc).date()
     ).first()
 
     if existing:
@@ -87,7 +87,7 @@ def submit_checkin (
 
     checkin = CheckIn(
         user_id = current_user.id,
-        checkin_date = date.today(),
+        checkin_date = datetime.now(timezone.utc).date(),
         prompt_question = data.prompt_question,
         prompt_response = data.prompt_response,
         journal_text = data.journal_text,
@@ -112,7 +112,7 @@ def get_today(
 ):
     checkin = db.query(CheckIn).filter(
         CheckIn.user_id == current_user.id,
-        CheckIn.checkin_date == date.today()
+        CheckIn.checkin_date == datetime.now(timezone.utc).date()
     ).first()
 
     if not checkin:
@@ -129,7 +129,7 @@ def update_today(
 ):
     checkin = db.query(CheckIn).filter(
         CheckIn.user_id == current_user.id,
-        CheckIn.checkin_date == date.today()
+        CheckIn.checkin_date == datetime.now(timezone.utc).date()
     ).first()
 
     if not checkin:

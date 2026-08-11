@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from datetime import date, timedelta
+from datetime import datetime, timezone, timedelta
 from app.core.database import get_db
 from app.models.temperature import TemperatureCheck
 from app.models.group import GroupMember
@@ -24,7 +24,7 @@ def submit_temperature(
     if not membership:
         raise HTTPException(status_code = 403, detail = "You are not a member of this group.")
     
-    today = date.today()
+    today = datetime.now(timezone.utc).date()
     week_start = today - timedelta(days = today.weekday()) # monday of the current week
 
     existing = db.query(TemperatureCheck).filter(
@@ -53,7 +53,7 @@ def get_my_temperature_checks(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    today = date.today()
+    today = datetime.now(timezone.utc).date()
     week_start = today - timedelta(days = today.weekday())
     checks = db.query(TemperatureCheck).filter(
         TemperatureCheck.user_id == current_user.id,
@@ -75,7 +75,7 @@ def get_group_temperature(
     if not membership:
         raise HTTPException(status_code = 403, detail = "You are not a member of this group.")
     
-    today = date.today()
+    today = datetime.now(timezone.utc).date()
     week_start = today - timedelta(days = today.weekday())
 
     checks = db.query(TemperatureCheck).filter(
