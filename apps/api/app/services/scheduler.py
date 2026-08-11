@@ -7,7 +7,6 @@ from app.models.checkin import CheckIn
 from app.models.notification import Notification
 from app.services.inference import run_inference
 from app.services.nudge_delivery import queue_notification
-from app.services.evaluation import evaluate_pending_nudges
 from app.services.coordinator import coordinator_job
 from app.routers.checkins import score_and_evaluate_checkin
 import httpx
@@ -51,13 +50,8 @@ def send_push_notifications():
                     notification.pushed_at = datetime.now(timezone.utc)
         db.commit()
 
-def run_post_nudge_evaluation():
-    with SessionLocal() as db:
-        evaluate_pending_nudges(db)
-
 def start_scheduler():
     scheduler.add_job(run_nightly_inference, CronTrigger(hour = 0, minute = 0)) # midnight utc
     scheduler.add_job(send_push_notifications, CronTrigger(hour = 9, minute = 0)) # 9am utc after nightly inference
-    scheduler.add_job(run_post_nudge_evaluation, CronTrigger(hour = 10, minute = 0)) # 10am utc after push notifs sent
-    scheduler.add_job(coordinator_job, CronTrigger(hour = 11, minute = 0)) # daily coordinator check, cooldown logic decides whether to post or not. 11am utc after evaluation job
+    scheduler.add_job(coordinator_job, CronTrigger(hour = 11, minute = 0)) # daily coordinator check, cooldown logic decides whether to post or not. 11am utc after push notifications
     scheduler.start()
