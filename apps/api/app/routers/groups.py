@@ -43,6 +43,8 @@ def assign_friend(group_id: int, friend_id: int, db: Session = Depends(get_db), 
     ).first()
     if not membership:
         raise HTTPException(status_code = 403, detail = "You are not a member of this group.")
+    if friend_id == current_user.id: # someone assigned as their own designated friend would mean nobody real ever gets notified if they're struggling
+        raise HTTPException(status_code = 400, detail = "You can't assign yourself as your own designated friend.")
     friend_membership = db.query(GroupMember).filter(
         GroupMember.group_id == group_id,
         GroupMember.user_id == friend_id
