@@ -42,9 +42,10 @@ def read_group_signals(group_id: int, db: Session) -> dict:
     ).all()] # a separate feature, each member can submit one word describing their week, shown to the coordinator alongside the daily signals above
     low_energy_scores = [score_low_energy(word) for word in temperature_words]
     avg_low_energy = sum(low_energy_scores) / len(low_energy_scores) if low_energy_scores else None # used by select_activity_category to avoid suggesting something physical when the group's own words lean tired/drained, even on weeks where sentiment_score data doesn't yet tell the same story
-    recent_flags = db.query(NudgeFlag).filter(
+    recent_flags = db.query(NudgeFlag).filter( # a flag that was created but never actually sent (blocked by the per-user cooldown) shouldn't count here, since these signals are about what the group has actually experienced recently. that's why this checks sent_at, not triggered_at
         NudgeFlag.user_id.in_(member_ids),
-        NudgeFlag.triggered_at >= datetime.now(timezone.utc) - timedelta(days = 3)
+        NudgeFlag.sent_at.isnot(None),
+        NudgeFlag.sent_at >= datetime.now(timezone.utc) - timedelta(days = 3)
     ).all()
     has_recent_flag = len(recent_flags) > 0
     has_high_distress = any(f.trigger_rule == "crisis_safety_net" for f in recent_flags) # shortens the cooldown below to 12 hours instead of 48
@@ -102,18 +103,25 @@ def run_coordinator(group_id: int, db: Session) -> None:
 
     signals = read_group_signals(group_id, db)
 
-    if last_post:
+    if signals["has_high_distress"]: # urgent cooldown only checks against the last urgent post, not the last post of any kind. a routine post a few hours ago shouldn't be able to hold back a genuinely urgent one, the same reasoning the per-user crisis override in nudge_delivery.py already follows
+        last_urgent_post = db.query(Post).filter(
+            Post.group_id == group_id,
+            Post.author_type == "agent",
+            Post.mode == "urgent"
+        ).order_by(Post.created_at.desc()).first()
+        if last_urgent_post:
+            hours_since_urgent = (datetime.now(timezone.utc) - last_urgent_post.created_at).total_seconds() / 3600
+            if hours_since_urgent < 12:
+                return
+    elif last_post:
         hours_since = (datetime.now(timezone.utc) - last_post.created_at).total_seconds() / 3600
-        if signals["has_high_distress"]:
-            if hours_since < 12:
-                return # urgent cooldown of 12 hours
-        elif hours_since < 48:
+        if hours_since < 48:
             return # standard cooldown of 48 hours
-            
+
     mode = select_mode(signals)
     if mode is None:
         return
-    
+
     category = select_activity_category(signals) if mode == "activity" else None
     last_post_summary = last_post.content if last_post else None
     message = generate_message(mode, category, signals, last_post_summary)
@@ -122,7 +130,8 @@ def run_coordinator(group_id: int, db: Session) -> None:
         group_id = group_id,
         author_id = None,
         content = message,
-        author_type = "agent"
+        author_type = "agent",
+        mode = mode
     )
     db.add(post)
     db.commit()
@@ -131,4 +140,7 @@ def coordinator_job():
     with SessionLocal() as db:
         groups = db.query(Group).all()
         for group in groups:
-            run_coordinator(group.id, db)
+            try:
+                run_coordinator(group.id, db)
+            except Exception: # one group's failure (if Ollama is down or being slow for example) shouldn't stop every group after it in this run from being checked at all
+                db.rollback() # clears any partial state left behind so the next group starts from a clean session

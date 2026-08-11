@@ -15,6 +15,7 @@ class Post(Base):
     content: Mapped[str] = mapped_column(String, nullable = False)
     author_type: Mapped[str] = mapped_column(String, nullable = False)
     parent_post_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("posts.id"), nullable = True)
+    mode: Mapped[str | None] = mapped_column(String, nullable = True) # only set for coordinator posts, either urgent, supportive, connective or activity, null for real user posts. Lets the urgent cooldown in coordinator.py tell an urgent post apart from a routine one
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone = True), default = (utc_now))
 
 class Reaction(Base):
