@@ -1,10 +1,27 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { API_URL } from "@/lib/auth";
 
 export default function DashboardPage() {
+    const router = useRouter();
+
+    async function handleLogout() {
+        await fetch(`${API_URL}/auth/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+        router.push("/login");
+    }
+
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>Dashboard</h1>
+            <div className={styles.headerRow}>
+                <h1 className={styles.heading}>Dashboard</h1>
+                <button className={styles.logout} onClick={handleLogout}>Log out</button>
+            </div>
             <div className={styles.grid}>
                 <Link href="/dashboard/checkin" className={styles.card}>
                     <h2 className={styles.cardTitle}>Check in</h2>
