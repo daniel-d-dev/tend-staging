@@ -4,7 +4,9 @@ from app.core.database import get_db
 from app.routers.auth import get_current_user
 from app.models.user import User
 from app.models.group import Group, GroupMember, FriendAssignment
-from app.schemas.group import GroupCreate, GroupResponse, GroupMemberInfo
+from app.models.feed import Post, Reaction
+from app.models.temperature import TemperatureCheck
+from app.schemas.group import GroupCreate, GroupUpdate, GroupResponse, GroupMemberInfo
 
 router = APIRouter(prefix = "/groups", tags = ["groups"])
 
@@ -62,6 +64,37 @@ def assign_friend(group_id: int, friend_id: int, db: Session = Depends(get_db), 
         db.add(assignment)
     db.commit()
     return {"message": "Designated friend has been assigned successfully."}
+
+@router.patch("/{group_id}", response_model = GroupResponse)
+def rename_group(group_id: int, payload: GroupUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    group = db.query(Group).filter(Group.id == group_id).first()
+    if not group:
+        raise HTTPException(status_code = 404, detail = "Group not found.")
+    if group.created_by != current_user.id: # only the creator can rename, same reasoning as delete below
+        raise HTTPException(status_code = 403, detail = "Only the group's creator can rename it.")
+    group.name = payload.name
+    db.commit()
+    db.refresh(group)
+    return group
+
+@router.delete("/{group_id}")
+def delete_group(group_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    group = db.query(Group).filter(Group.id == group_id).first()
+    if not group:
+        raise HTTPException(status_code = 404, detail = "Group not found.")
+    if group.created_by != current_user.id: # deleting a group members are relying on shouldn't be a decision any single member can make alone
+        raise HTTPException(status_code = 403, detail = "Only the group's creator can delete it.")
+
+    post_ids = [p.id for p in db.query(Post.id).filter(Post.group_id == group_id).all()]
+    if post_ids: # reactions reference posts, so they have to go first
+        db.query(Reaction).filter(Reaction.post_id.in_(post_ids)).delete(synchronize_session = False)
+    db.query(Post).filter(Post.group_id == group_id).delete(synchronize_session = False) # deletes replies alongside top-level posts in the same statement, avoiding any parent/child ordering issue
+    db.query(TemperatureCheck).filter(TemperatureCheck.group_id == group_id).delete(synchronize_session = False)
+    db.query(FriendAssignment).filter(FriendAssignment.group_id == group_id).delete(synchronize_session = False)
+    db.query(GroupMember).filter(GroupMember.group_id == group_id).delete(synchronize_session = False)
+    db.delete(group)
+    db.commit()
+    return {"message": "Group deleted successfully."}
 
 @router.get("/me", response_model = list[GroupResponse])
 def get_my_groups(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

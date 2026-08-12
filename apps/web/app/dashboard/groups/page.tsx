@@ -95,7 +95,7 @@ export default function GroupsPage() {
                 <div
                     key = {group.id}
                     className = {styles.groupCard}
-                    onClick = {() => router.push(`/dashboard/groups/${group.id}?name=${group.name}`)}
+                    onClick = {() => router.push(`/dashboard/groups/${group.id}?name=${group.name}&createdBy=${group.created_by}`)}
                     style = {{ cursor: "pointer" }}
                 >
                     <p className = {styles.groupName}>{group.name}</p>

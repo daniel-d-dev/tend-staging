@@ -4,6 +4,9 @@ from datetime import datetime
 class GroupCreate(BaseModel):
     name: str
 
+class GroupUpdate(BaseModel):
+    name: str
+
 class GroupMemberResponse(BaseModel):
     user_id: int
     joined_at: datetime

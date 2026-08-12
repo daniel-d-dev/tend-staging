@@ -9,6 +9,41 @@
 .heading {
     font-size: 20px;
     font-weight: 700;
+}
+
+.renameRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.renameInput {
+    flex: 1;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 4px 0;
+}
+
+.editLink {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.deleteLink {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 0;
     margin-bottom: 24px;
 }
 
