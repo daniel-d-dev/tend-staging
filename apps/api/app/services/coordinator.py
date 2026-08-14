@@ -103,17 +103,7 @@ def run_coordinator(group_id: int, db: Session) -> None:
 
     signals = read_group_signals(group_id, db)
 
-    if signals["has_high_distress"]: # urgent cooldown only checks against the last urgent post, not the last post of any kind. a routine post a few hours ago shouldn't be able to hold back a genuinely urgent one, the same reasoning the per-user crisis override in nudge_delivery.py already follows
-        last_urgent_post = db.query(Post).filter(
-            Post.group_id == group_id,
-            Post.author_type == "agent",
-            Post.mode == "urgent"
-        ).order_by(Post.created_at.desc()).first()
-        if last_urgent_post:
-            hours_since_urgent = (datetime.now(timezone.utc) - last_urgent_post.created_at).total_seconds() / 3600
-            if hours_since_urgent < 12:
-                return
-    elif last_post:
+    if last_post: # one cooldown applies to every mode here, including urgent, since the coordinator's post is just ambient group presence, not the actual crisis delivery mechanism. that job belongs to the per-user notification in nudge_delivery.py, which correctly has no cooldown at all for a genuine crisis
         hours_since = (datetime.now(timezone.utc) - last_post.created_at).total_seconds() / 3600
         if hours_since < 48:
             return # standard cooldown of 48 hours
