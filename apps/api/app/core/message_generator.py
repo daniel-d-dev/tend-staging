@@ -39,7 +39,7 @@ def build_prompt(mode: str, category: str | None, mood: str, last_post_summary: 
     if last_post_summary:
         base += f" Your last message was: {last_post_summary}. Do not repeat yourself."
     if mode == "urgent":
-        return base + " Someone in the group may be having a hard time. Write a short, gentle message to the whole group letting them know you're thinking of them. Do not identify anyone."
+        return base + " Someone in the group may be having a hard time. Write a short, gentle message to the whole group letting them know you're thinking of them. Do not identify anyone. Do not suggest an activity, plan, or getting together - just quiet presence and warmth, nothing that reads as a casual invite."
     if mode == "supportive":
         return base + " The group is having a tough week. Write a warm, supportive message. No activity suggestion, just warmth and presence."
     if mode == "connective":
