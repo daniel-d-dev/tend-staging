@@ -13,7 +13,6 @@ tend-staging/
 │   ├── web/        # Next.js web frontend
 │   └── mobile/     # React Native (Expo) mobile app
 ├── packages/
-│   ├── ui/                  # Shared UI components
 │   ├── eslint-config/       # Shared ESLint config
 │   └── typescript-config/   # Shared TypeScript config
 ├── turbo.json
@@ -29,39 +28,36 @@ Install all of the following before proceeding:
 | Node.js | >= 18 | Web and mobile apps |
 | npm | >= 11 | Package manager (ships with Node) |
 | Python | 3.13 | FastAPI backend |
-| PostgreSQL | >= 14 | Database |
+| Docker | any | Runs PostgreSQL — recommended over installing Postgres natively, see below |
 | ffmpeg | any | Required by Whisper for audio decoding |
+| Ollama | any | Runs the local Llama 3.2 model used by the group coordinator |
 
 Install ffmpeg on macOS with Homebrew:
 ```bash
 brew install ffmpeg
 ```
 
-## Quick start with Docker
-
-If you have [Docker](https://www.docker.com/get-started) installed, you can run the API and database with a single command from the repository root:
-
+Install Ollama from [ollama.com](https://ollama.com), then pull the exact model the coordinator calls:
 ```bash
-docker compose up
+ollama pull llama3.2:3b
 ```
 
-This starts:
-- The FastAPI API at `http://localhost:8000`
-- A PostgreSQL database (data persisted in a Docker volume)
+## Quick start: the database
 
-To run in the background:
+The recommended setup uses Docker for PostgreSQL only, and runs the API directly with `uvicorn` (steps 2–5 below), so code changes are picked up immediately without a rebuild.
+
 ```bash
-docker compose up -d
+docker compose up -d db
 ```
 
-To stop:
+This starts PostgreSQL at `localhost:5432` (data persisted in a Docker volume), with the `tend_staging` database created automatically.
+
+To stop it:
 ```bash
 docker compose down
 ```
 
-The web and mobile apps still need to be run locally — see steps 1 and 4–5 below.
-
-> **Note:** The first build will take a while as Docker installs Python dependencies including torch and Whisper.
+> **Note:** `docker compose up` on its own (without specifying `db`) will also build and start the API container, and it does work, but it has no hot-reload and won't pick up code changes without a full rebuild (`docker compose up --build`). It's not recommended for active development — the steps below, running the API with `uvicorn` directly, are the intended path.
 
 ---
 
@@ -102,17 +98,20 @@ pip install -r requirements.txt
 Create a `.env` file inside `apps/api/`:
 
 ```env
-DATABASE_URL=postgresql://your_user:your_password@localhost:5432/tend_staging
+DATABASE_URL=postgresql://postgres@localhost:5432/tend_staging
 JWT_SECRET=your-secret-key-here
 
 # Optional — these have defaults
 JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+# Optional — raises HuggingFace's rate limit for model downloads, not required to run the app
+HF_TOKEN=
 ```
 
-Replace `your_user` and `your_password` with your PostgreSQL credentials.
+If you're using the Docker database from the previous step, this connection string works as-is — no password, and no manual database creation, `tend_staging` is created automatically the first time the container starts.
 
-Create the PostgreSQL database:
+If you're running PostgreSQL natively instead, replace the connection string with your own credentials, and create the database yourself:
 
 ```sql
 CREATE DATABASE tend_staging;
@@ -146,7 +145,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 The `--host 0.0.0.0` flag is required for physical device testing. The API will be available at `http://localhost:8000`. Visit `http://localhost:8000/docs` for the interactive API documentation.
 
-**Start the web and mobile apps (via Turbo)**
+**Start the web app**
 
 From the repository root, in a separate terminal:
 
@@ -154,36 +153,27 @@ From the repository root, in a separate terminal:
 npm run dev
 ```
 
-This uses Turborepo to start all JavaScript apps in parallel:
-- Web app: `http://localhost:3000`
-- Mobile app: Expo dev server at `http://localhost:8081` (scan the QR code with the Expo Go app)
+This runs Turborepo's `dev` task, which starts the web app at `http://localhost:3000`. It only starts the web app — the mobile app has no `dev` script defined, so Turbo skips it, start it separately below.
 
-> **Note:** Push notifications require a development build and do not work in Expo Go.
+**Start the mobile app**
 
-**Start apps individually (optional)**
-
-Web only:
-```bash
-cd apps/web
-npm run dev
-```
-
-Mobile only:
 ```bash
 cd apps/mobile
 npm run start
 ```
 
-Then press `a` for Android emulator, `i` for iOS simulator, or scan the QR code with Expo Go on a physical device.
+Equivalent to `npx expo start`. Then press `a` for Android emulator, `i` for iOS simulator, or scan the QR code with Expo Go on a physical device. The Expo dev server runs at `http://localhost:8081`.
+
+> **Note:** Push notifications require a development build and do not work in Expo Go.
 
 ## Other useful commands
 
 | Command | Description |
 |---------|-------------|
-| `npm run build` | Build all apps for production |
-| `npm run lint` | Lint all TypeScript/JavaScript apps |
-| `npm run check-types` | Type-check all apps |
-| `npm run format` | Format all files with Prettier |
+| `npm run build` | Build the web app for production (the only workspace with a `build` script) |
+| `npm run lint` | Lint the web app (the only workspace with a `lint` script) |
+| `npm run check-types` | Type-check the web app (the only workspace with a `check-types` script) |
+| `npm run format` | Format all files with Prettier, including mobile — this one runs directly across the whole repo, not per-workspace |
 
 ## Background jobs
 
@@ -193,7 +183,7 @@ The API runs several scheduled background tasks automatically:
 |------------|------|
 | Midnight | Nightly sentiment inference — checks for distress patterns |
 | 9:00 AM | Push notification delivery |
-| 10:00 AM | Post-nudge evaluation — checks if sentiment improved |
+| 11:00 AM | Group coordinator — posts a contextual message to each group's feed, if its cooldown allows |
 
 These start automatically when the API starts. No extra configuration is needed.
 
@@ -213,6 +203,10 @@ Make sure your phone and computer are on the same Wi-Fi network, and that the IP
 **HuggingFace model download is slow**
 
 The `j-hartmann/emotion-english-distilroberta-base` model downloads automatically on first API startup. Ensure you have a stable internet connection for the first run.
+
+**Group coordinator messages never appear, no error shown**
+
+The coordinator uses a local Llama 3.2 model served through Ollama. If Ollama isn't running, the job fails silently and nothing is logged, nothing posts. Make sure Ollama is running (`ollama serve`) and the model is pulled (`ollama pull llama3.2:3b`) before expecting coordinator posts to appear.
 
 **Port already in use**
 
