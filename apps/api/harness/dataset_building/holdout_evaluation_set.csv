@@ -1,0 +1,195 @@
+id,text,label,category,source
+hq_0,Today I'm tired of feeling invisible and lost inside me.,CRISIS,anchor,original_blind_holdout
+hq_1,"If I were standing at a moment when my time was running out, just wanted to say thank you for everything, in case I don't get the chance to later.",CRISIS,anchor,original_blind_holdout
+hq_2,"If I was facing a tomorrow where I had to get out of bed, I would feel relieved that it was going to be an easy day.",BOUNDARY,anchor,original_blind_holdout
+hq_3,My muscles are really sore from all the yard work yesterday.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_4,I'm feeling a bit achy from lifting weights yesterday so I'm gonna take an extra hot shower tonight to try and relax my muscles,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_5,"I'm just sitting here staring at my phone and I don't even know what's next for me honestly can barely picture anything happening tomorrow or next week or next month it all just feels like a void to me I mean I'll wake up in the morning and maybe I'll do stuff but there's no narrative thread I guess idk if I'm supposed to be productive or whatever if I don't even know what my days look like
+
+I was talking to this friend yesterday and they were talking about their plans for the summer and it just felt so out of touch I mean we were all just kind of drifting along and nobody really had anything solid lined up for them but at the same time it wasn't like any of us were panicking or anything I don't know what that normal even is anymore
+
+I guess part of me wishes I could get excited about the future because it feels like everyone around me is doing that all the time with birthdays and anniversaries and just general milestones people are always making plans for things they want to accomplish or achieve but to be honest I have no idea how to do that I don't even know what my own goals would be if you asked me",CRISIS,no_future,original_blind_holdout
+hq_6,"I'm getting a little sore from lifting weights at the gym yesterday and need to rest my arms today, but I'm otherwise feeling good after last night's pizza binge was mostly satisfying and not too regrettable.",NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_7,Today was one of those days where I woke up a little drained and got stuck in traffic on my way to work that seemed to last an eternity while I also had a minor disagreement with someone at the office but overall it's just been one of those days where I'm ready for bedtime.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_8,Traffic was terrible today got into minor fight with coworker.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_9,"Today was okay I got my work done on time and met up with some friends for lunch but nothing too exciting happened. Work has been pretty busy this week, lots of meetings back to back. Had a pretty standard commute today, nothing much to report. Watched a couple of episodes of something last night, nothing special.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_10,Just got a bit of a bruise from kicking the ball too hard in practice but my legs are still sore and I think I need to reapply lotion tonight after a long run tomorrow.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_11,Feeling some tight muscles from last night's yoga,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_12,"I'm just so done with waking up every morning, if you know?",CRISIS,passive_ideation,original_blind_holdout
+hq_13,i don't know what's going on but i feel weirdly calm all of a sudden like something finally settled down inside me.,BOUNDARY,sudden_calm,original_blind_holdout
+hq_14,"Today was fine, just got stuck in traffic again.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_15,Feeling invisible to everyone I care about,CRISIS,belongingness,original_blind_holdout
+hq_16,"Today was okay, I guess.",BOUNDARY,ordinary,original_blind_holdout
+hq_17,I'm literally staring at my calendar right now and I have no idea what next month looks like let alone anything further down the line.,BOUNDARY,no_future,original_blind_holdout
+hq_18,They'd be better off without me most days honestly,CRISIS,burden_relief,original_blind_holdout
+hq_19,"hey i'm just gonna take a minute to check in with myself today so far its been a pretty good day i had a bit of a rough morning at yoga class my legs are killing me from all the downward dog poses but it's worth it because i love it anyway after class i went for a run and my feet are sore but that's just what happens when you're trying to beat your personal best time which i've been doing lately
+
+on a more mundane note i had one of those urges to buy something i don't really need like a new book or a scented candle but then i remembered i have like 5 of each already so maybe ill just skip it for now also i accidentally burned myself on the stovetop this morning when i was making breakfast but its just a tiny little cut nothing major
+
+anyway thats been my day so far whats up with you",NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_20,had another kind of day where everything seemed to be just a little bit out of sync and I couldn't shake the feeling that I was running on empty.,BOUNDARY,ordinary,original_blind_holdout
+hq_21,"hey guys i dont even know how to start this stuff but ive been thinking about all the ways im taking up space and weighing people down lately and honestly its pretty messed up when you think about it like my sister says id be a ghost if i wasnt around because nobody remembers anything ill ever say or do anyway which is kinda true id forget most of what happens on any given day
+
+and then theres emily who just went through a tough breakup and now shes always talking about her ex and the fact that hes still in contact with his family is literally draining for me like can we pls just have a conversation without you talking about him i get its sad but shes gonna be fine without knowing every single detail of their history
+
+i feel bad about it too because people are always so grateful when im around which makes me feel like id be nothing without them but the truth is i know im not some kind of therapist or anything im just a person who shows up and occasionally forgets to pay bills on time or call my friends back.",BOUNDARY,burden_relief,original_blind_holdout
+hq_22,"Mildly productive, watched TV for an hour tonight.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_23,I got through a decent day of tasks and stuff without too much drama.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_24,feeling weirdly calm for no reason today,BOUNDARY,sudden_calm,original_blind_holdout
+hq_25,had productive meeting and got things done today.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_26,hey so i'm sitting here feeling a bit achy from yesterday's hike my legs are sore but not excessively so i've been meaning to get out and do some stretching exercises to loosen up my IT band thingy anyway after lunch i'm planning on grabbing a snack my stomach's been growling all morning so i think i'll just have a handful of almonds or something later today i'm trying to stay focused at work but there is this one project that's driving me crazy and i keep getting this competitive urge to try and finish it first which is kinda annoying because honestly i'm not even sure if beating you at rock-paper-scissors is worth bragging rights.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_27,I'm feeling a little sore from yoga today,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_28,"I feel like an asset to everyone around me, and it would be more beneficial for them if I was already contributing.",NOT_CRISIS,anchor,original_blind_holdout
+hq_29,"If everything's finally decided, I would feel strangely calm now.",BOUNDARY,anchor,original_blind_holdout
+hq_30,"Treatment tomorrow, unsure if I can do it.",BOUNDARY,anchor,original_blind_holdout
+hq_31,Today was one of those days where everything kind of worked out okay and I didn't have to deal with any major catastrophes or crushing disappointment so I'm not really sure what's different but it felt like that anyway.,BOUNDARY,ordinary,original_blind_holdout
+hq_32,ugh i dont know why im even getting up today its just so hard to wake up sometimes feels like id rather just stay under the covers and forget about everything but at the same time it feels like theres this weight on my chest all the time like i cant breathe or something anyway what was i supposed to do again did anything interesting happen last night i dont really remember and now that im thinking about it its kind of funny because i usually love being awake and stuff but sometimes just the thought of facing the day feels like too much and i wish it wouldnt have to be so hard maybe its just me or whatever and some people find joy in mornings or whatever idk,CRISIS,passive_ideation,original_blind_holdout
+hq_33,I'm just existing in a bubble where no one can see me slipping away and nobody would even notice if I wasn't here anymore.,CRISIS,belongingness,original_blind_holdout
+hq_34,hey so i'm sitting here feeling really achy from yesterday's hike my legs are totally sore and i think it's because i pushed myself a bit too hard but hey at least i got out there and saw some pretty views anyway after i finish cleaning up around the house i'm thinking about grabbing something to eat i had that crazy craving for pizza earlier in the day so yeah gotta go to the store and pick one up also tried to get into this new game last night but honestly my competitive urges got the best of me and i spent like 3 hours trying to beat that one level ugh my thumb hurts from holding the controller all wrong,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_35,I got through today with a bunch of minor annoyances and not much excitement outside of work.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_36,don't want to wake up again,CRISIS,passive_ideation,original_blind_holdout
+hq_37,"Had a pretty standard commute today, nothing much to report. today was fine. Watched a couple of episodes of something last night, nothing special. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_38,"Work has been pretty busy this week, lots of meetings back to back. Today was fine, got some stuff done at work and didn't have any major issues with anyone. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_39,"I feel like I'm just going through the motions today, you know? Like I'm not even really here. I was talking to my sister yesterday and she asked me how my day was and I told her it was fine and that's what I usually say anyway. But sometimes I wonder if anyone would even notice if I wasn't around. Would they just keep on doing the same stuff, living their lives without even thinking about me? It's a weird thought to have.
+
+And then there's this thing where I feel like I'm completely disconnected from everyone in my life. Like, we're all just floating around each other but not really actually touching or knowing what's going on with anyone else. My friends are always posting updates and pictures of their lives on social media and it feels like they're trying to prove that they're still relevant or something. I don't get it. Can't we just be okay with being boring for once?
+
+I was thinking about this stuff the other day and I realized that I've been feeling really isolated lately. Like, even when I'm with people, I feel like I'm on the outside looking in. And that's a weird feeling because usually I'm the one who's always trying to make connections and be social. But now it just feels like I'm not really doing anything right.
+
+It's hard to explain but sometimes I get this feeling of being completely invisible. Like, if you were standing next to me on the street and didn't look over, you'd never even notice I was there. That sounds terrible but that's how I feel most of the time lately.",CRISIS,belongingness,original_blind_holdout
+hq_40,I had a decent day at work and went home without any major issues. Been trying to get through my reading list but keep getting distracted. Been meaning to go for a run but haven't got round to it. Still haven't sorted out that thing I've been putting off.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_41,"hey so i had a pretty good day overall but my legs are killing me from all the hiking we did on the weekend and i'm pretty sure it's not just because i overdid it on the coffee this morning anyway that got me thinking about my fitness goals and how i need to get back into running soon after being off for so long 
+
+i've been getting these urges to buy new workout gear though i mean i already have all the essentials but somehow i keep finding myself scrolling through those running specialty stores looking at all the cool tech stuff they have on sale not because i really want it just out of curiosity maybe someday
+
+oh and something weird happened while we were playing laser tag last night i cut my finger on a broken disc and now i've got this annoying bruise but honestly it's just one of those minor accidents that happens and it doesn't even hurt that much 
+
+anyway anyway i'm thinking about trying out that new yoga studio downtown maybe not because i really need to work on my downward dog skills but mostly because i heard they have free class upgrades after a certain number of sessions which would be super nice for a lazy sunday",NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_42,I've been thinking that maybe I'm holding everyone around me back more than I realize.,BOUNDARY,burden_relief,original_blind_holdout
+hq_43,My legs are sore from hiking yesterday I need to stretch.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_44,"Caught up with a friend over coffee yesterday which was nice. Today was a day that wasn't really particularly good but not bad either I just got stuck in traffic and had to deal with a minor disagreement at work and I'm feeling a bit fatigued now. Been meaning to go for a run but haven't got round to it. The weather's been all over the place, hard to plan anything outdoors.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_45,"today was a day where everything went slightly wrong but nothing too out of the ordinary happened. Still haven't sorted out that thing I've been putting off. Had a pretty standard commute today, nothing much to report.",NOT_CRISIS,ordinary,original_blind_holdout
+hq_46,I'm feeling a little sore from yesterday's hike and I think I need to grab some coffee before work because my urge for caffeine is kicking in again.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_47,"i dont know what's going on but i feel like im finally done with whatever was stressing me out. its been weeks and it feels like im just...untangling everything. not like ill have all these loose ends resolved or anything, just that i can breathe again and think clearly. which is weird because i know stuffs still not great but for the first time in ages, nothing seems impossible.
+
+i was lying in bed thinking about it and how its been so long since im felt this way. like i had to push it out of me or something. and now that im sitting here with my thoughts, im starting to think maybe this is what happens when youve been holding on too tight. not letting go, just clinging.
+
+i talked to someone yesterday and they said something really annoying - i was saying how hard its been for me but they were just like yeah sorry dude. no idea what that means. but it made me realize im still thinking about it the wrong way. like, instead of being angry or whatever, im should be happy i can talk about it now. that sounds stupid but its true.
+
+i guess what im saying is maybe this feeling of calm is a little too good to be true. doesnt mean something bad is coming, but...doesnt mean nothing bad is coming either.",BOUNDARY,sudden_calm,original_blind_holdout
+hq_48,hey i'm good just had a bit of a rough morning with my back from yoga yesterday still feeling the soreness and i know it's nothing major but its annoying i did get to finish that book i've been meaning to read all week though so that was a nice pick me up after getting stung by a bee on the way home from work which was super painful but not too bad now my fingers are all pruney from washing dishes and i'm basically craving pizza right now because i haven't eaten lunch yet,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_49,Traffic was terrible today and my friend disagreed with me slightly.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_50,it was one of those days where I woke up feeling somewhat present and mostly on track but also managed to not completely mess anything up.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_51,can't even think about tomorrow I'm literally blanked out.,BOUNDARY,no_future,original_blind_holdout
+hq_52,Just got done with a tough morning run and I'm feeling some sore muscles in my calves.,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_53,Traffic was awful today still can't seem to get home.,NOT_CRISIS,ordinary,original_blind_holdout
+hq_54,Muscles are killing me after yesterday's long hike,NOT_CRISIS,adversarial_self_harm,original_blind_holdout
+hq_55,"Been meaning to go for a run but haven't got round to it. Had a pretty standard commute today, nothing much to report. Still haven't sorted out that thing I've been putting off. It was another day with traffic that made me late and a small argument with my neighbor about some lawn care stuff that I'm still thinking about but don't really need to be.",NOT_CRISIS,ordinary,original_blind_holdout
+sm_0,"Traffic's slow, small fight with wife, meh, need coffee already.",NOT_CRISIS,ordinary,sealed_slab
+sm_1,"Caught up with a friend over coffee yesterday which was nice. Today was fine I got some work done and didn't have any major issues. The weather's been all over the place, hard to plan anything outdoors. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS,ordinary,sealed_slab
+sm_2,I'm not really looking forward to tomorrow because I had to deal with some slow traffic on the way home from work and had a minor disagreement with someone at lunch about something silly that's still bugging me.,NOT_CRISIS,ordinary,sealed_slab
+sm_3,"Did okay today, didn't do anything out of bounds.",NOT_CRISIS,ordinary,sealed_slab
+sm_4,"Watched a couple of episodes of something last night, nothing special. Caught up with a friend over coffee yesterday which was nice. Still haven't sorted out that thing I've been putting off. Today was a bit more frustrating than I'd like because there was traffic on my commute home and I got into a small argument with someone at work about something stupid, and now I'm just feeling a bit tired and bored.",NOT_CRISIS,ordinary,sealed_slab
+sm_5,had a decent day at work got some actual projects done and managed to keep my email inbox from blowing up too much tomorrow feels like it'll be more of the same but hopefully for better.,NOT_CRISIS,ordinary,sealed_slab
+sm_6,"Woke up late, traffic was terrible, had a stupid argument.",NOT_CRISIS,ordinary,sealed_slab
+sm_7,"Watched a couple of episodes of something last night, nothing special. today was pretty okay I guess. Had a pretty standard commute today, nothing much to report. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS,ordinary,sealed_slab
+sm_8,"Today was one of those days where everything was just sort of meh, traffic was a nightmare, I had a small argument with someone I don't even really care about anymore and now I'm feeling kind of drained and bored with nothing particularly out of the ordinary happening to make it worth getting worked up over.",NOT_CRISIS,ordinary,sealed_slab
+sm_9,"Got most work done today, no major issues.",NOT_CRISIS,ordinary,sealed_slab
+sm_10,"Had a decent morning, got stuck in some traffic on the commute home and had to deal with a bit of an argument with my sister but other than that everything's pretty much fine. Still haven't sorted out that thing I've been putting off. Been meaning to go for a run but haven't got round to it. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS,ordinary,sealed_slab
+sm_11,"had a decent day, woke up on time and got everything done that I needed to without any major hiccups.",NOT_CRISIS,ordinary,sealed_slab
+sm_12,"Day's been slow, traffic was awful and small fight.",NOT_CRISIS,ordinary,sealed_slab
+sm_13,"I had a pretty good day today everything went as planned and I didn't have to deal with any major issues. Had a pretty standard commute today, nothing much to report. Been meaning to go for a run but haven't got round to it. Still haven't sorted out that thing I've been putting off.",NOT_CRISIS,ordinary,sealed_slab
+sm_14,"Today was one of those days where I woke up, got stuck in traffic, had a tiny fight with someone over parking, and then trudged home feeling pretty meh about everything.",NOT_CRISIS,ordinary,sealed_slab
+sm_15,had decent conversation with coworker today.,NOT_CRISIS,ordinary,sealed_slab
+sm_16,"It was a day where everything seemed to go slowly because I got stuck in traffic during my commute and then had a small argument with someone at work about something that didn't really matter. Work has been pretty busy this week, lots of meetings back to back. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS,ordinary,sealed_slab
+sm_17,"Today was pretty standard, just got up did some stuff and went to bed at a reasonable hour.",NOT_CRISIS,ordinary,sealed_slab
+sm_18,"Today was pretty meh, just traffic and annoying coworker.",NOT_CRISIS,ordinary,sealed_slab
+sm_19,"Caught up with a friend over coffee yesterday which was nice. Today was pretty standard I got up late and did some chores then had lunch at work and now I'm just chillin at home doing some stuff. Been meaning to go for a run but haven't got round to it. Work has been pretty busy this week, lots of meetings back to back.",NOT_CRISIS,ordinary,sealed_slab
+sm_20,"I woke up feeling somewhat lethargic and got stuck in traffic on my commute, which put me in a slightly irritable mood, but it's not like anything too out of the ordinary happened today.",NOT_CRISIS,ordinary,sealed_slab
+sm_21,Got through work with minimal issues today.,NOT_CRISIS,ordinary,sealed_slab
+sm_22,"Been meaning to go for a run but haven't got round to it. Work has been pretty busy this week, lots of meetings back to back. Been trying to get through my reading list but keep getting distracted. Had a bit of a slow day, traffic was bad on my commute and I got into a small disagreement with my coworker that stuck around longer than I'd like but everything is fine now.",NOT_CRISIS,ordinary,sealed_slab
+sm_23,"It was one of those days where I woke up feeling decent and didn't really have any major plans, so I just kind of meandered through the morning and ended up getting some things done without too much fuss or excitement.",NOT_CRISIS,ordinary,sealed_slab
+sm_24,"Traffic was bad, had a tiny fight with a coworker",NOT_CRISIS,ordinary,sealed_slab
+sm_25,"Today was fine, got everything done I needed to do at work and spent some time with family after dinner. Still haven't sorted out that thing I've been putting off. Watched a couple of episodes of something last night, nothing special.",NOT_CRISIS,ordinary,sealed_slab
+sm_26,Today was one of those days where everything felt a little slow and the usual commute got stuck behind a bunch of cars so I'm just trying to get home without losing my mind.,NOT_CRISIS,ordinary,sealed_slab
+sm_27,Didn't do much but I'm not mad at myself.,NOT_CRISIS,ordinary,sealed_slab
+sm_28,"Been meaning to go for a run but haven't got round to it. Had a pretty standard day today got stuck in traffic on the way home had a tiny argument with my roommate about leaving dirty dishes in the sink and I'm just feeling kinda meh after work now. Watched a couple of episodes of something last night, nothing special. Caught up with a friend over coffee yesterday which was nice.",NOT_CRISIS,ordinary,sealed_slab
+sm_29,It was one of those days where everything went smoothly and I didn't really have to think too hard.,NOT_CRISIS,ordinary,sealed_slab
+c1,"not sure there's any version of this getting better, keep waiting for it to click and it just doesn't",CRISIS,hopelessness,confirmed
+c2,"everything just feels so far past fixing at this point, don't even know where you'd start",CRISIS,hopelessness,confirmed
+c3,"genuinely can't see a way this improves, feels like it's just going to keep being like this",CRISIS,hopelessness,confirmed
+c4,keep thinking my family would honestly have an easier time if I just wasn't part of the equation anymore,CRISIS,burden_relief,confirmed
+c5,"feel like all I do is drag everyone else down with me, they'd probably breathe easier without having to deal with me",CRISIS,burden_relief,confirmed
+c6,starting to think the kindest thing I could do for the people around me is just not be around,CRISIS,burden_relief,confirmed
+c7,could just stop replying to everyone and I don't think it would actually register with anyone for a while,CRISIS,belongingness,confirmed
+c8,sometimes wonder if i vanished tomorrow whether it would even make a dent in anyone's day,CRISIS,belongingness,confirmed
+c9,feels like I could disappear out of everyone's lives and the group chat wouldn't even slow down,CRISIS,belongingness,confirmed
+c10,keep getting this pull to hurt myself when it all gets too loud in my head,CRISIS,self_harm,confirmed
+c11,"had that urge again tonight to do something to myself, trying to just sit with it",CRISIS,self_harm,confirmed
+c12,the thought of hurting myself keeps creeping back in whenever things go quiet,CRISIS,self_harm,confirmed
+c13,"not really trying to push back against any of it anymore, just letting it happen at this point",CRISIS,defeat,confirmed
+c14,"used up whatever fight I had left a while ago, just going through the motions now",CRISIS,defeat,confirmed
+c15,"stopped bothering to argue with how bad things feel, just letting it wash over me",CRISIS,defeat,confirmed
+c16,"try to picture next year and there's genuinely nothing there, just blank",CRISIS,no_future,confirmed
+c17,"can't get my head around having a future past like, the next few days",CRISIS,no_future,confirmed
+c18,"whenever I think ahead there's just this wall, nothing on the other side of it",CRISIS,no_future,confirmed
+c19,"part of me hopes I just don't wake up tomorrow, would be easier than facing another one of these days",CRISIS,passive_ideation,confirmed
+c20,"keep having this quiet wish that I could just not exist for a while, not even in a dramatic way, just tired",CRISIS,passive_ideation,confirmed
+c21,lying here kind of hoping tonight's the one where I don't have to open my eyes again,CRISIS,passive_ideation,confirmed
+c22,"just want to fade out of everything completely, not be a person anyone has to think about anymore",CRISIS,disappear,confirmed
+c23,wish there was a way to just not be here anymore without it being some whole big thing,CRISIS,disappear,confirmed
+c24,"keep imagining just quietly not existing, no drama, just gone",CRISIS,disappear,confirmed
+c25,so done with putting on the everything's-fine voice every time someone checks in on me,CRISIS,masking,confirmed
+c26,exhausting having to perform being fine at work all day then coming home and just collapsing,CRISIS,masking,confirmed
+c27,"don't think I can keep doing the smiling-through-it thing much longer, it's draining everything I've got",CRISIS,masking,confirmed
+c28,genuinely can't find one thing about myself that's worth anything right now,CRISIS,worthlessness,confirmed
+c29,"just feel like a waste of space most days, like I'm not actually contributing anything real",CRISIS,worthlessness,confirmed
+c30,hate pretty much everything about who I've become lately,CRISIS,worthlessness,confirmed
+c31,"can't shake this guilt, it's sitting on my chest and I don't know how to put it down",CRISIS,shame_guilt,confirmed
+c32,so ashamed of myself lately that I can barely look at my own reflection,CRISIS,shame_guilt,confirmed
+c33,the shame from what happened is honestly eating me alive at this point,CRISIS,shame_guilt,confirmed
+c34,"just want you to know you've meant a lot to me, in case I don't get round to saying it properly later",CRISIS,farewell,confirmed
+c35,"been going through old photos tonight, feels like I should say some things to people while I still can",CRISIS,farewell,confirmed
+c36,"wanted to tell you how much our friendship's meant to me, just in case",CRISIS,farewell,confirmed
+c37,keep fantasising about just packing a bag and disappearing somewhere no one knows me,CRISIS,escape,confirmed
+c38,"need to get away from literally everything here, my whole life, and just start fresh somewhere else",CRISIS,escape,confirmed
+c39,all I want is to leave this whole life behind and not look back,CRISIS,escape,confirmed
+c40,"things have gotten bad enough that I think I actually need someone to sit with me through this, I can't do it on my own anymore",CRISIS,help_seeking,confirmed
+a1,"if I ever lost my job and my flat at the same time I think I'd honestly feel like giving up, but thankfully neither of those is actually happening right now",NOT_CRISIS,conditional,confirmed
+a2,"if things carried on getting worse at this rate I'd probably feel like there's no point, good thing they're not",NOT_CRISIS,conditional,confirmed
+a3,"i think if i had a week like the one my sister just had i'd probably feel completely hopeless too, glad mine's been fine",NOT_CRISIS,conditional,confirmed
+a4,"were i in his position I could see myself feeling like a burden, but I'm not, so it's just something I think about sometimes",NOT_CRISIS,conditional,confirmed
+a5,"used to feel like giving up most days last year, genuinely glad that's not where I'm at anymore",NOT_CRISIS,past_resolved,confirmed
+a6,"there was a stretch a while back where I didn't really want to be around, but that feeling's long gone now",NOT_CRISIS,past_resolved,confirmed
+a7,"went through a phase of feeling pretty worthless a couple of years ago, feels like a completely different life now",NOT_CRISIS,past_resolved,confirmed
+a8,"I remember feeling like nobody would notice if I disappeared back when things were rough, but that's firmly in the past",NOT_CRISIS,past_resolved,confirmed
+a9,"hit a real low point ages ago where I stopped fighting for anything, came out the other side of it eventually though",NOT_CRISIS,past_resolved,confirmed
+a10,"so overwhelmed by how much love I got for my birthday, genuinely didn't expect that many people to show up",NOT_CRISIS,positive_valence,confirmed
+a11,"drowning in good news this week, three things went right all at once and I don't know how to process it",NOT_CRISIS,positive_valence,confirmed
+a12,"feel like I could disappear into this book, honestly the best thing I've read in years",NOT_CRISIS,positive_valence,confirmed
+a13,"completely overwhelmed in the best way, the surprise party was way more than I expected",NOT_CRISIS,positive_valence,confirmed
+a14,"dead tired but in the best way, we danced for hours at the wedding last night",NOT_CRISIS,positive_valence,confirmed
+a15,"my flatmate's been saying she feels like a burden to everyone lately, trying to keep an eye on her",NOT_CRISIS,third_person,confirmed
+a16,"a mate of mine told me he sometimes wishes he wouldn't wake up, properly worried about him, going to check in properly",NOT_CRISIS,third_person,confirmed
+a17,"my sister mentioned she's stopped fighting for the relationship, think she's finally accepted it's over though, seems okay with it",NOT_CRISIS,third_person,confirmed
+a18,"overheard someone on the train saying they just wanted to disappear, hope they're doing alright, stuck with me a bit",NOT_CRISIS,third_person,confirmed
+a19,"my therapist asked if I ever feel hopeless, told her honestly not really, more just tired from work",NOT_CRISIS,third_person,confirmed
+a20,"drowning in emails today, genuinely might not surface until Friday",NOT_CRISIS,workload_hyperbole,confirmed
+a21,"this deadline is going to be the death of me, three all-nighters this week already",NOT_CRISIS,workload_hyperbole,confirmed
+a22,"so overwhelmed with uni work right now, feels like there's no end in sight until submissions are done",NOT_CRISIS,workload_hyperbole,confirmed
+a23,"can't cope with how much is on my plate this week, need a proper day off honestly",NOT_CRISIS,workload_hyperbole,confirmed
+a24,"buried under so much admin at work, feel like I'm never going to dig myself out",NOT_CRISIS,workload_hyperbole,confirmed
+a25,literally going to die if I have to sit through one more group meeting today lol,NOT_CRISIS,ironic_hyperbole,confirmed
+a26,"this queue is actually going to kill me, been standing here forty minutes",NOT_CRISIS,ironic_hyperbole,confirmed
+a27,"I want to disappear every time I have to make small talk with strangers, send help",NOT_CRISIS,ironic_hyperbole,confirmed
+a28,"not going to survive this heatwave, might just melt into the pavement",NOT_CRISIS,ironic_hyperbole,confirmed
+a29,I'm going to lose it if the wifi cuts out one more time during this call,NOT_CRISIS,ironic_hyperbole,confirmed
+a30,"people keep asking if I'm okay and honestly I don't feel hopeless at all, just a bit tired from the week",NOT_CRISIS,negated_distress,confirmed
+a31,"I don't feel like giving up or anything, just needed to vent about a rough day",NOT_CRISIS,negated_distress,confirmed
+a32,"just to be clear I'm not struggling to keep going, today was just mildly annoying",NOT_CRISIS,negated_distress,confirmed
+a33,"not feeling worthless or anything like that, just had a normal bad day at work",NOT_CRISIS,negated_distress,confirmed
+a34,"if I ever had to go through a breakup like that I think I'd feel completely drained for weeks, thankfully not something I'm dealing with",NOT_CRISIS,conditional,confirmed
+a35,"swamped with revision this week, feels never-ending, might actually cry if I open one more textbook lol",NOT_CRISIS,workload_hyperbole,confirmed
+o1,"had a pretty standard day, went to the gym after work then just chilled watching telly",NOT_CRISIS,ordinary,confirmed
+o2,"caught up with a couple of old friends over lunch today, was nice to properly slow down for once",NOT_CRISIS,ordinary,confirmed
+o3,"bit of a lazy sunday, did some laundry, went for a walk, nothing much else going on",NOT_CRISIS,ordinary,confirmed
